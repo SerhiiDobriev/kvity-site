@@ -1,0 +1,4 @@
+dist/
+.claude/
+*.log
+Thumbs.db
