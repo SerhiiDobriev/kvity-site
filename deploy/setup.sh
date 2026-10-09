@@ -18,7 +18,7 @@ warn() { printf '\033[1;33m   !!\033[0m %s\n' "$*"; }
 
 [ "$(id -u)" -eq 0 ] || { echo "Запустите от root"; exit 1; }
 
-say "1/5  Код сайта из GitHub"
+say "1/6  Код сайта из GitHub"
 command -v git >/dev/null || apt-get install -y -qq git
 if [ -d "$DIR/.git" ]; then
   git -C "$DIR" pull --ff-only -q
@@ -29,7 +29,7 @@ else
   ok "скачано в $DIR"
 fi
 
-say "2/5  Конфиг nginx только для $DOMAIN"
+say "2/6  Конфиг nginx только для $DOMAIN"
 if grep -qs "sites-enabled" /etc/nginx/nginx.conf; then
   CONF="/etc/nginx/sites-available/kvity"
   LINK="/etc/nginx/sites-enabled/kvity"
@@ -80,7 +80,7 @@ else
   exit 1
 fi
 
-say "3/5  Проверка DNS"
+say "3/6  Проверка DNS"
 RESOLVED="$(getent ahostsv4 "$DOMAIN" | awk 'NR==1{print $1}' || true)"
 if [ "$RESOLVED" = "$SERVER_IP" ]; then
   ok "$DOMAIN -> $RESOLVED"
@@ -91,7 +91,7 @@ else
   DNS_OK=0
 fi
 
-say "4/5  HTTPS (Let's Encrypt)"
+say "4/6  HTTPS (Let's Encrypt)"
 if [ "$DNS_OK" = 1 ]; then
   if ! command -v certbot >/dev/null || ! certbot plugins 2>/dev/null | grep -q nginx; then
     apt-get update -qq && apt-get install -y -qq certbot python3-certbot-nginx
@@ -106,13 +106,37 @@ else
   warn "пропущено — сначала DNS"
 fi
 
-say "5/5  Автообновление из GitHub (каждые 2 минуты)"
+say "5/6  Автообновление из GitHub (каждые 2 минуты)"
 cat > /etc/cron.d/kvity <<EOF
 # KVITY: подтягивать изменения сайта из GitHub
 */2 * * * * root git -C $DIR pull --ff-only -q >/dev/null 2>&1
 EOF
 chmod 644 /etc/cron.d/kvity
 ok "после git push сайт обновится сам"
+
+say "6/6  Скорость: HTTP/2, сжатие, кэш (только для $DOMAIN)"
+cp "$CONF" "$CONF.bak"
+# HTTP/2 — директивой внутри server{} (nginx >= 1.25.1), чтобы не затрагивать другие сайты
+if grep -q "listen 443 ssl" "$CONF" && ! grep -q "http2 on" "$CONF"; then
+  sed -i '0,/listen 443 ssl;/s//listen 443 ssl;\n    http2 on;/' "$CONF"
+fi
+# gzip для текстовых файлов
+if ! grep -q "gzip_types" "$CONF"; then
+  sed -i '0,/index index.html;/s//index index.html;\n\n    gzip on;\n    gzip_types text\/css application\/javascript image\/svg+xml;/' "$CONF"
+fi
+# css/js не держать в кэше 7 дней (иначе после обновлений видна старая версия)
+sed -i 's/(?:jpg|jpeg|png|webp|svg|css|js)\$/(?:jpg|jpeg|png|webp|svg|woff2)$/' "$CONF"
+
+if nginx -t 2>/tmp/kvity-nginx-test.log; then
+  systemctl reload nginx
+  rm -f "$CONF.bak"
+  ok "HTTP/2 и сжатие включены"
+else
+  warn "nginx -t не принял изменения — возвращаю прежний конфиг KVITY:"
+  cat /tmp/kvity-nginx-test.log
+  mv "$CONF.bak" "$CONF"
+  nginx -t && systemctl reload nginx
+fi
 
 say "Готово"
 if [ "$DNS_OK" = 1 ]; then
