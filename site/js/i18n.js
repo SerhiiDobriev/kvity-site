@@ -17,9 +17,6 @@ window.KVITY_I18N = {
       ctaOrder: "Comandă",
       ctaWorks: "Vezi lucrările"
     },
-    intro: {
-      text: "<em>Kvity</em> înseamnă „flori” în ucraineană. Creăm buchete generoase și moderne din flori de import și decorăm momentele importante cu baloane."
-    },
     cats: {
       kicker: "Ce creăm",
       bouquets: "Buchete",
@@ -191,9 +188,6 @@ window.KVITY_I18N = {
       sub: "A modern flower studio with rare imported flowers. Every arrangement is created just for you.",
       ctaOrder: "Order",
       ctaWorks: "See our work"
-    },
-    intro: {
-      text: "<em>Kvity</em> means “flowers” in Ukrainian. We create generous, modern bouquets from imported flowers and make important moments brighter with balloons."
     },
     cats: {
       kicker: "What we create",
@@ -367,9 +361,6 @@ window.KVITY_I18N = {
       ctaOrder: "Замовити",
       ctaWorks: "Наші роботи"
     },
-    intro: {
-      text: "<em>Kvity</em> — це «квіти». Ми створюємо пишні сучасні букети з імпортних квітів і прикрашаємо важливі моменти повітряними кулями."
-    },
     cats: {
       kicker: "Що ми створюємо",
       bouquets: "Букети",
@@ -541,9 +532,6 @@ window.KVITY_I18N = {
       sub: "Современная цветочная студия с импортными цветами интересных сортов. Каждую композицию создаём специально для вас.",
       ctaOrder: "Заказать",
       ctaWorks: "Наши работы"
-    },
-    intro: {
-      text: "<em>Kvity</em> по-украински значит «цветы». Мы создаём пышные современные букеты из импортных цветов и украшаем важные моменты воздушными шарами."
     },
     cats: {
       kicker: "Что мы создаём",
