@@ -12,7 +12,9 @@
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
   var icon = function (id) { return '<svg aria-hidden="true"><use href="#i-' + id + '"/></svg>'; };
   var tel = function (p) { return "tel:" + p.replace(/[^\d+]/g, ""); };
-  var mapsDir = function (q) { return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(q); };
+  // Маршрут и карточка — по точной метке студии в Google Maps
+  var mapsDir = function (s) { return "https://www.google.com/maps/dir/?api=1&destination=" + s.lat + "," + s.lng + "&destination_place_id=" + s.placeId; };
+  var mapsPlace = function (s) { return "https://www.google.com/maps/place/?q=place_id:" + s.placeId; };
   var pad2 = function (n) { return String(n).padStart(2, "0"); };
   var small = function (id) { return "img/" + id + "-s.webp"; };
   var large = function (id) { return "img/" + id + ".webp"; };
@@ -349,29 +351,41 @@
   }
 
   /* ---------------- Студии и рейтинги ---------------- */
+  var mapIO = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      loadMap(en.target);
+      mapIO.unobserve(en.target);
+    });
+  }, { rootMargin: "400px 0px" }) : null;
+
+  function loadMap(box) {
+    if (box.querySelector("iframe")) return;
+    var st = cfg.studios[+box.dataset.i];
+    var f = document.createElement("iframe");
+    f.title = "KVITY " + st.name;
+    f.loading = "lazy";
+    f.referrerPolicy = "no-referrer-when-downgrade";
+    f.src = "https://maps.google.com/maps?q=" + st.lat + "," + st.lng + "&z=16&hl=" + HTML_LANG[lang] + "&output=embed";
+    f.onload = function () { box.classList.add("is-loaded"); };
+    box.appendChild(f);
+  }
+
   function renderStudios() {
-    var grid = $("#studiosGrid");
-    var loaded = {};
-    $$(".map iframe", grid).forEach(function (f) { loaded[f.closest(".studio").dataset.id] = true; });
-    grid.innerHTML = cfg.studios.map(function (s, i) {
+    $("#studiosGrid").innerHTML = cfg.studios.map(function (s, i) {
       return '<article class="studio reveal" style="--delay:' + i * 0.12 + 's" data-id="' + s.id + '">' +
         '<div class="studio__body"><h3>' + esc(s.name) + "</h3>" +
         '<p class="studio__line">' + icon("pin") + "<span>" + esc(s.address) + "</span></p>" +
         '<p class="studio__line">' + icon("clock") + "<span>" + esc(t("studios.daily")) + ", " + s.hours + "</span></p>" +
         '<div class="studio__actions">' +
-          '<a class="btn btn--dark" target="_blank" rel="noopener" href="' + mapsDir(s.mapsQuery) + '">' + icon("route") + "<span>" + esc(t("studios.route")) + "</span></a>" +
+          '<a class="btn btn--dark" target="_blank" rel="noopener" href="' + mapsDir(s) + '">' + icon("route") + "<span>" + esc(t("studios.route")) + "</span></a>" +
           '<a class="btn btn--line" href="' + tel(s.phone) + '">' + icon("phone") + "<span>" + esc(t("studios.call")) + "</span></a>" +
         "</div></div>" +
-        '<div class="map"><button type="button" class="btn btn--light map__btn">' + icon("pin") + "<span>" + esc(t("studios.map")) + "</span></button></div>" +
+        '<div class="map" data-i="' + i + '">' + icon("pin") + "</div>" +
         "</article>";
     }).join("");
-    $$(".studio", grid).forEach(function (card, i) {
-      var load = function () {
-        $(".map", card).innerHTML = '<iframe title="' + esc(cfg.studios[i].name) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=' +
-          encodeURIComponent(cfg.studios[i].mapsQuery) + '&z=16&output=embed"></iframe>';
-      };
-      $(".map__btn", card).addEventListener("click", load);
-      if (loaded[card.dataset.id]) load();
+    $$(".map", $("#studiosGrid")).forEach(function (box) {
+      if (mapIO) mapIO.observe(box); else loadMap(box);
     });
   }
 
@@ -380,13 +394,23 @@
     for (var i = 1; i <= 5; i++) out += '<svg aria-hidden="true"' + (r >= i - 0.25 ? "" : ' class="is-off"') + '><use href="#i-star"/></svg>';
     return out;
   }
+  function studioById(id) { return cfg.studios.filter(function (s) { return s.id === id; })[0]; }
+
   function renderRatings() {
     $("#ratings").innerHTML = cfg.studios.map(function (s, i) {
-      return '<div class="rating reveal" style="--delay:' + i * 0.12 + 's"><span class="rating__num">' + s.rating.toFixed(1) + "</span>" +
+      return '<a class="rating reveal" style="--delay:' + i * 0.12 + 's" href="' + mapsPlace(s) + '" target="_blank" rel="noopener">' +
+        '<span class="rating__num">' + s.rating.toFixed(1) + "</span>" +
         '<div><div class="rating__stars">' + stars(s.rating) + "</div>" +
-        "<strong>KVITY " + esc(s.name) + "</strong><small>" + s.reviews + " " + esc(t("studios.reviews")) + "</small></div></div>";
+        "<strong>KVITY " + esc(s.name) + "</strong><small>" + s.reviews + " " + esc(t("studios.reviews")) + "</small></div></a>";
     }).join("");
-    $("#readReviews").href = cfg.googleReviewsUrl;
+    $("#reviewsTrack").innerHTML = cfg.reviews.map(function (r, i) {
+      var st = studioById(r.studio);
+      return '<figure class="review reveal" style="--delay:' + (i % 3) * 0.1 + 's">' +
+        '<div class="rating__stars">' + stars(5) + "</div>" +
+        "<blockquote>" + esc(r.text) + "</blockquote>" +
+        "<figcaption><strong>" + esc(r.name) + "</strong><span>Google · " + esc(st ? st.name : "") + "</span></figcaption></figure>";
+    }).join("");
+    $("#readReviews").href = mapsPlace(cfg.studios[1]);
   }
 
   /* ---------------- Подвал ---------------- */
@@ -397,7 +421,7 @@
       '<li><a href="' + wa + '" target="_blank" rel="noopener">' + icon("chat") + "WhatsApp</a></li>" +
       '<li><a href="' + cfg.telegram + '" target="_blank" rel="noopener">' + icon("send") + "Telegram</a></li>" +
       cfg.studios.map(function (s) {
-        return '<li><a href="' + mapsDir(s.mapsQuery) + '" target="_blank" rel="noopener">' + icon("pin") + esc(s.name) + "</a></li>";
+        return '<li><a href="' + mapsPlace(s) + '" target="_blank" rel="noopener">' + icon("pin") + esc(s.name) + "</a></li>";
       }).join("");
     $("#socials").innerHTML =
       '<a href="' + cfg.instagram + '" target="_blank" rel="noopener" aria-label="Instagram">' + icon("insta") + "</a>" +
@@ -410,7 +434,8 @@
       '<li><a href="#">' + esc(t("footer.privacy")) + "</a></li>" +
       '<li><a href="#">' + esc(t("footer.terms")) + "</a></li>" +
       '<li><a href="https://anpc.ro/" target="_blank" rel="noopener">ANPC</a> · ' +
-      '<a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">' + esc(t("footer.sal")) + "</a></li>";
+      '<a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">' + esc(t("footer.sal")) + "</a></li>" +
+      '<li class="footer__note">' + esc(t("footer.cookies")) + "</li>";
     $$(".js-call").forEach(function (a) { a.href = tel(cfg.phone); });
     $$(".js-wa").forEach(function (a) { a.href = wa; });
     $("#year").textContent = new Date().getFullYear();

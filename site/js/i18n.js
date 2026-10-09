@@ -158,7 +158,7 @@ window.KVITY_I18N = {
     reviews: {
       kicker: "Recenzii",
       title: "Ne recomandă<br><em>clienții</em>",
-      read: "Citește recenziile pe Google"
+      read: "Toate recenziile pe Google"
     },
     cta: {
       title: "Flori sau baloane<br>pentru <em>cineva drag?</em>",
@@ -173,6 +173,7 @@ window.KVITY_I18N = {
       privacy: "Politica de confidențialitate",
       terms: "Termeni și condiții",
       sal: "Soluționarea alternativă a litigiilor",
+      cookies: "Hărțile Google de pe această pagină pot salva cookie-uri în browser.",
       rights: "Toate drepturile rezervate."
     },
     sticky: { order: "Comandă" }
@@ -332,7 +333,7 @@ window.KVITY_I18N = {
     reviews: {
       kicker: "Reviews",
       title: "Recommended<br>by <em>our clients</em>",
-      read: "Read the reviews on Google"
+      read: "All reviews on Google"
     },
     cta: {
       title: "Flowers or balloons<br>for <em>someone special?</em>",
@@ -347,6 +348,7 @@ window.KVITY_I18N = {
       privacy: "Privacy policy",
       terms: "Terms and conditions",
       sal: "Alternative dispute resolution",
+      cookies: "The Google Maps on this page may store cookies in your browser.",
       rights: "All rights reserved."
     },
     sticky: { order: "Order" }
@@ -506,7 +508,7 @@ window.KVITY_I18N = {
     reviews: {
       kicker: "Відгуки",
       title: "Нас рекомендують<br><em>клієнти</em>",
-      read: "Читати відгуки в Google"
+      read: "Усі відгуки в Google"
     },
     cta: {
       title: "Квіти чи кулі<br>для <em>дорогої людини?</em>",
@@ -521,6 +523,7 @@ window.KVITY_I18N = {
       privacy: "Політика конфіденційності",
       terms: "Умови використання",
       sal: "Альтернативне вирішення спорів",
+      cookies: "Карти Google на цій сторінці можуть зберігати cookies у браузері.",
       rights: "Усі права захищені."
     },
     sticky: { order: "Замовити" }
@@ -680,7 +683,7 @@ window.KVITY_I18N = {
     reviews: {
       kicker: "Отзывы",
       title: "Нас рекомендуют<br><em>клиенты</em>",
-      read: "Читать отзывы в Google"
+      read: "Все отзывы в Google"
     },
     cta: {
       title: "Цветы или шары<br>для <em>близкого человека?</em>",
@@ -695,6 +698,7 @@ window.KVITY_I18N = {
       privacy: "Политика конфиденциальности",
       terms: "Условия использования",
       sal: "Альтернативное разрешение споров",
+      cookies: "Карты Google на этой странице могут сохранять cookies в браузере.",
       rights: "Все права защищены."
     },
     sticky: { order: "Заказать" }

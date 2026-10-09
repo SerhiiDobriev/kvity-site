@@ -27,7 +27,10 @@ window.KVITY_CONFIG = {
       hours: "09:00–19:00",
       rating: 5.0,
       reviews: 12,
-      mapsQuery: "KVITY flower studio, Bulevardul Aurel Vlaicu 305A, Constanța"
+      // Точная точка и карточка в Google Maps (маршрут, карта, отзывы)
+      lat: 44.2095337,
+      lng: 28.6170152,
+      placeId: "ChIJcfB7xanxukARjQSgXdOneUs"
     },
     {
       id: "navodari",
@@ -37,11 +40,22 @@ window.KVITY_CONFIG = {
       hours: "09:00–19:00",
       rating: 4.7,
       reviews: 43,
-      mapsQuery: "KVITY flower studio, Strada Prelungirea D12 6BIS, Năvodari"
+      lat: 44.304458,
+      lng: 28.6256995,
+      placeId: "ChIJ9bsDKWH3ukAR1lI4RegLZtQ"
     }
   ],
 
-  googleReviewsUrl: "https://www.google.com/maps/search/?api=1&query=KVITY+flower+studio+Constan%C8%9Ba",
+  // Настоящие отзывы из Google Maps: текст дословно (длинные — фрагментом с «…»), имя сокращено. Проверено 2026-10-09.
+  // studio — id студии выше.
+  reviews: [
+    { name: "Viktor G.", studio: "navodari", text: "…Цветы свежие, упаковка шикарная, внимание к деталям. Однозначно, не пожалеете." },
+    { name: "Vladyslav L.", studio: "constanta", text: "Am cumpărat ieri flori din acest loc. Sunt foarte frumoase și proaspete! Soției și fiicei mele le-au plăcut enorm. Personalul este foarte amabil, fetele sunt drăguțe și își fac treaba de minune. Recomand cu încredere și ofer nota 5!" },
+    { name: "Maksim K.", studio: "navodari", text: "…Заказывал девушке бело-розовый букет. Очень нежные, воздушный, а самое главное, что девушка просто в восторге! Спасибо вам огромное!" },
+    { name: "Вадим К.", studio: "constanta", text: "Очень повезло что я нашел этот магазин! Когда вошел даже растерялся от такого обилия красоты! Жена была восхищена таким букетом цветов! Спасибо вам девочки за праздник!!! Всем рекомендую" },
+    { name: "Ivan O.", studio: "navodari", text: "Хороший сервис, отличные цветы, стоят уже вторую неделю в отличном состоянии. Крайне рекомендую." },
+    { name: "Денис К.", studio: "navodari", text: "Наверное лучший цветочный магазин в Мамаи" }
+  ],
 
   // Категории = разделы её Instagram. Порядок задаёт порядок фильтров.
   categories: ["bouquets", "xl", "baskets", "wedding", "balloons"],
