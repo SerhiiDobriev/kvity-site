@@ -9,16 +9,13 @@
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
-  var el = function (tag, attrs, html) {
-    var node = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
-    if (html != null) node.innerHTML = html;
-    return node;
-  };
-  var icon = function (id) { return '<svg class="ico" aria-hidden="true"><use href="#i-' + id + '"/></svg>'; };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var icon = function (id) { return '<svg aria-hidden="true"><use href="#i-' + id + '"/></svg>'; };
   var tel = function (p) { return "tel:" + p.replace(/[^\d+]/g, ""); };
   var mapsDir = function (q) { return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(q); };
+  var pad2 = function (n) { return String(n).padStart(2, "0"); };
+  var small = function (id) { return "img/" + id + "-s.webp"; };
+  var large = function (id) { return "img/" + id + ".webp"; };
 
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
@@ -36,14 +33,14 @@
     if (saved && LANGS.indexOf(saved) > -1) return saved;
     var nav = (navigator.language || "ro").slice(0, 2).toLowerCase();
     if (nav === "uk") return "ua";
-    if (nav === "ru") return "ru";
-    if (nav === "en") return "en";
+    if (nav === "ru" || nav === "en") return nav;
     return "ro";
   }
 
   function t(path) {
     return path.split(".").reduce(function (o, k) { return o == null ? o : o[k]; }, dict);
   }
+  function caption(id) { return t("gallery.captions." + id) || ""; }
 
   function applyLang(next) {
     lang = next;
@@ -54,12 +51,7 @@
     $('meta[name="description"]').setAttribute("content", t("meta.description"));
 
     $$("[data-i18n]").forEach(function (n) { var v = t(n.dataset.i18n); if (v != null) n.textContent = v; });
-    $$("[data-i18n-html]").forEach(function (n) {
-      var v = t(n.dataset.i18nHtml);
-      if (v == null) return;
-      n.innerHTML = v;
-      if (n.hasAttribute("data-split")) splitWords(n);
-    });
+    $$("[data-i18n-html]").forEach(function (n) { var v = t(n.dataset.i18nHtml); if (v != null) n.innerHTML = v; });
     $$("[data-i18n-ph]").forEach(function (n) { n.placeholder = t(n.dataset.i18nPh); });
     $$("[data-i18n-aria]").forEach(function (n) { n.setAttribute("aria-label", t(n.dataset.i18nAria)); });
     $$(".langs button").forEach(function (b) {
@@ -68,105 +60,111 @@
       b.setAttribute("aria-pressed", on);
     });
 
-    renderMarquee();
-    renderGalleryCaptions();
+    renderCats();
+    renderFilters();
+    renderGallery(false);
+    renderBalloonList();
     renderSteps();
     renderChips();
     renderTimes();
     renderStudios();
-    renderReviews();
+    renderRatings();
     renderFooter();
     updateRef();
     observeAll();
   }
 
-  /* Делим заголовок на слова для пословной анимации, сохраняя <em> и <br> */
-  function splitWords(root) {
-    var i = 0;
-    (function walk(node) {
-      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
-        if (child.nodeType === 3) {
-          var frag = document.createDocumentFragment();
-          child.textContent.split(/(\s+)/).forEach(function (part) {
-            if (!part) return;
-            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
-            var w = el("span", { "class": "w" });
-            var inner = el("span", { style: "--i:" + (i++) });
-            inner.textContent = part;
-            w.appendChild(inner);
-            frag.appendChild(w);
-          });
-          node.replaceChild(frag, child);
-        } else if (child.nodeType === 1 && child.tagName !== "BR") {
-          walk(child);
-        }
-      });
-    })(root);
-  }
+  /* ---------------- Категории и фильтры ---------------- */
+  var filter = "all";
 
-  /* ---------------- Бегущая строка ---------------- */
-  function renderMarquee() {
-    var items = t("marquee");
-    var html = "";
-    for (var r = 0; r < 2; r++) {
-      html += items.map(function (s) {
-        return '<span class="marquee__item">' + esc(s) + '<svg aria-hidden="true"><use href="#i-flower"/></svg></span>';
-      }).join("");
+  function renderCats() {
+    $("#cats").innerHTML = cfg.categories.map(function (c) {
+      return '<button type="button" class="cat reveal" data-cat="' + c + '">' +
+        '<img src="' + small(cfg.categoryCovers[c]) + '" alt="" loading="lazy" width="640" height="853">' +
+        "<span>" + esc(t("cats." + c)) + "</span></button>";
+    }).join("");
+  }
+  $("#cats").addEventListener("click", function (e) {
+    var b = e.target.closest(".cat");
+    if (!b) return;
+    setFilter(b.dataset.cat);
+    $("#works").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+  });
+
+  function countIn(cat) {
+    return cat === "all" ? cfg.gallery.length : cfg.gallery.filter(function (g) { return g.cat === cat; }).length;
+  }
+  function renderFilters() {
+    $("#filters").innerHTML = ["all"].concat(cfg.categories).map(function (c) {
+      var on = c === filter;
+      return '<button type="button" role="tab" class="filter' + (on ? " is-active" : "") + '" aria-selected="' + on + '" data-filter="' + c + '">' +
+        esc(t("cats." + c)) + "<sup>" + countIn(c) + "</sup></button>";
+    }).join("");
+  }
+  $("#filters").addEventListener("click", function (e) {
+    var b = e.target.closest(".filter");
+    if (b) setFilter(b.dataset.filter);
+  });
+  function setFilter(c) {
+    if (c === filter) return;
+    filter = c;
+    renderFilters();
+    renderGallery(true);
+    var active = $(".filter.is-active");
+    var bar = $("#filters");
+    if (active && bar.scrollWidth > bar.clientWidth) {
+      bar.scrollTo({ left: active.offsetLeft - 20, behavior: reduceMotion ? "auto" : "smooth" });
     }
-    $("#marquee").innerHTML = html;
   }
 
   /* ---------------- Галерея ---------------- */
-  var gallery = $("#gallery");
-  function buildGallery() {
-    cfg.gallery.forEach(function (item, idx) {
-      var fig = el("figure", { "class": "work", tabindex: "0", role: "button", "data-index": idx });
-      fig.innerHTML =
-        '<div class="work__frame"><img src="' + item.src + '" alt="" loading="lazy" decoding="async">' +
-        '<span class="work__num">' + String(idx + 1).padStart(2, "0") + "</span></div>" +
-        "<figcaption></figcaption>";
-      fig.addEventListener("click", function () { openLightbox(idx); });
-      fig.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(idx); } });
-      gallery.appendChild(fig);
-    });
+  var visible = [];
+  function renderGallery(animate) {
+    visible = cfg.gallery.filter(function (g) { return filter === "all" || g.cat === filter; });
+    $("#gallery").innerHTML = visible.map(function (g, i) {
+      var cap = caption(g.id);
+      return '<figure class="work" role="button" tabindex="0" data-index="' + i + '" aria-label="' + esc(cap) + '"' +
+        (animate ? ' style="--i:' + i + '"' : ' style="animation:none"') + ">" +
+        '<div class="work__frame"><img src="' + small(g.id) + '" alt="' + esc(cap) + '" loading="lazy" decoding="async" width="640" height="853"></div>' +
+        "<figcaption>" + esc(cap) + "</figcaption></figure>";
+    }).join("");
   }
-  function caption(id) { return t("gallery.captions." + id) || ""; }
-  function renderGalleryCaptions() {
-    $$(".work", gallery).forEach(function (fig, idx) {
-      var cap = caption(cfg.gallery[idx].id);
-      $("figcaption", fig).textContent = cap;
-      $("img", fig).alt = "KVITY — " + cap;
-      fig.setAttribute("aria-label", cap);
-    });
-  }
+  $("#gallery").addEventListener("click", function (e) {
+    var w = e.target.closest(".work");
+    if (w) openLightbox(+w.dataset.index);
+  });
+  $("#gallery").addEventListener("keydown", function (e) {
+    var w = e.target.closest(".work");
+    if (w && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openLightbox(+w.dataset.index); }
+  });
 
-  /* ---------------- Лайтбокс ---------------- */
+  /* ---------------- Просмотр фото ---------------- */
   var lb = $("#lightbox"), lbImg = $("#lbImg"), lbIndex = 0, lastFocus = null;
-  function openLightbox(idx) {
+  function openLightbox(i) {
     lastFocus = document.activeElement;
     lb.hidden = false;
     document.documentElement.style.overflow = "hidden";
-    showSlide(idx);
+    showSlide(i);
     requestAnimationFrame(function () { lb.classList.add("is-open"); });
     $("#lbClose").focus();
   }
   function closeLightbox() {
     lb.classList.remove("is-open");
     document.documentElement.style.overflow = "";
-    setTimeout(function () { lb.hidden = true; lbImg.classList.remove("is-loaded"); }, 400);
+    setTimeout(function () { lb.hidden = true; lbImg.classList.remove("is-loaded"); }, 380);
     if (lastFocus) lastFocus.focus();
   }
-  function showSlide(idx) {
-    var n = cfg.gallery.length;
-    lbIndex = (idx + n) % n;
-    var item = cfg.gallery[lbIndex];
+  function showSlide(i) {
+    var n = visible.length;
+    lbIndex = (i + n) % n;
+    var g = visible[lbIndex];
     lbImg.classList.remove("is-loaded");
     lbImg.onload = function () { lbImg.classList.add("is-loaded"); };
-    lbImg.src = item.src;
-    lbImg.alt = caption(item.id);
-    if (lbImg.complete) requestAnimationFrame(function () { lbImg.classList.add("is-loaded"); });
-    $("#lbCaption").textContent = caption(item.id);
-    $("#lbCount").textContent = String(lbIndex + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
+    lbImg.src = large(g.id);
+    lbImg.alt = caption(g.id);
+    if (lbImg.complete && lbImg.naturalWidth) lbImg.classList.add("is-loaded");
+    $("#lbCaption").textContent = caption(g.id);
+    $("#lbCount").textContent = pad2(lbIndex + 1) + " / " + pad2(n);
   }
   $("#lbClose").addEventListener("click", closeLightbox);
   $("#lbPrev").addEventListener("click", function () { showSlide(lbIndex - 1); });
@@ -190,42 +188,52 @@
     }, { passive: true });
   })();
   $("#lbSimilar").addEventListener("click", function () {
-    state.ref = lbIndex;
+    var g = visible[lbIndex];
+    state.ref = g.id;
+    state.what = g.cat === "balloons" ? 1 : 0;
+    renderChips();
     updateRef();
     closeLightbox();
     setTimeout(function () { $("#order").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); }, 250);
   });
 
-  /* ---------------- Шаги ---------------- */
+  /* ---------------- Шары и шаги ---------------- */
+  function renderBalloonList() {
+    $("#balloonList").innerHTML = t("balloons.list").map(function (s) { return "<li>" + icon("check") + esc(s) + "</li>"; }).join("");
+  }
+  $$("[data-order-what]").forEach(function (a) {
+    a.addEventListener("click", function () { state.what = +a.dataset.orderWhat; renderChips(); });
+  });
+
   function renderSteps() {
-    var list = $("#steps");
-    var wasIn = $$(".step.in", list).length > 0;
-    list.innerHTML = t("how.steps").map(function (s, i) {
-      return '<li class="step' + (wasIn ? " in" : "") + '" style="--delay:' + i * 0.12 + 's">' +
-        '<span class="step__num">' + (i + 1) + "</span>" +
+    $("#steps").innerHTML = t("how.steps").map(function (s, i) {
+      return '<li class="step reveal" style="--delay:' + i * 0.1 + 's"><span class="step__num">' + pad2(i + 1) + "</span>" +
         "<div><h3>" + esc(s.t) + "</h3><p>" + esc(s.d) + "</p></div></li>";
     }).join("");
   }
 
   /* ---------------- Форма ---------------- */
-  var state = { occasion: null, palette: null, style: null, budget: null, method: "delivery", studio: 0, ref: null };
+  var state = { what: null, occasion: null, palette: null, style: null, budget: null, method: "delivery", studio: 0, ref: null };
   var SWATCHES = [
-    "linear-gradient(135deg,#F6D6DA,#EBC3E0)",
+    "linear-gradient(135deg,#F6DDD1,#EBC6D6)",
     "conic-gradient(#E0475B,#F2A33A,#D94C9C,#7A5CD6,#E0475B)",
     "#FFFFFF",
-    "conic-gradient(#F3DCDD,#C7D3B4,#B9C7EA,#F6E1C3,#F3DCDD)"
+    "conic-gradient(#F6DDD1,#C7D3B4,#B9C7EA,#F6E1C3,#F6DDD1)"
   ];
 
-  function chipGroup(container, name, labels, key, extra) {
+  function chipGroup(container, name, labels, key, opts) {
+    opts = opts || {};
     container.innerHTML = labels.map(function (label, i) {
-      var val = extra && extra.values ? extra.values[i] : i;
-      var sw = extra && extra.swatches ? '<span class="swatch" style="background:' + extra.swatches[i] + '"></span>' : "";
-      var checked = String(state[key]) === String(val) ? " checked" : "";
-      return '<label class="chip' + (checked ? " is-checked" : "") + '"><input type="radio" name="' + name + '" value="' + val + '"' + checked + ">" + sw + "<span>" + esc(label) + "</span></label>";
+      var val = opts.values ? opts.values[i] : i;
+      var checked = state[key] != null && String(state[key]) === String(val);
+      var sw = opts.swatches ? '<span class="swatch" style="background:' + opts.swatches[i] + '"></span>' : "";
+      return '<label class="chip' + (checked ? " is-checked" : "") + '"><input type="radio" name="' + name + '" value="' + val + '"' +
+        (checked ? " checked" : "") + ">" + sw + "<span>" + esc(label) + "</span></label>";
     }).join("");
   }
 
   function renderChips() {
+    chipGroup($("#whatChips"), "what", t("form.whats"), "what");
     chipGroup($("#occasionChips"), "occasion", t("form.occasions"), "occasion");
     chipGroup($("#paletteChips"), "palette", t("form.palettes"), "palette", { swatches: SWATCHES });
     chipGroup($("#styleChips"), "style", t("form.styles"), "style");
@@ -234,18 +242,14 @@
     chipGroup($("#studioChips"), "studio", cfg.studios.map(function (s) { return "KVITY " + s.name; }), "studio");
   }
 
-  $(".form").addEventListener("change", function (e) {
+  $("#orderForm").addEventListener("change", function (e) {
     var input = e.target;
     if (input.type !== "radio") return;
-    var v = input.value;
-    state[input.name] = (input.name === "budget") ? v : Number(v);
+    state[input.name] = input.name === "budget" ? input.value : Number(input.value);
     $$('input[name="' + input.name + '"]').forEach(function (r) { r.closest(".chip").classList.toggle("is-checked", r.checked); });
-    var chip = input.closest(".chip");
-    chip.classList.remove("pop"); void chip.offsetWidth; chip.classList.add("pop");
     if (input.name === "budget") {
-      var custom = $("#customBudget");
-      custom.hidden = v !== "custom";
-      if (v === "custom") $("#budgetCustom").focus();
+      $("#customBudget").hidden = input.value !== "custom";
+      if (input.value === "custom") $("#budgetCustom").focus();
     }
   });
 
@@ -276,13 +280,13 @@
     $("#pickupBox").classList.toggle("is-open", state.method === "pickup");
   });
 
+  function refNumber(id) { return pad2(cfg.gallery.findIndex(function (g) { return g.id === id; }) + 1); }
   function updateRef() {
     var box = $("#refBox");
     if (state.ref == null) { box.hidden = true; return; }
-    var item = cfg.gallery[state.ref];
     box.hidden = false;
-    $("#refImg").src = item.src;
-    $("#refCaption").textContent = "#" + String(state.ref + 1).padStart(2, "0") + " · " + caption(item.id);
+    $("#refImg").src = small(state.ref);
+    $("#refCaption").textContent = "#" + refNumber(state.ref) + " · " + caption(state.ref);
     $("#refRemove").setAttribute("aria-label", t("form.remove"));
   }
   $("#refRemove").addEventListener("click", function () { state.ref = null; updateRef(); });
@@ -292,8 +296,8 @@
     if (!wrap) return;
     var err = $(".error", wrap);
     wrap.classList.toggle("has-error", on);
-    if (on && !err) { err = el("span", { "class": "error" }); wrap.appendChild(err); }
-    if (err) { err.textContent = on ? t("form.required") : ""; if (!on) err.remove(); }
+    if (on && !err) { err = document.createElement("span"); err.className = "error"; wrap.appendChild(err); }
+    if (err) { if (on) err.textContent = t("form.required"); else err.remove(); }
   }
 
   $("#orderForm").addEventListener("submit", function (e) {
@@ -306,8 +310,11 @@
       fieldError(inp, bad);
       if (bad && !firstBad) firstBad = inp;
     });
-    if (firstBad) { firstBad.focus({ preventScroll: true }); firstBad.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
-
+    if (firstBad) {
+      firstBad.focus({ preventScroll: true });
+      firstBad.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      return;
+    }
     var url = "https://wa.me/" + cfg.whatsapp + "?text=" + encodeURIComponent(buildMessage());
     toast(t("form.sent"));
     var win = window.open(url, "_blank", "noopener");
@@ -320,6 +327,7 @@
   function buildMessage() {
     var m = function (k) { return t("msg." + k); };
     var lines = [m("hello"), ""];
+    if (state.what != null) lines.push("• " + m("what") + ": " + t("form.whats")[state.what]);
     if (state.occasion != null) lines.push("• " + m("occasion") + ": " + t("form.occasions")[state.occasion]);
     if (state.palette != null) lines.push("• " + m("palette") + ": " + t("form.palettes")[state.palette]);
     if (state.style != null) lines.push("• " + m("style") + ": " + t("form.styles")[state.style]);
@@ -328,53 +336,38 @@
       lines.push("• " + m("budget") + ": " + b + " " + t("form.currency"));
     }
     var time = $("#time").value;
-    var dateStr = $("#date").value.split("-").reverse().join(".");
-    lines.push("• " + m("date") + ": " + dateStr + ", " + (time === "asap" ? t("form.asap") : time));
-    if (state.method === "delivery") {
-      lines.push("• " + m("delivery") + ": " + $("#address").value.trim());
-    } else {
-      lines.push("• " + m("pickup") + ": KVITY " + cfg.studios[state.studio || 0].name);
-    }
+    lines.push("• " + m("date") + ": " + $("#date").value.split("-").reverse().join(".") + ", " + (time === "asap" ? t("form.asap") : time));
+    if (state.method === "delivery") lines.push("• " + m("delivery") + ": " + $("#address").value.trim());
+    else lines.push("• " + m("pickup") + ": KVITY " + cfg.studios[state.studio || 0].name);
     var card = $("#card").value.trim();
     if (card) lines.push("• " + m("card") + ": «" + card + "»");
     if (state.ref != null) {
-      var item = cfg.gallery[state.ref];
-      var abs = new URL(item.src, location.href).href;
-      lines.push("• " + m("example") + ": #" + String(state.ref + 1).padStart(2, "0") + " " + caption(item.id) + " — " + abs);
+      lines.push("• " + m("example") + ": #" + refNumber(state.ref) + " " + caption(state.ref) + " — " + new URL(large(state.ref), location.href).href);
     }
-    lines.push("");
-    lines.push(m("name") + ": " + $("#name").value.trim());
-    lines.push(m("phone") + ": " + $("#phone").value.trim());
-    lines.push("");
-    lines.push(m("thanks"));
+    lines.push("", m("name") + ": " + $("#name").value.trim(), m("phone") + ": " + $("#phone").value.trim(), "", m("thanks"));
     return lines.join("\n");
   }
 
-  /* ---------------- Студии ---------------- */
+  /* ---------------- Студии и рейтинги ---------------- */
   function renderStudios() {
     var grid = $("#studiosGrid");
     var loaded = {};
     $$(".map iframe", grid).forEach(function (f) { loaded[f.closest(".studio").dataset.id] = true; });
     grid.innerHTML = cfg.studios.map(function (s, i) {
       return '<article class="studio reveal" style="--delay:' + i * 0.12 + 's" data-id="' + s.id + '">' +
-        '<div class="studio__body">' +
-          '<div class="studio__top"><h3>' + esc(s.name) + '</h3>' +
-          '<span class="studio__rating">' + icon("star") + "<strong>" + s.rating.toFixed(1) + "</strong><small>(" + s.reviews + " " + esc(t("studios.reviews")) + ")</small></span></div>" +
-          '<p class="studio__line">' + icon("pin") + "<span>" + esc(s.address) + "</span></p>" +
-          '<p class="studio__line">' + icon("clock") + "<span>" + esc(t("studios.daily")) + ", " + s.hours + "</span></p>" +
-          '<div class="studio__actions">' +
-            '<a class="btn btn--primary" target="_blank" rel="noopener" href="' + mapsDir(s.mapsQuery) + '">' + icon("route") + "<span>" + esc(t("studios.route")) + "</span></a>" +
-            '<a class="btn btn--ghost" href="' + tel(s.phone) + '">' + icon("phone") + "<span>" + esc(t("studios.call")) + "</span></a>" +
-          "</div>" +
-        "</div>" +
-        '<div class="map">' + icon("pin").replace('class="ico"', 'class="ico map__pin"') +
-          '<button type="button" class="btn btn--ghost map__btn" style="background:var(--card)">' + esc(t("studios.map")) + "</button></div>" +
+        '<div class="studio__body"><h3>' + esc(s.name) + "</h3>" +
+        '<p class="studio__line">' + icon("pin") + "<span>" + esc(s.address) + "</span></p>" +
+        '<p class="studio__line">' + icon("clock") + "<span>" + esc(t("studios.daily")) + ", " + s.hours + "</span></p>" +
+        '<div class="studio__actions">' +
+          '<a class="btn btn--dark" target="_blank" rel="noopener" href="' + mapsDir(s.mapsQuery) + '">' + icon("route") + "<span>" + esc(t("studios.route")) + "</span></a>" +
+          '<a class="btn btn--line" href="' + tel(s.phone) + '">' + icon("phone") + "<span>" + esc(t("studios.call")) + "</span></a>" +
+        "</div></div>" +
+        '<div class="map"><button type="button" class="btn btn--light map__btn">' + icon("pin") + "<span>" + esc(t("studios.map")) + "</span></button></div>" +
         "</article>";
     }).join("");
     $$(".studio", grid).forEach(function (card, i) {
       var load = function () {
-        var map = $(".map", card);
-        map.innerHTML = '<iframe title="' + esc(cfg.studios[i].name) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=' +
+        $(".map", card).innerHTML = '<iframe title="' + esc(cfg.studios[i].name) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=' +
           encodeURIComponent(cfg.studios[i].mapsQuery) + '&z=16&output=embed"></iframe>';
       };
       $(".map__btn", card).addEventListener("click", load);
@@ -382,19 +375,21 @@
     });
   }
 
-  /* ---------------- Отзывы ---------------- */
-  function renderReviews() {
-    $("#reviewsTrack").innerHTML = cfg.reviews.map(function (r, i) {
-      return '<article class="review reveal" style="--delay:' + i * 0.1 + 's">' +
-        '<div class="review__stars">' + new Array(r.stars + 1).join(icon("star")) + "</div>" +
-        "<p>" + esc(r.text) + "</p>" +
-        '<footer><span class="review__avatar">' + esc(r.name.charAt(0)) + "</span><span><strong>" + esc(r.name) + "</strong><small>" + esc(t("reviews.from")) + "</small></span></footer>" +
-        "</article>";
+  function stars(r) {
+    var out = "";
+    for (var i = 1; i <= 5; i++) out += '<svg aria-hidden="true"' + (r >= i - 0.25 ? "" : ' class="is-off"') + '><use href="#i-star"/></svg>';
+    return out;
+  }
+  function renderRatings() {
+    $("#ratings").innerHTML = cfg.studios.map(function (s, i) {
+      return '<div class="rating reveal" style="--delay:' + i * 0.12 + 's"><span class="rating__num">' + s.rating.toFixed(1) + "</span>" +
+        '<div><div class="rating__stars">' + stars(s.rating) + "</div>" +
+        "<strong>KVITY " + esc(s.name) + "</strong><small>" + s.reviews + " " + esc(t("studios.reviews")) + "</small></div></div>";
     }).join("");
-    $("#allReviews").href = cfg.googleReviewsUrl;
+    $("#readReviews").href = cfg.googleReviewsUrl;
   }
 
-  /* ---------------- Подвал и контакты ---------------- */
+  /* ---------------- Подвал ---------------- */
   function renderFooter() {
     var wa = "https://wa.me/" + cfg.whatsapp;
     $("#footerContacts").innerHTML =
@@ -414,7 +409,7 @@
       '<li><a href="mailto:' + cfg.legal.email + '">' + esc(cfg.legal.email) + "</a></li>" +
       '<li><a href="#">' + esc(t("footer.privacy")) + "</a></li>" +
       '<li><a href="#">' + esc(t("footer.terms")) + "</a></li>" +
-      '<li><a href="https://anpc.ro/" target="_blank" rel="noopener">' + esc(t("footer.anpc")) + "</a> · " +
+      '<li><a href="https://anpc.ro/" target="_blank" rel="noopener">ANPC</a> · ' +
       '<a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">' + esc(t("footer.sal")) + "</a></li>";
     $$(".js-call").forEach(function (a) { a.href = tel(cfg.phone); });
     $$(".js-wa").forEach(function (a) { a.href = wa; });
@@ -431,133 +426,41 @@
     toastTimer = setTimeout(function () { n.classList.remove("is-visible"); }, 2600);
   }
 
-  /* ---------------- Появление при скролле ---------------- */
-  var seen = new WeakSet();
-  var io = new IntersectionObserver(function (entries) {
+  /* ---------------- Мягкое появление ---------------- */
+  var io = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;
       en.target.classList.add("in");
-      if (en.target.classList.contains("stat")) countUp(en.target);
       io.unobserve(en.target);
     });
-  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" }) : null;
 
   function observeAll() {
-    $$(".reveal, .reveal-img, [data-split], .work, .step, .draw-in, .stat").forEach(function (n) {
-      if (n.classList.contains("hero__title")) return; // заголовок hero запускается после интро
-      if (seen.has(n) && n.classList.contains("in")) return;
-      seen.add(n);
-      io.observe(n);
-    });
-    $$(".work", gallery).forEach(function (w, i) {
-      var cols = window.innerWidth >= 1000 ? 4 : window.innerWidth >= 720 ? 3 : 2;
-      w.style.setProperty("--delay", (i % cols) * 0.1 + "s");
+    $$(".reveal:not(.in), .reveal-img:not(.in)").forEach(function (n) {
+      if (io) io.observe(n); else n.classList.add("in");
     });
   }
 
-  function countUp(stat) {
-    var n = $(".count", stat);
-    if (!n || reduceMotion) return;
-    var target = parseFloat(n.dataset.count), dec = parseInt(n.dataset.decimals || "0", 10), t0 = null;
-    (function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min((ts - t0) / 1400, 1), e = 1 - Math.pow(1 - p, 3);
-      n.textContent = (target * e).toFixed(dec);
-      if (p < 1) requestAnimationFrame(step);
-    })(performance.now());
-  }
-
-  /* ---------------- Параллакс, рисование линий, шапка ---------------- */
-  var header = $(".header"), sticky = $("#sticky"), hero = $(".hero"), orderSec = $("#order");
-  var parallax = $$("[data-parallax]");
-  var drawers = $$(".draw-scroll");
-  var stepsWrap = $(".steps-wrap"), stepsLine = $(".steps__line");
-  var lastY = window.scrollY, ticking = false;
-
+  /* ---------------- Шапка и липкая панель ---------------- */
+  var header = $(".header"), sticky = $("#sticky"), hero = $(".hero"), orderSec = $("#order"), ticking = false;
   function onScroll() {
     var y = window.scrollY, vh = window.innerHeight;
-
-    header.classList.toggle("is-scrolled", y > 10);
-    header.classList.toggle("is-hidden", y > lastY && y > 500 && lb.hidden);
-    lastY = y;
-
-    var heroBottom = hero.offsetTop + hero.offsetHeight - vh * 0.4;
-    var orderRect = orderSec.getBoundingClientRect();
-    var formVisible = orderRect.top < vh * 0.8 && orderRect.bottom > vh * 0.2;
-    sticky.classList.toggle("is-visible", y > heroBottom && !formVisible);
-
-    if (!reduceMotion) {
-      parallax.forEach(function (img) {
-        var r = img.parentElement.getBoundingClientRect();
-        if (r.bottom < -100 || r.top > vh + 100) return;
-        var offset = (r.top + r.height / 2 - vh / 2) * parseFloat(img.dataset.parallax);
-        img.style.translate = "0 " + offset.toFixed(1) + "px";
-      });
-    }
-    drawers.forEach(function (svg) {
-      var r = svg.getBoundingClientRect();
-      var p = Math.min(Math.max((vh - r.top) / (vh * 0.4 + r.height), 0), 1);
-      svg.style.setProperty("--p", reduceMotion ? 1 : p.toFixed(3));
-    });
-    if (stepsWrap) {
-      var r2 = stepsWrap.getBoundingClientRect();
-      var p2 = Math.min(Math.max((vh * 0.75 - r2.top) / r2.height, 0), 1);
-      stepsLine.style.setProperty("--p", p2.toFixed(3));
-    }
+    header.classList.toggle("is-solid", y > 40);
+    var r = orderSec.getBoundingClientRect();
+    var formVisible = r.top < vh * 0.85 && r.bottom > vh * 0.15;
+    sticky.classList.toggle("is-visible", y > hero.offsetHeight * 0.7 && !formVisible);
     ticking = false;
   }
   window.addEventListener("scroll", function () {
     if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
-  window.addEventListener("resize", function () { observeAll(); onScroll(); });
 
-  /* ---------------- Волна на кнопках ---------------- */
-  document.addEventListener("pointerdown", function (e) {
-    var btn = e.target.closest(".btn");
-    if (!btn || reduceMotion) return;
-    var r = btn.getBoundingClientRect(), size = Math.max(r.width, r.height);
-    var dot = el("span", { "class": "ripple" });
-    dot.style.cssText = "width:" + size + "px;height:" + size + "px;left:" + (e.clientX - r.left - size / 2) + "px;top:" + (e.clientY - r.top - size / 2) + "px";
-    btn.appendChild(dot);
-    setTimeout(function () { dot.remove(); }, 700);
-  });
-
-  /* ---------------- Переключатель языка ---------------- */
   $(".langs").addEventListener("click", function (e) {
     var b = e.target.closest("button[data-lang]");
-    if (!b || b.dataset.lang === lang) return;
-    applyLang(b.dataset.lang);
-    var title = $(".hero__title");
-    title.classList.add("in");
+    if (b && b.dataset.lang !== lang) applyLang(b.dataset.lang);
   });
 
   /* ---------------- Старт ---------------- */
-  buildGallery();
   applyLang(lang);
   onScroll();
-
-  var started = false;
-  function start() {
-    if (started) return;
-    started = true;
-    document.body.classList.remove("is-loading");
-    document.body.classList.add("is-ready");
-    // запускаем пословную анимацию заголовка hero
-    requestAnimationFrame(function () { $(".hero__title").classList.add("in"); });
-  }
-
-  var introSeen = false;
-  try { introSeen = sessionStorage.getItem("kvity-intro") === "1"; sessionStorage.setItem("kvity-intro", "1"); } catch (e) { /* без хранилища — просто показываем интро */ }
-
-  if (reduceMotion || introSeen) {
-    $(".intro").style.display = "none";
-    start();
-  } else {
-    var heroImg = $(".hero__img");
-    var minDelay = new Promise(function (r) { setTimeout(r, 1500); });
-    var imgReady = new Promise(function (r) { if (heroImg.complete) r(); else { heroImg.onload = r; heroImg.onerror = r; } });
-    var fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
-    Promise.all([minDelay, imgReady, fontsReady]).then(start);
-    setTimeout(start, 3500); // страховка на медленном интернете
-  }
 })();

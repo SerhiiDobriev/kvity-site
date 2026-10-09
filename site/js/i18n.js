@@ -1,76 +1,103 @@
 /*
  * Все тексты сайта на четырёх языках. RO — язык по умолчанию.
- * Ключи из HTML: data-i18n="hero.sub" (текст), data-i18n-html (с разметкой), data-i18n-ph (placeholder).
+ * В HTML: data-i18n="key" (текст), data-i18n-html="key" (с разметкой), data-i18n-ph (placeholder), data-i18n-aria.
  * TODO: румынские тексты проверить носителем языка.
  */
 window.KVITY_I18N = {
   ro: {
     meta: {
-      title: "KVITY — buchete de autor în Constanța și Mamaia",
-      description: "Florărie ucraineană în Constanța și Năvodari (Mamaia). Buchete de autor din flori proaspete de import, livrare și ridicare din studio."
+      title: "KVITY — flori și baloane în Constanța și Mamaia",
+      description: "Florărie modernă în Constanța și Mamaia: buchete de autor din flori de import, coșuri, buchete de mireasă și baloane."
     },
-    nav: { order: "Comandă", works: "Lucrări", studios: "Studiouri", menu: "Meniu" },
+    nav: { works: "Lucrări", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
     hero: {
-      eyebrow: "Flower studio · Constanța & Mamaia",
-      title: "Buchete de autor<br><em>din flori proaspete</em>",
-      sub: "Prima florărie ucraineană din Constanța și Mamaia. Soiuri de import deosebite și compoziții moderne, create special pentru tine.",
-      ctaOrder: "Comandă un buchet",
-      ctaCall: "Sună-ne",
-      badge: "buchete de autor · flower studio · kvity ·",
-      scroll: "Derulează"
+      eyebrow: "Flower studio · Constanța · Mamaia",
+      title: "Buchete de autor<br>și baloane <em>cu stil</em>",
+      sub: "Florărie modernă cu flori de import deosebite. Fiecare compoziție este creată special pentru tine.",
+      ctaOrder: "Comandă",
+      ctaWorks: "Vezi lucrările"
     },
-    marquee: ["Buchete de autor", "Flori de import", "Livrare în Constanța și Mamaia", "Fotografie înainte de livrare", "Zilnic 9:00–19:00"],
-    about: {
-      kicker: "Despre noi",
-      title: "<em>Kvity</em> înseamnă „flori”",
-      p1: "În ucraineană, «квіти» (kvity) înseamnă flori. Am adus în Constanța stilul florăriilor ucrainene: buchete generoase, combinații curajoase de culori și atenție la fiecare detaliu.",
-      p2: "Nu avem buchete „de pe raft”. Fiecare compoziție este creată pentru tine, din florile proaspete care sunt azi în studio.",
-      stat1: "rating Google",
-      stat2: "studiouri",
-      stat3: "zilnic"
+    intro: {
+      text: "<em>Kvity</em> înseamnă „flori” în ucraineană. Creăm buchete generoase și moderne din flori de import și decorăm momentele importante cu baloane."
     },
-    quote: {
-      text: "Florile spun ceea ce<br><em>cuvintele nu reușesc</em>",
-      by: "— echipa KVITY"
+    cats: {
+      kicker: "Ce creăm",
+      bouquets: "Buchete",
+      xl: "Size XL+",
+      baskets: "Coșuri",
+      wedding: "Nunți",
+      balloons: "Baloane",
+      all: "Toate"
     },
     gallery: {
       kicker: "Lucrările noastre",
-      title: "Fiecare buchet<br><em>este unic</em>",
-      note: "Fiecare buchet este de autor și se creează din flori proaspete disponibile, de aceea poate diferi de exemple. Înainte de livrare îți trimitem o fotografie a buchetului gata.",
+      title: "Fiecare buchet<br>este <em>unic</em>",
+      note: "Fiecare buchet este de autor și se creează din florile proaspete disponibile, de aceea poate diferi de exemple. Înainte de livrare îți trimitem o fotografie a buchetului gata.",
       similar: "Vreau unul similar",
-      tap: "Atinge o fotografie",
       close: "Închide",
       prev: "Anterior",
       next: "Următor",
       captions: {
-        w01: "Trandafiri roșii în ambalaj negru",
-        w02: "Hortensii verzi și trandafiri roz",
-        w03: "Hortensii albastre și trandafiri de grădină",
-        w04: "Bujori, scabiosa și mathiola",
-        w05: "Coș cu hortensii și trandafiri",
-        w07: "Lalele și mușețel",
-        w08: "Hortensii roz",
-        w09: "Buchete pentru un eveniment",
-        w10: "Hortensii roz, trandafiri și mușețel",
-        w11: "Crizanteme bordo",
-        w12: "Hortensii, trandafiri și eustoma",
-        w13: "Trandafiri roșii și crem"
+        g01: "Trandafiri roz, mathiola și eucalipt",
+        g02: "Buchet XL de mușețel",
+        g03: "Trandafiri tufă de culoarea piersicii",
+        g04: "Baloane în nuanță de piersică",
+        g05: "Hortensii albastre și trandafiri de grădină",
+        g06: "Hortensii și trandafiri pudrați, XL",
+        g07: "Coș cu hortensii roz",
+        g08: "Buchet de mireasă cu anthurium",
+        g09: "Hortensii și trandafiri pudrați",
+        g10: "Hortensii roz",
+        g11: "Baloane roz cu fundițe",
+        g12: "Hortensii, bujor și delphinium",
+        g13: "Trandafiri roșii și crem",
+        g14: "Coș de vară cu crizanteme",
+        g15: "Lalele, trandafiri și tweedia",
+        g16: "Flori și baloane pentru o surpriză",
+        g17: "Hortensii verzi și trandafiri roz",
+        g18: "Buchet de mireasă în nuanțe de albastru",
+        g19: "Trandafiri roșii, XL",
+        g20: "Baloane albe și roz cu inimă",
+        g21: "Bujori, scabiosa și mathiola",
+        g22: "Dalii de toamnă",
+        g23: "Crizanteme bordo",
+        g24: "Cifra 10 și buchet de baloane",
+        g25: "Cifra 7 în nuanțe de roz",
+        g26: "Baloane argintii și aurii"
       }
+    },
+    balloons: {
+      kicker: "Baloane",
+      title: "Baloane pentru<br><em>orice ocazie</em>",
+      text: "Buchete de baloane, cifre și inimi în nuanțele preferate. Le comanzi separat sau împreună cu flori — pentru o surpriză completă.",
+      list: ["Cifre și litere", "Buchete de baloane", "Flori + baloane", "Nuanțe la alegere"],
+      cta: "Comandă baloane"
+    },
+    about: {
+      kicker: "Despre studio",
+      title: "Prima florărie <em>ucraineană</em><br>din Constanța",
+      p1: "Am adus în Constanța stilul florăriilor ucrainene: buchete generoase, soiuri de import deosebite și atenție la fiecare detaliu — de la flori până la ambalaj și panglică.",
+      p2: "Nu avem buchete „de pe raft”. Fiecare compoziție este creată pentru tine, din florile proaspete care sunt azi în studio.",
+      stat1: "rating Google",
+      stat2: "studiouri",
+      stat3: "deschis zilnic, 9:00–19:00"
     },
     how: {
       kicker: "Cum comanzi",
-      title: "Simplu, <em>în patru pași</em>",
+      title: "Simplu, în <em>patru pași</em>",
       steps: [
-        { t: "Alegi ocazia și bugetul", d: "Un formular scurt, fără coș și fără plată online." },
+        { t: "Alegi ce îți dorești", d: "Ocazia, gama de culori și bugetul — fără coș și fără plată online." },
         { t: "Ne scrii pe WhatsApp", d: "Mesajul se completează singur, îl trimiți cu un singur clic." },
-        { t: "Floristul creează buchetul", d: "Din cele mai frumoase flori proaspete din studio." },
-        { t: "Primești fotografia și florile", d: "Îți trimitem poza înainte de livrare. Livrăm sau îl ridici din studio." }
+        { t: "Floristul creează compoziția", d: "Din cele mai frumoase flori proaspete din studio." },
+        { t: "Primești fotografia și florile", d: "Îți trimitem poza înainte de livrare. Livrăm sau ridici din studio." }
       ]
     },
     form: {
       kicker: "Comandă",
-      title: "Creează-ți<br><em>buchetul</em>",
+      title: "Creează-ți<br><em>comanda</em>",
       sub: "Alege ce îți place, restul îl face floristul. Comanda se trimite pe WhatsApp, iar noi confirmăm detaliile și prețul.",
+      what: "Ce dorești",
+      whats: ["Flori", "Baloane", "Flori + baloane"],
       occasion: "Ocazia",
       occasions: ["Zi de naștere", "Dragoste", "Nuntă", "Scuze", "Mulțumesc", "Așa, din suflet"],
       palette: "Gama de culori",
@@ -85,10 +112,9 @@ window.KVITY_I18N = {
       date: "Data",
       time: "Interval",
       asap: "Cât mai repede",
-      method: "Cum primești buchetul",
+      method: "Cum primești comanda",
       delivery: "Livrare",
       pickup: "Ridicare din studio",
-      studio: "Studioul",
       address: "Adresa de livrare",
       addressPh: "Strada, nr., bloc, apartament, oraș",
       card: "Text pentru card",
@@ -105,7 +131,8 @@ window.KVITY_I18N = {
       sent: "Se deschide WhatsApp…"
     },
     msg: {
-      hello: "Bună ziua! Aș dori să comand un buchet.",
+      hello: "Bună ziua! Aș dori să fac o comandă.",
+      what: "Comanda",
       occasion: "Ocazia",
       palette: "Gama",
       style: "Stilul",
@@ -121,105 +148,130 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Studiourile noastre",
-      title: "Te așteptăm<br><em>în două locuri</em>",
+      title: "Te așteptăm<br>în <em>două locuri</em>",
       daily: "Zilnic",
       route: "Traseu",
       call: "Sună",
       map: "Arată harta",
-      reviews: "recenzii"
+      reviews: "recenzii pe Google"
     },
     reviews: {
       kicker: "Recenzii",
-      title: "Ce spun<br><em>clienții noștri</em>",
-      from: "din Google",
-      all: "Toate recenziile pe Google Maps"
+      title: "Ne recomandă<br><em>clienții</em>",
+      read: "Citește recenziile pe Google"
     },
     cta: {
-      title: "Un buchet pentru<br><em>cineva drag?</em>",
-      sub: "Scrie-ne, iar floristul îl creează astăzi.",
-      btn: "Comandă un buchet"
+      title: "Flori sau baloane<br>pentru <em>cineva drag?</em>",
+      sub: "Scrie-ne, iar floristul creează comanda astăzi.",
+      btn: "Comandă"
     },
     footer: {
-      tagline: "Buchete de autor în Constanța și Mamaia.",
+      tagline: "Buchete de autor și baloane în Constanța și Mamaia.",
       contacts: "Contacte",
       follow: "Urmărește-ne",
       legal: "Informații legale",
       privacy: "Politica de confidențialitate",
       terms: "Termeni și condiții",
-      anpc: "ANPC",
       sal: "Soluționarea alternativă a litigiilor",
       rights: "Toate drepturile rezervate."
     },
-    sticky: { order: "Comandă un buchet" }
+    sticky: { order: "Comandă" }
   },
 
   en: {
     meta: {
-      title: "KVITY — signature bouquets in Constanța & Mamaia",
-      description: "Ukrainian flower studio in Constanța and Năvodari (Mamaia). Signature bouquets from fresh imported flowers, delivery or in-store pickup."
+      title: "KVITY — flowers & balloons in Constanța and Mamaia",
+      description: "Modern flower studio in Constanța and Mamaia: signature bouquets from imported flowers, baskets, bridal bouquets and balloons."
     },
-    nav: { order: "Order", works: "Works", studios: "Studios", menu: "Menu" },
+    nav: { works: "Works", balloons: "Balloons", studios: "Studios", order: "Order" },
     hero: {
-      eyebrow: "Flower studio · Constanța & Mamaia",
-      title: "Signature bouquets<br><em>from fresh flowers</em>",
-      sub: "The first Ukrainian flower studio in Constanța and Mamaia. Rare imported varieties and modern arrangements, made just for you.",
-      ctaOrder: "Order a bouquet",
-      ctaCall: "Call us",
-      badge: "signature bouquets · flower studio · kvity ·",
-      scroll: "Scroll"
+      eyebrow: "Flower studio · Constanța · Mamaia",
+      title: "Signature bouquets<br>& balloons <em>with style</em>",
+      sub: "A modern flower studio with rare imported flowers. Every arrangement is created just for you.",
+      ctaOrder: "Order",
+      ctaWorks: "See our work"
     },
-    marquee: ["Signature bouquets", "Imported flowers", "Delivery in Constanța & Mamaia", "Photo before delivery", "Daily 9:00–19:00"],
-    about: {
-      kicker: "About us",
-      title: "<em>Kvity</em> means “flowers”",
-      p1: "In Ukrainian, «квіти» (kvity) means flowers. We brought the Ukrainian florist style to Constanța: generous bouquets, bold colour pairings and care for every detail.",
-      p2: "We have no ready-made bouquets on a shelf. Every arrangement is created for you from the freshest flowers in the studio today.",
-      stat1: "Google rating",
-      stat2: "studios",
-      stat3: "open daily"
+    intro: {
+      text: "<em>Kvity</em> means “flowers” in Ukrainian. We create generous, modern bouquets from imported flowers and make important moments brighter with balloons."
     },
-    quote: {
-      text: "Flowers say what<br><em>words cannot</em>",
-      by: "— the KVITY team"
+    cats: {
+      kicker: "What we create",
+      bouquets: "Bouquets",
+      xl: "Size XL+",
+      baskets: "Baskets",
+      wedding: "Weddings",
+      balloons: "Balloons",
+      all: "All"
     },
     gallery: {
       kicker: "Our work",
-      title: "Every bouquet<br><em>is one of a kind</em>",
+      title: "Every bouquet<br>is <em>one of a kind</em>",
       note: "Every bouquet is handmade from the fresh flowers we have in stock, so it may differ from these examples. We send you a photo of the finished bouquet before delivery.",
       similar: "I want one like this",
-      tap: "Tap a photo",
       close: "Close",
       prev: "Previous",
       next: "Next",
       captions: {
-        w01: "Red roses in black wrapping",
-        w02: "Green hydrangeas and pink roses",
-        w03: "Blue hydrangeas and garden roses",
-        w04: "Peonies, scabiosa and stock",
-        w05: "Basket of hydrangeas and roses",
-        w07: "Tulips and chamomile",
-        w08: "Pink hydrangeas",
-        w09: "Bouquets for an event",
-        w10: "Pink hydrangeas, roses and chamomile",
-        w11: "Burgundy chrysanthemums",
-        w12: "Hydrangeas, roses and lisianthus",
-        w13: "Red and cream roses"
+        g01: "Pink roses, stock and eucalyptus",
+        g02: "XL chamomile bouquet",
+        g03: "Peach spray roses",
+        g04: "Peach balloons",
+        g05: "Blue hydrangeas and garden roses",
+        g06: "Hydrangeas and powder-pink roses, XL",
+        g07: "Basket of pink hydrangeas",
+        g08: "Bridal bouquet with anthurium",
+        g09: "Hydrangeas and powder-pink roses",
+        g10: "Pink hydrangeas",
+        g11: "Pink balloons with bows",
+        g12: "Hydrangeas, peony and delphinium",
+        g13: "Red and cream roses",
+        g14: "Summer basket with chrysanthemums",
+        g15: "Tulips, roses and tweedia",
+        g16: "Flowers and balloons for a surprise",
+        g17: "Green hydrangeas and pink roses",
+        g18: "Bridal bouquet in shades of blue",
+        g19: "Red roses, XL",
+        g20: "White and pink balloons with a heart",
+        g21: "Peonies, scabiosa and stock",
+        g22: "Autumn dahlias",
+        g23: "Burgundy chrysanthemums",
+        g24: "Number 10 and a balloon bouquet",
+        g25: "Number 7 in shades of pink",
+        g26: "Silver and gold balloons"
       }
+    },
+    balloons: {
+      kicker: "Balloons",
+      title: "Balloons for<br><em>every occasion</em>",
+      text: "Balloon bouquets, numbers and hearts in your favourite shades. Order them on their own or together with flowers for a complete surprise.",
+      list: ["Numbers and letters", "Balloon bouquets", "Flowers + balloons", "Colours of your choice"],
+      cta: "Order balloons"
+    },
+    about: {
+      kicker: "About the studio",
+      title: "The first <em>Ukrainian</em><br>flower studio in Constanța",
+      p1: "We brought the Ukrainian florist style to Constanța: generous bouquets, rare imported varieties and care for every detail — from the flowers to the wrapping and ribbon.",
+      p2: "We have no ready-made bouquets on a shelf. Every arrangement is created for you from the freshest flowers in the studio today.",
+      stat1: "Google rating",
+      stat2: "studios",
+      stat3: "open daily, 9:00–19:00"
     },
     how: {
       kicker: "How to order",
       title: "Simple, <em>in four steps</em>",
       steps: [
-        { t: "Choose the occasion and budget", d: "A short form, with no cart and no online payment." },
+        { t: "Choose what you'd like", d: "The occasion, colours and budget — no cart and no online payment." },
         { t: "Message us on WhatsApp", d: "The message fills itself in, so you send it with one tap." },
-        { t: "The florist creates your bouquet", d: "From the most beautiful fresh flowers in the studio." },
+        { t: "The florist creates it", d: "From the most beautiful fresh flowers in the studio." },
         { t: "Get the photo, then the flowers", d: "We send a photo before delivery. We deliver, or you pick it up." }
       ]
     },
     form: {
       kicker: "Order",
-      title: "Create<br><em>your bouquet</em>",
+      title: "Create<br><em>your order</em>",
       sub: "Pick what you like and the florist does the rest. Your request goes to WhatsApp, where we confirm the details and price.",
+      what: "What would you like",
+      whats: ["Flowers", "Balloons", "Flowers + balloons"],
       occasion: "Occasion",
       occasions: ["Birthday", "Love", "Wedding", "Sorry", "Thank you", "Just because"],
       palette: "Colour palette",
@@ -237,7 +289,6 @@ window.KVITY_I18N = {
       method: "How to receive it",
       delivery: "Delivery",
       pickup: "Studio pickup",
-      studio: "Studio",
       address: "Delivery address",
       addressPh: "Street, no., building, apartment, city",
       card: "Card message",
@@ -254,7 +305,8 @@ window.KVITY_I18N = {
       sent: "Opening WhatsApp…"
     },
     msg: {
-      hello: "Hello! I'd like to order a bouquet.",
+      hello: "Hello! I'd like to place an order.",
+      what: "Order",
       occasion: "Occasion",
       palette: "Palette",
       style: "Style",
@@ -275,100 +327,125 @@ window.KVITY_I18N = {
       route: "Directions",
       call: "Call",
       map: "Show map",
-      reviews: "reviews"
+      reviews: "Google reviews"
     },
     reviews: {
       kicker: "Reviews",
-      title: "What our<br><em>clients say</em>",
-      from: "on Google",
-      all: "All reviews on Google Maps"
+      title: "Recommended<br>by <em>our clients</em>",
+      read: "Read the reviews on Google"
     },
     cta: {
-      title: "A bouquet for<br><em>someone special?</em>",
-      sub: "Message us and the florist will create it today.",
-      btn: "Order a bouquet"
+      title: "Flowers or balloons<br>for <em>someone special?</em>",
+      sub: "Message us and the florist will create your order today.",
+      btn: "Order"
     },
     footer: {
-      tagline: "Signature bouquets in Constanța and Mamaia.",
+      tagline: "Signature bouquets and balloons in Constanța and Mamaia.",
       contacts: "Contacts",
       follow: "Follow us",
       legal: "Legal",
       privacy: "Privacy policy",
       terms: "Terms and conditions",
-      anpc: "ANPC",
       sal: "Alternative dispute resolution",
       rights: "All rights reserved."
     },
-    sticky: { order: "Order a bouquet" }
+    sticky: { order: "Order" }
   },
 
   ua: {
     meta: {
-      title: "KVITY — авторські букети в Констанці та Мамаї",
-      description: "Українська квіткова студія в Констанці та Нэводарі (Мамая). Авторські букети зі свіжих імпортних квітів, доставка та самовивіз."
+      title: "KVITY — квіти й кулі в Констанці та Мамаї",
+      description: "Сучасна квіткова студія в Констанці та Мамаї: авторські букети з імпортних квітів, кошики, весільні букети та повітряні кулі."
     },
-    nav: { order: "Замовити", works: "Роботи", studios: "Студії", menu: "Меню" },
+    nav: { works: "Роботи", balloons: "Кулі", studios: "Студії", order: "Замовити" },
     hero: {
-      eyebrow: "Flower studio · Констанца & Мамая",
-      title: "Авторські букети<br><em>зі свіжих квітів</em>",
-      sub: "Перша українська квіткова студія в Констанці та на Мамаї. Імпортні квіти цікавих сортів і сучасні букети, створені саме для вас.",
-      ctaOrder: "Замовити букет",
-      ctaCall: "Зателефонувати",
-      badge: "авторські букети · flower studio · kvity ·",
-      scroll: "Гортайте"
+      eyebrow: "Flower studio · Констанца · Мамая",
+      title: "Авторські букети<br>і кулі <em>зі смаком</em>",
+      sub: "Сучасна квіткова студія з імпортними квітами цікавих сортів. Кожну композицію створюємо саме для вас.",
+      ctaOrder: "Замовити",
+      ctaWorks: "Наші роботи"
     },
-    marquee: ["Авторські букети", "Імпортні квіти", "Доставка по Констанці та Мамаї", "Фото перед доставкою", "Щодня 9:00–19:00"],
-    about: {
-      kicker: "Про нас",
-      title: "<em>Kvity</em> — це «квіти»",
-      p1: "Ми привезли в Констанцу стиль українських квіткових студій: пишні букети, сміливі поєднання кольорів і увага до кожної деталі.",
-      p2: "У нас немає букетів «з полиці». Кожну композицію ми створюємо для вас зі свіжих квітів, які сьогодні є в студії.",
-      stat1: "рейтинг Google",
-      stat2: "студії",
-      stat3: "щодня"
+    intro: {
+      text: "<em>Kvity</em> — це «квіти». Ми створюємо пишні сучасні букети з імпортних квітів і прикрашаємо важливі моменти повітряними кулями."
     },
-    quote: {
-      text: "Квіти кажуть те,<br><em>чого не скажуть слова</em>",
-      by: "— команда KVITY"
+    cats: {
+      kicker: "Що ми створюємо",
+      bouquets: "Букети",
+      xl: "Size XL+",
+      baskets: "Кошики",
+      wedding: "Весілля",
+      balloons: "Кулі",
+      all: "Усі"
     },
     gallery: {
       kicker: "Наші роботи",
       title: "Кожен букет<br><em>унікальний</em>",
       note: "Кожен букет авторський і збирається зі свіжих квітів у наявності, тому може відрізнятися від прикладів. Перед доставкою надішлемо фото готового букета.",
       similar: "Хочу схожий",
-      tap: "Торкніться фото",
       close: "Закрити",
       prev: "Попереднє",
       next: "Наступне",
       captions: {
-        w01: "Червоні троянди в чорному пакуванні",
-        w02: "Зелені гортензії та рожеві троянди",
-        w03: "Блакитні гортензії та піоноподібні троянди",
-        w04: "Півонії, скабіоза та матіола",
-        w05: "Кошик з гортензіями та трояндами",
-        w07: "Тюльпани та ромашки",
-        w08: "Рожеві гортензії",
-        w09: "Букети для події",
-        w10: "Рожеві гортензії, троянди та ромашки",
-        w11: "Бордові хризантеми",
-        w12: "Гортензії, троянди та еустома",
-        w13: "Червоні та кремові троянди"
+        g01: "Рожеві троянди, матіола й евкаліпт",
+        g02: "Букет XL з ромашок",
+        g03: "Кущові троянди персикового кольору",
+        g04: "Кулі персикового відтінку",
+        g05: "Блакитні гортензії та садові троянди",
+        g06: "Гортензії та пудрові троянди, XL",
+        g07: "Кошик з рожевими гортензіями",
+        g08: "Букет нареченої з антуріумом",
+        g09: "Гортензії та пудрові троянди",
+        g10: "Рожеві гортензії",
+        g11: "Рожеві кулі з бантиками",
+        g12: "Гортензії, півонія та дельфініум",
+        g13: "Червоні та кремові троянди",
+        g14: "Літній кошик з хризантемами",
+        g15: "Тюльпани, троянди та твідія",
+        g16: "Квіти й кулі для сюрпризу",
+        g17: "Зелені гортензії та рожеві троянди",
+        g18: "Букет нареченої в блакитних відтінках",
+        g19: "Червоні троянди, XL",
+        g20: "Білі й рожеві кулі із серцем",
+        g21: "Півонії, скабіоза та матіола",
+        g22: "Осінні жоржини",
+        g23: "Бордові хризантеми",
+        g24: "Цифра 10 і букет із куль",
+        g25: "Цифра 7 у рожевих відтінках",
+        g26: "Срібні та золоті кулі"
       }
+    },
+    balloons: {
+      kicker: "Кулі",
+      title: "Кулі для<br><em>будь-якої нагоди</em>",
+      text: "Букети з куль, цифри й серця у ваших улюблених відтінках. Замовляйте окремо або разом із квітами — для повного сюрпризу.",
+      list: ["Цифри та літери", "Букети з куль", "Квіти + кулі", "Відтінки на вибір"],
+      cta: "Замовити кулі"
+    },
+    about: {
+      kicker: "Про студію",
+      title: "Перша <em>українська</em><br>квіткова студія в Констанці",
+      p1: "Ми привезли в Констанцу стиль українських квіткових студій: пишні букети, імпортні квіти цікавих сортів і увагу до кожної деталі — від квітів до пакування та стрічки.",
+      p2: "У нас немає букетів «з полиці». Кожну композицію ми створюємо для вас зі свіжих квітів, які сьогодні є в студії.",
+      stat1: "рейтинг Google",
+      stat2: "студії",
+      stat3: "щодня, 9:00–19:00"
     },
     how: {
       kicker: "Як замовити",
       title: "Просто, <em>у чотири кроки</em>",
       steps: [
-        { t: "Обираєте привід і бюджет", d: "Коротка форма, без кошика та онлайн-оплати." },
+        { t: "Обираєте, що бажаєте", d: "Привід, кольори та бюджет — без кошика та онлайн-оплати." },
         { t: "Пишете нам у WhatsApp", d: "Повідомлення заповнюється саме, ви надсилаєте його одним дотиком." },
-        { t: "Флорист створює букет", d: "З найкращих свіжих квітів, що є в студії." },
+        { t: "Флорист створює композицію", d: "З найкращих свіжих квітів, що є в студії." },
         { t: "Отримуєте фото і квіти", d: "Надсилаємо фото перед доставкою. Доставляємо або ви забираєте зі студії." }
       ]
     },
     form: {
       kicker: "Замовлення",
-      title: "Створіть<br><em>свій букет</em>",
+      title: "Створіть<br><em>замовлення</em>",
       sub: "Оберіть, що вам до душі, решту зробить флорист. Заявка надсилається у WhatsApp, а ми підтверджуємо деталі та ціну.",
+      what: "Що бажаєте",
+      whats: ["Квіти", "Кулі", "Квіти + кулі"],
       occasion: "Привід",
       occasions: ["День народження", "Кохання", "Весілля", "Вибачення", "Подяка", "Просто так"],
       palette: "Кольорова гама",
@@ -383,10 +460,9 @@ window.KVITY_I18N = {
       date: "Дата",
       time: "Інтервал",
       asap: "Якнайшвидше",
-      method: "Як отримати букет",
+      method: "Як отримати замовлення",
       delivery: "Доставка",
       pickup: "Самовивіз зі студії",
-      studio: "Студія",
       address: "Адреса доставки",
       addressPh: "Вулиця, будинок, блок, квартира, місто",
       card: "Текст листівки",
@@ -403,7 +479,8 @@ window.KVITY_I18N = {
       sent: "Відкриваємо WhatsApp…"
     },
     msg: {
-      hello: "Добрий день! Хочу замовити букет.",
+      hello: "Добрий день! Хочу зробити замовлення.",
+      what: "Замовлення",
       occasion: "Привід",
       palette: "Гама",
       style: "Стиль",
@@ -424,100 +501,125 @@ window.KVITY_I18N = {
       route: "Маршрут",
       call: "Подзвонити",
       map: "Показати мапу",
-      reviews: "відгуків"
+      reviews: "відгуків у Google"
     },
     reviews: {
       kicker: "Відгуки",
-      title: "Що кажуть<br><em>наші клієнти</em>",
-      from: "з Google",
-      all: "Усі відгуки на Google Maps"
+      title: "Нас рекомендують<br><em>клієнти</em>",
+      read: "Читати відгуки в Google"
     },
     cta: {
-      title: "Букет для<br><em>дорогої людини?</em>",
-      sub: "Напишіть нам, і флорист збере його вже сьогодні.",
-      btn: "Замовити букет"
+      title: "Квіти чи кулі<br>для <em>дорогої людини?</em>",
+      sub: "Напишіть нам, і флорист створить замовлення вже сьогодні.",
+      btn: "Замовити"
     },
     footer: {
-      tagline: "Авторські букети в Констанці та Мамаї.",
+      tagline: "Авторські букети та кулі в Констанці й Мамаї.",
       contacts: "Контакти",
       follow: "Ми в соцмережах",
       legal: "Юридична інформація",
       privacy: "Політика конфіденційності",
       terms: "Умови використання",
-      anpc: "ANPC",
       sal: "Альтернативне вирішення спорів",
       rights: "Усі права захищені."
     },
-    sticky: { order: "Замовити букет" }
+    sticky: { order: "Замовити" }
   },
 
   ru: {
     meta: {
-      title: "KVITY — авторские букеты в Констанце и Мамае",
-      description: "Украинская цветочная студия в Констанце и Нэводари (Мамая). Авторские букеты из свежих импортных цветов, доставка и самовывоз."
+      title: "KVITY — цветы и шары в Констанце и Мамае",
+      description: "Современная цветочная студия в Констанце и Мамае: авторские букеты из импортных цветов, корзины, свадебные букеты и воздушные шары."
     },
-    nav: { order: "Заказать", works: "Работы", studios: "Студии", menu: "Меню" },
+    nav: { works: "Работы", balloons: "Шары", studios: "Студии", order: "Заказать" },
     hero: {
-      eyebrow: "Flower studio · Констанца & Мамая",
-      title: "Авторские букеты<br><em>из свежих цветов</em>",
-      sub: "Первая украинская цветочная студия в Констанце и на Мамае. Импортные цветы интересных сортов и современные букеты, созданные специально для вас.",
-      ctaOrder: "Заказать букет",
-      ctaCall: "Позвонить",
-      badge: "авторские букеты · flower studio · kvity ·",
-      scroll: "Листайте"
+      eyebrow: "Flower studio · Констанца · Мамая",
+      title: "Авторские букеты<br>и шары <em>со вкусом</em>",
+      sub: "Современная цветочная студия с импортными цветами интересных сортов. Каждую композицию создаём специально для вас.",
+      ctaOrder: "Заказать",
+      ctaWorks: "Наши работы"
     },
-    marquee: ["Авторские букеты", "Импортные цветы", "Доставка по Констанце и Мамае", "Фото перед доставкой", "Ежедневно 9:00–19:00"],
-    about: {
-      kicker: "О нас",
-      title: "<em>Kvity</em> — значит «цветы»",
-      p1: "По-украински «квіти» (kvity) значит цветы. Мы привезли в Констанцу стиль украинских цветочных студий: пышные букеты, смелые сочетания цветов и внимание к каждой детали.",
-      p2: "У нас нет букетов «с полки». Каждую композицию мы создаём для вас из свежих цветов, которые сегодня есть в студии.",
-      stat1: "рейтинг Google",
-      stat2: "студии",
-      stat3: "ежедневно"
+    intro: {
+      text: "<em>Kvity</em> по-украински значит «цветы». Мы создаём пышные современные букеты из импортных цветов и украшаем важные моменты воздушными шарами."
     },
-    quote: {
-      text: "Цветы говорят то,<br><em>что не скажут слова</em>",
-      by: "— команда KVITY"
+    cats: {
+      kicker: "Что мы создаём",
+      bouquets: "Букеты",
+      xl: "Size XL+",
+      baskets: "Корзины",
+      wedding: "Свадьба",
+      balloons: "Шары",
+      all: "Все"
     },
     gallery: {
       kicker: "Наши работы",
       title: "Каждый букет<br><em>уникален</em>",
       note: "Каждый букет авторский и собирается из свежих цветов в наличии, поэтому может отличаться от примеров. Перед доставкой пришлём фото готового букета.",
       similar: "Хочу похожий",
-      tap: "Нажмите на фото",
       close: "Закрыть",
       prev: "Предыдущее",
       next: "Следующее",
       captions: {
-        w01: "Красные розы в чёрной упаковке",
-        w02: "Зелёные гортензии и розовые розы",
-        w03: "Голубые гортензии и пионовидные розы",
-        w04: "Пионы, скабиоза и маттиола",
-        w05: "Корзина с гортензиями и розами",
-        w07: "Тюльпаны и ромашки",
-        w08: "Розовые гортензии",
-        w09: "Букеты для мероприятия",
-        w10: "Розовые гортензии, розы и ромашки",
-        w11: "Бордовые хризантемы",
-        w12: "Гортензии, розы и эустома",
-        w13: "Красные и кремовые розы"
+        g01: "Розовые розы, маттиола и эвкалипт",
+        g02: "Букет XL из ромашек",
+        g03: "Кустовые розы персикового цвета",
+        g04: "Шары персикового оттенка",
+        g05: "Голубые гортензии и садовые розы",
+        g06: "Гортензии и пудровые розы, XL",
+        g07: "Корзина с розовыми гортензиями",
+        g08: "Букет невесты с антуриумом",
+        g09: "Гортензии и пудровые розы",
+        g10: "Розовые гортензии",
+        g11: "Розовые шары с бантиками",
+        g12: "Гортензии, пион и дельфиниум",
+        g13: "Красные и кремовые розы",
+        g14: "Летняя корзина с хризантемами",
+        g15: "Тюльпаны, розы и твидия",
+        g16: "Цветы и шары для сюрприза",
+        g17: "Зелёные гортензии и розовые розы",
+        g18: "Букет невесты в голубых оттенках",
+        g19: "Красные розы, XL",
+        g20: "Белые и розовые шары с сердцем",
+        g21: "Пионы, скабиоза и маттиола",
+        g22: "Осенние георгины",
+        g23: "Бордовые хризантемы",
+        g24: "Цифра 10 и букет из шаров",
+        g25: "Цифра 7 в розовых оттенках",
+        g26: "Серебряные и золотые шары"
       }
+    },
+    balloons: {
+      kicker: "Шары",
+      title: "Шары для<br><em>любого повода</em>",
+      text: "Букеты из шаров, цифры и сердца в ваших любимых оттенках. Заказывайте отдельно или вместе с цветами — для полного сюрприза.",
+      list: ["Цифры и буквы", "Букеты из шаров", "Цветы + шары", "Оттенки на выбор"],
+      cta: "Заказать шары"
+    },
+    about: {
+      kicker: "О студии",
+      title: "Первая <em>украинская</em><br>цветочная студия в Констанце",
+      p1: "Мы привезли в Констанцу стиль украинских цветочных студий: пышные букеты, импортные цветы интересных сортов и внимание к каждой детали — от цветов до упаковки и ленты.",
+      p2: "У нас нет букетов «с полки». Каждую композицию мы создаём для вас из свежих цветов, которые сегодня есть в студии.",
+      stat1: "рейтинг Google",
+      stat2: "студии",
+      stat3: "ежедневно, 9:00–19:00"
     },
     how: {
       kicker: "Как заказать",
       title: "Просто, <em>в четыре шага</em>",
       steps: [
-        { t: "Выбираете повод и бюджет", d: "Короткая форма, без корзины и онлайн-оплаты." },
+        { t: "Выбираете, что хотите", d: "Повод, цвета и бюджет — без корзины и онлайн-оплаты." },
         { t: "Пишете нам в WhatsApp", d: "Сообщение заполняется само, вы отправляете его в одно касание." },
-        { t: "Флорист создаёт букет", d: "Из самых красивых свежих цветов в студии." },
+        { t: "Флорист создаёт композицию", d: "Из самых красивых свежих цветов в студии." },
         { t: "Получаете фото и цветы", d: "Присылаем фото перед доставкой. Доставляем или вы забираете из студии." }
       ]
     },
     form: {
       kicker: "Заказ",
-      title: "Создайте<br><em>свой букет</em>",
+      title: "Создайте<br><em>заказ</em>",
       sub: "Выберите, что вам нравится, остальное сделает флорист. Заявка отправляется в WhatsApp, а мы подтверждаем детали и цену.",
+      what: "Что хотите",
+      whats: ["Цветы", "Шары", "Цветы + шары"],
       occasion: "Повод",
       occasions: ["День рождения", "Любовь", "Свадьба", "Извинение", "Благодарность", "Просто так"],
       palette: "Цветовая гамма",
@@ -532,10 +634,9 @@ window.KVITY_I18N = {
       date: "Дата",
       time: "Интервал",
       asap: "Как можно скорее",
-      method: "Как получить букет",
+      method: "Как получить заказ",
       delivery: "Доставка",
       pickup: "Самовывоз из студии",
-      studio: "Студия",
       address: "Адрес доставки",
       addressPh: "Улица, дом, блок, квартира, город",
       card: "Текст открытки",
@@ -552,7 +653,8 @@ window.KVITY_I18N = {
       sent: "Открываем WhatsApp…"
     },
     msg: {
-      hello: "Здравствуйте! Хочу заказать букет.",
+      hello: "Здравствуйте! Хочу сделать заказ.",
+      what: "Заказ",
       occasion: "Повод",
       palette: "Гамма",
       style: "Стиль",
@@ -573,30 +675,28 @@ window.KVITY_I18N = {
       route: "Маршрут",
       call: "Позвонить",
       map: "Показать карту",
-      reviews: "отзывов"
+      reviews: "отзывов в Google"
     },
     reviews: {
       kicker: "Отзывы",
-      title: "Что говорят<br><em>наши клиенты</em>",
-      from: "из Google",
-      all: "Все отзывы на Google Maps"
+      title: "Нас рекомендуют<br><em>клиенты</em>",
+      read: "Читать отзывы в Google"
     },
     cta: {
-      title: "Букет для<br><em>близкого человека?</em>",
-      sub: "Напишите нам, и флорист соберёт его уже сегодня.",
-      btn: "Заказать букет"
+      title: "Цветы или шары<br>для <em>близкого человека?</em>",
+      sub: "Напишите нам, и флорист создаст заказ уже сегодня.",
+      btn: "Заказать"
     },
     footer: {
-      tagline: "Авторские букеты в Констанце и Мамае.",
+      tagline: "Авторские букеты и шары в Констанце и Мамае.",
       contacts: "Контакты",
       follow: "Мы в соцсетях",
       legal: "Юридическая информация",
       privacy: "Политика конфиденциальности",
       terms: "Условия использования",
-      anpc: "ANPC",
       sal: "Альтернативное разрешение споров",
       rights: "Все права защищены."
     },
-    sticky: { order: "Заказать букет" }
+    sticky: { order: "Заказать" }
   }
 };

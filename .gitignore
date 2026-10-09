@@ -2,3 +2,5 @@ dist/
 .claude/
 *.log
 Thumbs.db
+photos-raw/
+photos-selection.jpg
