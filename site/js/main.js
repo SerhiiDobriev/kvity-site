@@ -16,8 +16,11 @@
   var mapsDir = function (s) { return "https://www.google.com/maps/dir/?api=1&destination=" + s.lat + "," + s.lng + "&destination_place_id=" + s.placeId; };
   var mapsPlace = function (s) { return "https://www.google.com/maps/place/?q=place_id:" + s.placeId; };
   var pad2 = function (n) { return String(n).padStart(2, "0"); };
-  var small = function (id) { return "img/" + id + "-s.webp"; };
-  var large = function (id) { return "img/" + id + ".webp"; };
+  var byId = {};
+  cfg.gallery.forEach(function (g) { byId[g.id] = g; });
+  var file = function (id) { var g = byId[id]; return "img/" + id + (g && g.slug ? "-" + g.slug : ""); };
+  var small = function (id) { return file(id) + "-s.webp"; };
+  var large = function (id) { return file(id) + ".webp"; };
 
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
@@ -43,6 +46,11 @@
     return path.split(".").reduce(function (o, k) { return o == null ? o : o[k]; }, dict);
   }
   function caption(id) { return t("gallery.captions." + id) || ""; }
+  // Полное описание фото для Google и экранных дикторов: подпись + кто и где
+  function altText(id) {
+    var g = byId[id];
+    return caption(id) + " — " + t(g && g.cat === "balloons" ? "alts.balloons" : "alts.flowers");
+  }
 
   function applyLang(next) {
     lang = next;
@@ -56,6 +64,7 @@
     $$("[data-i18n-html]").forEach(function (n) { var v = t(n.dataset.i18nHtml); if (v != null) n.innerHTML = v; });
     $$("[data-i18n-ph]").forEach(function (n) { n.placeholder = t(n.dataset.i18nPh); });
     $$("[data-i18n-aria]").forEach(function (n) { n.setAttribute("aria-label", t(n.dataset.i18nAria)); });
+    $$("[data-i18n-alt]").forEach(function (n) { n.alt = t(n.dataset.i18nAlt); });
     $$(".langs button").forEach(function (b) {
       var on = b.dataset.lang === lang;
       b.classList.toggle("is-active", on);
@@ -127,7 +136,7 @@
       var cap = caption(g.id);
       return '<figure class="work" role="button" tabindex="0" data-index="' + i + '" aria-label="' + esc(cap) + '"' +
         (animate ? ' style="--i:' + i + '"' : ' style="animation:none"') + ">" +
-        '<div class="work__frame"><img src="' + small(g.id) + '" alt="' + esc(cap) + '" loading="lazy" decoding="async" width="640" height="853"></div>' +
+        '<div class="work__frame"><img src="' + small(g.id) + '" alt="' + esc(altText(g.id)) + '" loading="lazy" decoding="async" width="640" height="853"></div>' +
         "<figcaption>" + esc(cap) + "</figcaption></figure>";
     }).join("");
   }
@@ -163,7 +172,7 @@
     lbImg.classList.remove("is-loaded");
     lbImg.onload = function () { lbImg.classList.add("is-loaded"); };
     lbImg.src = large(g.id);
-    lbImg.alt = caption(g.id);
+    lbImg.alt = altText(g.id);
     if (lbImg.complete && lbImg.naturalWidth) lbImg.classList.add("is-loaded");
     $("#lbCaption").textContent = caption(g.id);
     $("#lbCount").textContent = pad2(lbIndex + 1) + " / " + pad2(n);

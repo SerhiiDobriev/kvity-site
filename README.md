@@ -9,7 +9,7 @@ site/css/style.css     — стили и анимации
 site/js/config.js      — ВСЕ контакты: номер WhatsApp, телефон, адреса, ссылки, галерея, отзывы, юр. данные
 site/js/i18n.js        — все тексты на 4 языках
 site/js/main.js        — логика: язык, галерея/лайтбокс, форма → WhatsApp, анимации
-site/img/              — фото WebP: <id>.webp (большое) и <id>-s.webp (превью), og.jpg — превью ссылки
+site/img/              — фото WebP: <id>-<slug>.webp (большое) и <id>-<slug>-s.webp (превью), og.jpg — превью ссылки
 site/fonts/            — шрифты Jost и Cormorant Italic (свои, без Google Fonts)
 site/v1/               — первая версия сайта (для сравнения): /v1/
 photos-raw/            — исходные фото от владелицы (в git не попадают)
@@ -19,7 +19,7 @@ deploy/setup.sh        — установка на сервер (nginx + HTTPS +
 ## Как поменять
 - **Номер для заявок / телефон / адреса** → `site/js/config.js` (`whatsapp` — только цифры с кодом страны).
 - **Тексты** → `site/js/i18n.js`, ключи одинаковые для всех языков.
-- **Фото галереи** → сделать `site/img/gNN.webp` (до 1280 px) и `site/img/gNN-s.webp` (640 px), добавить `{ id, cat }` в `gallery` в `site/js/config.js` и подпись в `gallery.captions` в `site/js/i18n.js` (для всех 4 языков). Категории: bouquets, xl, baskets, wedding, balloons.
+- **Фото галереи** → сделать `site/img/gNN-<slug>.webp` (до 1280 px) и `site/img/gNN-<slug>-s.webp` (640 px; slug — описание по-румынски латиницей, для Google), добавить `{ id, slug, cat }` в `gallery` в `site/js/config.js` и подпись в `gallery.captions` в `site/js/i18n.js` (для всех 4 языков). Категории: bouquets, xl, baskets, wedding, balloons.
 - **Рейтинги и отзывы Google** → `rating`/`reviews` у студий и массив `reviews` в `site/js/config.js`. Только настоящие отзывы, текст дословно (длинные — фрагментом с «…»), имя сокращено.
 - **Карты и маршрут** строятся по `lat`/`lng`/`placeId` студий (точные карточки в Google Maps). Карта грузится сама при прокрутке до блока.
 

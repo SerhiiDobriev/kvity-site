@@ -9,6 +9,16 @@ window.KVITY_I18N = {
       title: "Florărie Constanța și Mamaia: flori și baloane | KVITY",
       description: "Buchete de autor din flori proaspete de import, buchete de mireasă, coșuri și baloane cu heliu. Livrare în Constanța și Mamaia."
     },
+    alts: {
+      flowers: "florăria KVITY, Constanța și Mamaia",
+      balloons: "baloane cu heliu KVITY, Constanța și Mamaia",
+      hero: "Buchet de trandafiri tufă de culoarea piersicii — florăria KVITY, Constanța și Mamaia",
+      balloonsMain: "Baloane cu heliu și coșuri cu flori pentru o surpriză — KVITY, Constanța",
+      balloonsSide: "Baloane cu heliu în nuanță de piersică — KVITY, Constanța și Mamaia",
+      about: "Buchet de trandafiri albi și crem în mâinile floristei — florăria KVITY, Constanța",
+      tulips: "Lalele roz proaspete — florăria KVITY, Constanța și Mamaia",
+      cta: "Buchete de hortensii și trandafiri pregătite pentru livrare — KVITY, Constanța"
+    },
     nav: { works: "Lucrări", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
     hero: {
       eyebrow: "Florărie în Constanța și Mamaia",
@@ -181,6 +191,16 @@ window.KVITY_I18N = {
     meta: {
       title: "Flower shop in Constanța & Mamaia: flowers and balloons | KVITY",
       description: "Signature bouquets from fresh imported flowers, bridal bouquets, baskets and helium balloons. Delivery in Constanța and Mamaia."
+    },
+    alts: {
+      flowers: "KVITY flower shop, Constanța & Mamaia",
+      balloons: "KVITY helium balloons, Constanța & Mamaia",
+      hero: "Bouquet of peach spray roses — KVITY flower shop, Constanța & Mamaia",
+      balloonsMain: "Helium balloons and flower baskets for a surprise — KVITY, Constanța",
+      balloonsSide: "Peach helium balloons — KVITY, Constanța & Mamaia",
+      about: "White and cream rose bouquet in the florist's hands — KVITY flower shop, Constanța",
+      tulips: "Fresh pink tulips — KVITY flower shop, Constanța & Mamaia",
+      cta: "Hydrangea and rose bouquets ready for delivery — KVITY, Constanța"
     },
     nav: { works: "Works", balloons: "Balloons", studios: "Studios", order: "Order" },
     hero: {
@@ -355,6 +375,16 @@ window.KVITY_I18N = {
       title: "Квіти в Констанці та Мамаї: букети й кулі | KVITY",
       description: "Авторські букети зі свіжих імпортних квітів, весільні букети, кошики та гелієві кулі. Доставка по Констанці та Мамаї."
     },
+    alts: {
+      flowers: "квіткова студія KVITY, Констанца й Мамая",
+      balloons: "гелієві кулі KVITY, Констанца й Мамая",
+      hero: "Букет кущових троянд персикового кольору — квіткова студія KVITY, Констанца й Мамая",
+      balloonsMain: "Гелієві кулі та кошики з квітами для сюрпризу — KVITY, Констанца",
+      balloonsSide: "Гелієві кулі персикового відтінку — KVITY, Констанца й Мамая",
+      about: "Букет білих і кремових троянд у руках флористки — квіткова студія KVITY, Констанца",
+      tulips: "Свіжі рожеві тюльпани — квіткова студія KVITY, Констанца й Мамая",
+      cta: "Букети з гортензій і троянд, готові до доставки — KVITY, Констанца"
+    },
     nav: { works: "Роботи", balloons: "Кулі", studios: "Студії", order: "Замовити" },
     hero: {
       eyebrow: "Квіткова студія в Констанці та Мамаї",
@@ -527,6 +557,16 @@ window.KVITY_I18N = {
     meta: {
       title: "Цветы в Констанце и Мамае: букеты и шары | KVITY",
       description: "Авторские букеты из свежих импортных цветов, свадебные букеты, корзины и гелиевые шары. Доставка по Констанце и Мамае."
+    },
+    alts: {
+      flowers: "цветочная студия KVITY, Констанца и Мамая",
+      balloons: "гелиевые шары KVITY, Констанца и Мамая",
+      hero: "Букет кустовых роз персикового цвета — цветочная студия KVITY, Констанца и Мамая",
+      balloonsMain: "Гелиевые шары и корзины с цветами для сюрприза — KVITY, Констанца",
+      balloonsSide: "Гелиевые шары персикового оттенка — KVITY, Констанца и Мамая",
+      about: "Букет белых и кремовых роз в руках флориста — цветочная студия KVITY, Констанца",
+      tulips: "Свежие розовые тюльпаны — цветочная студия KVITY, Констанца и Мамая",
+      cta: "Букеты из гортензий и роз, готовые к доставке — KVITY, Констанца"
     },
     nav: { works: "Работы", balloons: "Шары", studios: "Студии", order: "Заказать" },
     hero: {
