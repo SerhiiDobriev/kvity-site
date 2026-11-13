@@ -10,7 +10,7 @@ site/js/config.js      — ВСЕ контакты: номер WhatsApp, тел�
 site/js/i18n.js        — все тексты на 4 языках
 site/js/main.js        — логика: язык, галерея/лайтбокс, форма → WhatsApp, анимации
 site/img/              — фото WebP: <id>-<slug>.webp (большое) и <id>-<slug>-s.webp (превью), og.jpg — превью ссылки
-site/fonts/            — шрифты Jost и Cormorant Italic (свои, без Google Fonts)
+site/fonts/            — шрифты Jost, Cormorant Italic, Montserrat (буквы логотипа), Sacramento (подпись «your happy moments and memories»)
 site/v1/               — первая версия сайта (для сравнения): /v1/
 photos-raw/            — исходные фото от владелицы (в git не попадают)
 deploy/setup.sh        — установка на сервер (nginx + HTTPS + автообновление)
@@ -54,6 +54,10 @@ DNS (Namecheap → Advanced DNS): A-запись `kvity` → `95.217.133.58`.
 шрифт Jost (строгий гротеск как на лентах) + Cormorant Italic для акцентов. Анимации сдержанные: медленный зум первого фото,
 мягкое появление блоков при прокрутке, плавная смена фильтров галереи. При «уменьшить движение» всё отключается.
 Курсив (<em>) не ставить на румынские слова с «î/â» — в Cormorant Italic значок висит слишком высоко.
+
+## Логотип
+Повторён по фото её фирменной карточки: KVITY — Montserrat 500 с разрядкой, над «I» подсолнух, стебель обвивает «V» (SVG-символы `#kv-mark` и `#kv-flower` в index.html),
+подпись — Sacramento. Это близкая копия, не оригинал: когда пришлёт файл логотипа (PDF/SVG/AI/PNG), заменить на него. Иконки (favicon, og.jpg, apple-touch-icon) сделаны с этим же знаком.
 
 ## До показа / открытые вопросы
 - Главный номер для WhatsApp (сейчас +40 727 244 681).

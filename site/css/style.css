@@ -11,6 +11,9 @@
 @font-face { font-family: "Cormorant"; font-style: italic; font-weight: 400; font-display: swap; src: url(../fonts/cormorant-italic-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "Cormorant"; font-style: italic; font-weight: 400; font-display: swap; src: url(../fonts/cormorant-italic-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
 
+@font-face { font-family: "KvLogo"; font-style: normal; font-weight: 100 900; font-display: swap; src: url(../fonts/montserrat-latin.woff2) format("woff2"); } /* буквы логотипа (Montserrat) */
+@font-face { font-family: "Sacramento"; font-style: normal; font-weight: 400; font-display: swap; src: url(../fonts/sacramento-latin.woff2) format("woff2"); } /* подпись с карточки */
+
 :root {
   --bg: #FBF9F7;
   --surface: #F3EEEA;
@@ -112,40 +115,60 @@ p { text-wrap: pretty; }
 .btn--sm { min-height: 40px; padding: 0 18px; font-size: .7rem; }
 .btn--wide { width: 100%; }
 
-/* ---------- Логотип (по её фирменному знаку) ---------- */
+/* ---------- Логотип (по её фирменной карточке) ---------- */
+/* Буквы — Montserrat 500 с разрядкой; знак (подсолнух + стебель вокруг «V») — SVG #kv-mark,
+   координаты: 100 ед. = высота заглавной; .70em — высота заглавной Montserrat, .27em — от верха строки до верха заглавной. */
 .logo {
+  --mk-k: 1.08;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
   color: var(--ink);
   line-height: 1;
-  padding-top: 9px; /* место под цветок над I */
+  padding-top: 12px; /* место под цветок над I */
 }
 .logo__word {
+  font-family: "KvLogo", var(--sans);
   font-weight: 500;
-  font-size: 1.32rem;
-  letter-spacing: .2em;
-  margin-right: -.2em;
+  font-size: 1.45rem;
+  letter-spacing: .14em;
+  margin-right: -.14em;
 }
 .logo__i { position: relative; }
 .logo__i svg {
   position: absolute;
-  width: .62em; height: .62em;
-  left: 50%; top: -.56em;
-  transform: translateX(-50%);
-  color: var(--ink);
+  width: calc(.924em * var(--mk-k));
+  height: calc(1.043em * var(--mk-k));
+  left: calc(50% - .70em * var(--mk-k));
+  top: calc(.27em - .448em * var(--mk-k));
+  overflow: visible;
+  pointer-events: none;
 }
+/* Внутри <use> внешние селекторы не работают — настройки знака передаём переменными */
+.mk-p { fill: var(--mk-fill, var(--bg)); stroke: currentColor; stroke-width: var(--mk-sw, .8px); vector-effect: non-scaling-stroke; }
+.mk-s { fill: none; stroke: currentColor; stroke-width: var(--mk-sw, .8px); vector-effect: non-scaling-stroke; }
+.mk-in { display: var(--mk-in, inline); }
 .logo__sub {
-  font-size: .46rem;
+  font-size: .44rem;
   font-weight: 500;
   letter-spacing: .34em;
   text-transform: uppercase;
   margin-top: 6px;
   margin-right: -.34em;
 }
-.logo--light { color: var(--white); }
-.logo--light .logo__i svg { color: var(--white); }
+.logo__tag {
+  font-family: "Sacramento", cursive;
+  font-size: .7rem;
+  line-height: 1;
+  margin-top: 8px;
+  white-space: nowrap;
+}
+.logo--light { color: var(--white); --mk-fill: var(--ink); }
+.logo--light .logo__word { font-size: 2rem; }
+.logo--light { --mk-sw: 1px; }
+.header .logo { --mk-sw: .6px; --mk-in: none; } /* мелкий размер: тонкий контур и один ряд лепестков, иначе цветок сливается */
+.note svg { --mk-fill: var(--surface); }
 
 /* ---------- Шапка ---------- */
 .header {
@@ -570,7 +593,7 @@ p { text-wrap: pretty; }
    Десктоп
    ========================================================================== */
 @media (min-width: 1024px) {
-  .logo__word { font-size: 1.5rem; }
+  .logo__word { font-size: 1.6rem; }
   .header__nav { display: flex; gap: 34px; margin-left: auto; }
   .header__nav a { text-decoration: none; font-size: .74rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; position: relative; }
   .header__nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .45s var(--ease); }
