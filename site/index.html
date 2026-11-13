@@ -23,11 +23,11 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="preload" href="fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="img/buchet-trandafiri-piersica-kvity-constanta.webp">
-  <link rel="stylesheet" href="css/style.css?v=2.7">
+  <link rel="stylesheet" href="css/style.css?v=2.8">
   <!-- defer: скрипты качаются параллельно и не задерживают первую отрисовку (важно для Safari на медленном интернете) -->
-  <script src="js/config.js?v=2.7" defer></script>
-  <script src="js/i18n.js?v=2.7" defer></script>
-  <script src="js/main.js?v=2.7" defer></script>
+  <script src="js/config.js?v=2.8" defer></script>
+  <script src="js/i18n.js?v=2.8" defer></script>
+  <script src="js/main.js?v=2.8" defer></script>
 </head>
 <body>
 
@@ -222,7 +222,10 @@
           </div>
         </fieldset>
 
-        <button type="submit" class="btn btn--dark btn--wide"><svg aria-hidden="true"><use href="#i-chat"/></svg><span data-i18n="form.submit">Trimite pe WhatsApp</span></button>
+        <div class="form__send">
+          <button type="submit" class="btn btn--dark btn--wide" data-channel="wa"><svg aria-hidden="true"><use href="#i-chat"/></svg><span data-i18n="form.submit">Trimite pe WhatsApp</span></button>
+          <button type="submit" class="btn btn--line btn--wide" data-channel="tg" hidden><svg aria-hidden="true"><use href="#i-send"/></svg><span data-i18n="form.submitTg">Trimite pe Telegram</span></button>
+        </div>
         <p class="form__hint" data-i18n="form.hint"></p>
       </form>
     </section>

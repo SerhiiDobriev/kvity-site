@@ -131,11 +131,14 @@ window.KVITY_I18N = {
       name: "Numele",
       phone: "Telefon",
       submit: "Trimite pe WhatsApp",
+      submitTg: "Trimite pe Telegram",
       hint: "Se deschide WhatsApp cu mesajul gata. Nimic nu se trimite fără tine.",
+      hintBoth: "Se deschide WhatsApp sau Telegram cu mesajul gata. Nimic nu se trimite fără tine.",
       ref: "Exemplul ales",
       remove: "Elimină",
       required: "Completează acest câmp",
-      sent: "Se deschide WhatsApp…"
+      sent: "Se deschide WhatsApp…",
+      sentTg: "Se deschide Telegram. Mesajul este copiat — îl poți lipi dacă e nevoie."
     },
     msg: {
       hello: "Bună ziua! Aș dori să fac o comandă.",
@@ -314,11 +317,14 @@ window.KVITY_I18N = {
       name: "Name",
       phone: "Phone",
       submit: "Send via WhatsApp",
+      submitTg: "Send via Telegram",
       hint: "WhatsApp opens with the message ready. Nothing is sent without you.",
+      hintBoth: "WhatsApp or Telegram opens with the message ready. Nothing is sent without you.",
       ref: "Chosen example",
       remove: "Remove",
       required: "Please fill in this field",
-      sent: "Opening WhatsApp…"
+      sent: "Opening WhatsApp…",
+      sentTg: "Opening Telegram. The message is copied — paste it if needed."
     },
     msg: {
       hello: "Hello! I'd like to place an order.",
@@ -497,11 +503,14 @@ window.KVITY_I18N = {
       name: "Ім'я",
       phone: "Телефон",
       submit: "Надіслати у WhatsApp",
+      submitTg: "Надіслати в Telegram",
       hint: "Відкриється WhatsApp з готовим повідомленням. Без вас нічого не надсилається.",
+      hintBoth: "Відкриється WhatsApp або Telegram з готовим повідомленням. Без вас нічого не надсилається.",
       ref: "Обраний приклад",
       remove: "Прибрати",
       required: "Заповніть це поле",
-      sent: "Відкриваємо WhatsApp…"
+      sent: "Відкриваємо WhatsApp…",
+      sentTg: "Відкриваємо Telegram. Повідомлення скопійовано — вставте його, якщо потрібно."
     },
     msg: {
       hello: "Добрий день! Хочу зробити замовлення.",
@@ -680,11 +689,14 @@ window.KVITY_I18N = {
       name: "Имя",
       phone: "Телефон",
       submit: "Отправить в WhatsApp",
+      submitTg: "Отправить в Telegram",
       hint: "Откроется WhatsApp с готовым сообщением. Без вас ничего не отправится.",
+      hintBoth: "Откроется WhatsApp или Telegram с готовым сообщением. Без вас ничего не отправится.",
       ref: "Выбранный пример",
       remove: "Убрать",
       required: "Заполните это поле",
-      sent: "Открываем WhatsApp…"
+      sent: "Открываем WhatsApp…",
+      sentTg: "Открываем Telegram. Сообщение скопировано — вставьте его, если нужно."
     },
     msg: {
       hello: "Здравствуйте! Хочу сделать заказ.",

@@ -311,8 +311,20 @@
     if (err) { if (on) err.textContent = t("form.required"); else err.remove(); }
   }
 
+  // Кнопка Telegram видна, только если в config.js задан ник для заявок
+  var tgBtn = $('[data-channel="tg"]');
+  if (cfg.telegramOrders) {
+    tgBtn.hidden = false;
+    $(".form__hint").setAttribute("data-i18n", "form.hintBoth");
+  }
+  var channel = "wa";
+  $$("#orderForm [data-channel]").forEach(function (b) {
+    b.addEventListener("click", function () { channel = b.dataset.channel; });
+  });
+
   $("#orderForm").addEventListener("submit", function (e) {
     e.preventDefault();
+    if (e.submitter && e.submitter.dataset.channel) channel = e.submitter.dataset.channel;
     var required = [$("#name"), $("#phone"), $("#date")];
     if (state.method === "delivery") required.push($("#address"));
     var firstBad = null;
@@ -326,8 +338,18 @@
       firstBad.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
       return;
     }
-    var url = "https://wa.me/" + cfg.whatsapp + "?text=" + encodeURIComponent(buildMessage());
-    toast(t("form.sent"));
+    var text = buildMessage();
+    var url;
+    if (channel === "tg" && cfg.telegramOrders) {
+      // t.me/<ник>?text= открывает чат с готовым текстом; на всякий случай кладём текст и в буфер обмена
+      url = "https://t.me/" + cfg.telegramOrders + "?text=" + encodeURIComponent(text);
+      try { if (navigator.clipboard) navigator.clipboard.writeText(text); } catch (err) { /* без буфера тоже работает */ }
+      toast(t("form.sentTg"));
+    } else {
+      url = "https://wa.me/" + cfg.whatsapp + "?text=" + encodeURIComponent(text);
+      toast(t("form.sent"));
+    }
+    channel = "wa";
     var win = window.open(url, "_blank", "noopener");
     if (!win) location.href = url;
   });
