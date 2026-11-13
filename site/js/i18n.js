@@ -11,9 +11,9 @@ window.KVITY_I18N = {
     },
     nav: { works: "Lucrări", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
     hero: {
-      eyebrow: "Flower studio · Constanța · Mamaia",
+      eyebrow: "Florărie în Constanța și Mamaia",
       title: "Buchete de autor<br>și baloane <em>cu stil</em>",
-      sub: "Florărie modernă cu flori de import deosebite. Fiecare compoziție este creată special pentru tine.",
+      sub: "Florărie modernă în Constanța și Mamaia: buchete din flori proaspete de import, create special pentru tine. Livrare la domiciliu sau ridicare din studio.",
       ctaOrder: "Comandă",
       ctaWorks: "Vezi lucrările"
     },
@@ -66,14 +66,14 @@ window.KVITY_I18N = {
     balloons: {
       kicker: "Baloane",
       title: "Baloane pentru<br><em>orice ocazie</em>",
-      text: "Buchete de baloane, cifre și inimi în nuanțele preferate. Le comanzi separat sau împreună cu flori — pentru o surpriză completă.",
+      text: "Baloane cu heliu: buchete de baloane, cifre și inimi în nuanțele preferate. Le comanzi separat sau împreună cu flori, cu livrare în Constanța și Mamaia.",
       list: ["Cifre și litere", "Buchete de baloane", "Flori + baloane", "Nuanțe la alegere"],
       cta: "Comandă baloane"
     },
     about: {
       kicker: "Despre studio",
       title: "Prima florărie <em>ucraineană</em><br>din Constanța",
-      p1: "Am adus în Constanța stilul florăriilor ucrainene: buchete generoase, soiuri de import deosebite și atenție la fiecare detaliu — de la flori până la ambalaj și panglică.",
+      p1: "Florăria KVITY din Constanța și Mamaia aduce stilul florăriilor ucrainene: buchete generoase, soiuri de import deosebite și atenție la fiecare detaliu — de la flori până la ambalaj și panglică.",
       p2: "Nu avem buchete „de pe raft”. Fiecare compoziție este creată pentru tine, din florile proaspete care sunt azi în studio.",
       stat1: "rating Google",
       stat2: "studiouri",
@@ -145,6 +145,7 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Studiourile noastre",
+      lead: "Livrare flori în Constanța și Mamaia sau vino în studio.",
       title: "Te așteptăm<br>în <em>două locuri</em>",
       daily: "Zilnic",
       route: "Traseu",
@@ -159,11 +160,11 @@ window.KVITY_I18N = {
     },
     cta: {
       title: "Flori sau baloane<br>pentru <em>cineva drag?</em>",
-      sub: "Scrie-ne, iar floristul creează comanda astăzi.",
+      sub: "Comandă flori sau baloane cu livrare în Constanța și Mamaia — floristul creează comanda astăzi.",
       btn: "Comandă"
     },
     footer: {
-      tagline: "Buchete de autor și baloane în Constanța și Mamaia.",
+      tagline: "Florărie în Constanța și Mamaia: buchete de autor, buchete de mireasă și baloane cu heliu.",
       contacts: "Contacte",
       follow: "Urmărește-ne",
       legal: "Informații legale",
@@ -183,9 +184,9 @@ window.KVITY_I18N = {
     },
     nav: { works: "Works", balloons: "Balloons", studios: "Studios", order: "Order" },
     hero: {
-      eyebrow: "Flower studio · Constanța · Mamaia",
+      eyebrow: "Flower shop in Constanța & Mamaia",
       title: "Signature bouquets<br>& balloons <em>with style</em>",
-      sub: "A modern flower studio with rare imported flowers. Every arrangement is created just for you.",
+      sub: "A modern flower shop in Constanța and Mamaia: bouquets from fresh imported flowers, created just for you. Home delivery or studio pickup.",
       ctaOrder: "Order",
       ctaWorks: "See our work"
     },
@@ -238,14 +239,14 @@ window.KVITY_I18N = {
     balloons: {
       kicker: "Balloons",
       title: "Balloons for<br><em>every occasion</em>",
-      text: "Balloon bouquets, numbers and hearts in your favourite shades. Order them on their own or together with flowers for a complete surprise.",
+      text: "Helium balloons: balloon bouquets, numbers and hearts in your favourite shades. Order them on their own or with flowers, with delivery in Constanța and Mamaia.",
       list: ["Numbers and letters", "Balloon bouquets", "Flowers + balloons", "Colours of your choice"],
       cta: "Order balloons"
     },
     about: {
       kicker: "About the studio",
       title: "The first <em>Ukrainian</em><br>flower studio in Constanța",
-      p1: "We brought the Ukrainian florist style to Constanța: generous bouquets, rare imported varieties and care for every detail — from the flowers to the wrapping and ribbon.",
+      p1: "KVITY flower shop in Constanța and Mamaia brings the Ukrainian florist style: generous bouquets, rare imported varieties and care for every detail — from the flowers to the wrapping and ribbon.",
       p2: "We have no ready-made bouquets on a shelf. Every arrangement is created for you from the freshest flowers in the studio today.",
       stat1: "Google rating",
       stat2: "studios",
@@ -317,6 +318,7 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Our studios",
+      lead: "Flower delivery in Constanța and Mamaia — or visit our studio.",
       title: "Visit us<br><em>in two places</em>",
       daily: "Daily",
       route: "Directions",
@@ -331,11 +333,11 @@ window.KVITY_I18N = {
     },
     cta: {
       title: "Flowers or balloons<br>for <em>someone special?</em>",
-      sub: "Message us and the florist will create your order today.",
+      sub: "Order flowers or balloons with delivery in Constanța and Mamaia — the florist will create it today.",
       btn: "Order"
     },
     footer: {
-      tagline: "Signature bouquets and balloons in Constanța and Mamaia.",
+      tagline: "Flower shop in Constanța and Mamaia: signature bouquets, bridal bouquets and helium balloons.",
       contacts: "Contacts",
       follow: "Follow us",
       legal: "Legal",
@@ -355,9 +357,9 @@ window.KVITY_I18N = {
     },
     nav: { works: "Роботи", balloons: "Кулі", studios: "Студії", order: "Замовити" },
     hero: {
-      eyebrow: "Flower studio · Констанца · Мамая",
+      eyebrow: "Квіткова студія в Констанці та Мамаї",
       title: "Авторські букети<br>і кулі <em>зі смаком</em>",
-      sub: "Сучасна квіткова студія з імпортними квітами цікавих сортів. Кожну композицію створюємо саме для вас.",
+      sub: "Сучасна квіткова студія в Констанці та Мамаї: букети зі свіжих імпортних квітів, створені саме для вас. Доставка додому або самовивіз зі студії.",
       ctaOrder: "Замовити",
       ctaWorks: "Наші роботи"
     },
@@ -410,14 +412,14 @@ window.KVITY_I18N = {
     balloons: {
       kicker: "Кулі",
       title: "Кулі для<br><em>будь-якої нагоди</em>",
-      text: "Букети з куль, цифри й серця у ваших улюблених відтінках. Замовляйте окремо або разом із квітами — для повного сюрпризу.",
+      text: "Гелієві кулі: букети з куль, цифри й серця у ваших улюблених відтінках. Замовляйте окремо або разом із квітами, з доставкою по Констанці та Мамаї.",
       list: ["Цифри та літери", "Букети з куль", "Квіти + кулі", "Відтінки на вибір"],
       cta: "Замовити кулі"
     },
     about: {
       kicker: "Про студію",
       title: "Перша <em>українська</em><br>квіткова студія в Констанці",
-      p1: "Ми привезли в Констанцу стиль українських квіткових студій: пишні букети, імпортні квіти цікавих сортів і увагу до кожної деталі — від квітів до пакування та стрічки.",
+      p1: "Квіткова студія KVITY у Констанці та Мамаї — це стиль українських квіткових студій: пишні букети, імпортні квіти цікавих сортів і увага до кожної деталі — від квітів до пакування та стрічки.",
       p2: "У нас немає букетів «з полиці». Кожну композицію ми створюємо для вас зі свіжих квітів, які сьогодні є в студії.",
       stat1: "рейтинг Google",
       stat2: "студії",
@@ -489,6 +491,7 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Наші студії",
+      lead: "Доставка квітів по Констанці та Мамаї — або приходьте до студії.",
       title: "Чекаємо на вас<br><em>у двох місцях</em>",
       daily: "Щодня",
       route: "Маршрут",
@@ -503,11 +506,11 @@ window.KVITY_I18N = {
     },
     cta: {
       title: "Квіти чи кулі<br>для <em>дорогої людини?</em>",
-      sub: "Напишіть нам, і флорист створить замовлення вже сьогодні.",
+      sub: "Замовте квіти чи кулі з доставкою по Констанці та Мамаї — флорист створить замовлення вже сьогодні.",
       btn: "Замовити"
     },
     footer: {
-      tagline: "Авторські букети та кулі в Констанці й Мамаї.",
+      tagline: "Квіткова студія в Констанці та Мамаї: авторські букети, весільні букети та гелієві кулі.",
       contacts: "Контакти",
       follow: "Ми в соцмережах",
       legal: "Юридична інформація",
@@ -527,9 +530,9 @@ window.KVITY_I18N = {
     },
     nav: { works: "Работы", balloons: "Шары", studios: "Студии", order: "Заказать" },
     hero: {
-      eyebrow: "Flower studio · Констанца · Мамая",
+      eyebrow: "Цветочная студия в Констанце и Мамае",
       title: "Авторские букеты<br>и шары <em>со вкусом</em>",
-      sub: "Современная цветочная студия с импортными цветами интересных сортов. Каждую композицию создаём специально для вас.",
+      sub: "Современная цветочная студия в Констанце и Мамае: букеты из свежих импортных цветов, созданные специально для вас. Доставка на дом или самовывоз из студии.",
       ctaOrder: "Заказать",
       ctaWorks: "Наши работы"
     },
@@ -582,14 +585,14 @@ window.KVITY_I18N = {
     balloons: {
       kicker: "Шары",
       title: "Шары для<br><em>любого повода</em>",
-      text: "Букеты из шаров, цифры и сердца в ваших любимых оттенках. Заказывайте отдельно или вместе с цветами — для полного сюрприза.",
+      text: "Гелиевые шары: букеты из шаров, цифры и сердца в ваших любимых оттенках. Заказывайте отдельно или вместе с цветами, с доставкой по Констанце и Мамае.",
       list: ["Цифры и буквы", "Букеты из шаров", "Цветы + шары", "Оттенки на выбор"],
       cta: "Заказать шары"
     },
     about: {
       kicker: "О студии",
       title: "Первая <em>украинская</em><br>цветочная студия в Констанце",
-      p1: "Мы привезли в Констанцу стиль украинских цветочных студий: пышные букеты, импортные цветы интересных сортов и внимание к каждой детали — от цветов до упаковки и ленты.",
+      p1: "Цветочная студия KVITY в Констанце и Мамае — это стиль украинских цветочных студий: пышные букеты, импортные цветы интересных сортов и внимание к каждой детали — от цветов до упаковки и ленты.",
       p2: "У нас нет букетов «с полки». Каждую композицию мы создаём для вас из свежих цветов, которые сегодня есть в студии.",
       stat1: "рейтинг Google",
       stat2: "студии",
@@ -661,6 +664,7 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Наши студии",
+      lead: "Доставка цветов по Констанце и Мамае — или приходите в студию.",
       title: "Ждём вас<br><em>в двух местах</em>",
       daily: "Ежедневно",
       route: "Маршрут",
@@ -675,11 +679,11 @@ window.KVITY_I18N = {
     },
     cta: {
       title: "Цветы или шары<br>для <em>близкого человека?</em>",
-      sub: "Напишите нам, и флорист создаст заказ уже сегодня.",
+      sub: "Закажите цветы или шары с доставкой по Констанце и Мамае — флорист создаст заказ уже сегодня.",
       btn: "Заказать"
     },
     footer: {
-      tagline: "Авторские букеты и шары в Констанце и Мамае.",
+      tagline: "Цветочная студия в Констанце и Мамае: авторские букеты, свадебные букеты и гелиевые шары.",
       contacts: "Контакты",
       follow: "Мы в соцсетях",
       legal: "Юридическая информация",
