@@ -57,7 +57,7 @@ DNS (Namecheap → Advanced DNS): A-запись `kvity` → `95.217.133.58`.
 
 ## До показа / открытые вопросы
 - Главный номер для WhatsApp (сейчас +40 727 244 681).
-- Личный Telegram-ник для заявок → `telegramOrders` в config.js (пусто = кнопка скрыта). НЕ группа kvity_flori: там 1200+ участников.
+- Telegram для заявок: `telegramOrders` = kvity_manager (аккаунт «KVITY Manager»). НЕ группа kvity_flori: там 1200+ участников.
 - Адрес в Констанце: в Instagram «Aurel Vlaicu 305A», в Google Maps «305» — уточнить и выровнять.
 - Реальные отзывы, юр. данные (фирма, CUI, email), политика конфиденциальности.
 - Проверка румынских текстов носителем.
