@@ -126,11 +126,15 @@ if ! grep -q "gzip_types" "$CONF"; then
 fi
 # css/js не держать в кэше 7 дней (иначе после обновлений видна старая версия)
 sed -i 's/(?:jpg|jpeg|png|webp|svg|css|js)\$/(?:jpg|jpeg|png|webp|svg|woff2)$/' "$CONF"
+# страница (html): телефон каждый раз спрашивает сервер, нет ли новой версии
+if ! grep -q 'Cache-Control "no-cache"' "$CONF"; then
+  sed -i 's|try_files $uri $uri/ =404;|try_files $uri $uri/ =404;\n        add_header Cache-Control "no-cache" always;\n        add_header X-Robots-Tag "noindex, nofollow" always;|' "$CONF"
+fi
 
 if nginx -t 2>/tmp/kvity-nginx-test.log; then
   systemctl reload nginx
   rm -f "$CONF.bak"
-  ok "HTTP/2 и сжатие включены"
+  ok "HTTP/2, сжатие и свежая страница включены"
 else
   warn "nginx -t не принял изменения — возвращаю прежний конфиг KVITY:"
   cat /tmp/kvity-nginx-test.log
