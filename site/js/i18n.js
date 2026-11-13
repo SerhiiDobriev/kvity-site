@@ -7,7 +7,7 @@ window.KVITY_I18N = {
   ro: {
     meta: {
       title: "Florărie Constanța și Mamaia: flori și baloane | KVITY",
-      description: "Buchete de autor din flori proaspete de import, buchete de mireasă, coșuri și baloane cu heliu. Livrare în Constanța, Mamaia și Năvodari."
+      description: "Buchete de autor din flori proaspete de import, buchete de mireasă, coșuri și baloane cu heliu. Livrare în Constanța și Mamaia."
     },
     nav: { works: "Lucrări", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
     hero: {
@@ -179,7 +179,7 @@ window.KVITY_I18N = {
   en: {
     meta: {
       title: "Flower shop in Constanța & Mamaia: flowers and balloons | KVITY",
-      description: "Signature bouquets from fresh imported flowers, bridal bouquets, baskets and helium balloons. Delivery in Constanța, Mamaia and Năvodari."
+      description: "Signature bouquets from fresh imported flowers, bridal bouquets, baskets and helium balloons. Delivery in Constanța and Mamaia."
     },
     nav: { works: "Works", balloons: "Balloons", studios: "Studios", order: "Order" },
     hero: {
