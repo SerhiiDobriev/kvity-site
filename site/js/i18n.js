@@ -6,8 +6,8 @@
 window.KVITY_I18N = {
   ro: {
     meta: {
-      title: "KVITY — flori și baloane în Constanța și Mamaia",
-      description: "Florărie modernă în Constanța și Mamaia: buchete de autor din flori de import, coșuri, buchete de mireasă și baloane."
+      title: "Florărie Constanța și Mamaia: flori și baloane | KVITY",
+      description: "Buchete de autor din flori proaspete de import, buchete de mireasă, coșuri și baloane cu heliu. Livrare în Constanța, Mamaia și Năvodari."
     },
     nav: { works: "Lucrări", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
     hero: {
@@ -178,8 +178,8 @@ window.KVITY_I18N = {
 
   en: {
     meta: {
-      title: "KVITY — flowers & balloons in Constanța and Mamaia",
-      description: "Modern flower studio in Constanța and Mamaia: signature bouquets from imported flowers, baskets, bridal bouquets and balloons."
+      title: "Flower shop in Constanța & Mamaia: flowers and balloons | KVITY",
+      description: "Signature bouquets from fresh imported flowers, bridal bouquets, baskets and helium balloons. Delivery in Constanța, Mamaia and Năvodari."
     },
     nav: { works: "Works", balloons: "Balloons", studios: "Studios", order: "Order" },
     hero: {
@@ -350,8 +350,8 @@ window.KVITY_I18N = {
 
   ua: {
     meta: {
-      title: "KVITY — квіти й кулі в Констанці та Мамаї",
-      description: "Сучасна квіткова студія в Констанці та Мамаї: авторські букети з імпортних квітів, кошики, весільні букети та повітряні кулі."
+      title: "Квіти в Констанці та Мамаї: букети й кулі | KVITY",
+      description: "Авторські букети зі свіжих імпортних квітів, весільні букети, кошики та гелієві кулі. Доставка по Констанці та Мамаї."
     },
     nav: { works: "Роботи", balloons: "Кулі", studios: "Студії", order: "Замовити" },
     hero: {
@@ -522,8 +522,8 @@ window.KVITY_I18N = {
 
   ru: {
     meta: {
-      title: "KVITY — цветы и шары в Констанце и Мамае",
-      description: "Современная цветочная студия в Констанце и Мамае: авторские букеты из импортных цветов, корзины, свадебные букеты и воздушные шары."
+      title: "Цветы в Констанце и Мамае: букеты и шары | KVITY",
+      description: "Авторские букеты из свежих импортных цветов, свадебные букеты, корзины и гелиевые шары. Доставка по Констанце и Мамае."
     },
     nav: { works: "Работы", balloons: "Шары", studios: "Студии", order: "Заказать" },
     hero: {
