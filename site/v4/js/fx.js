@@ -112,6 +112,7 @@
   function updateIntro() {
     if (!hero || reduce) return;
     var p = clamp((Y - heroTop) / heroRange, 0, 1);
+    if (sdaOn) { hero.classList.toggle("is-revealed", p > 0.7); return; } // движение ведёт браузер (buildSda)
     var z = clamp(p / 0.6, 0, 1);
     var e = smooth(z);
     var s = Math.pow(maxScale, e);
@@ -128,20 +129,77 @@
   var catsSec = $("#catsSec"), catsTrack = $("#cats"), catsBar = $("#catsBar"), catsPin = $(".cats__pin");
   var catsDist = 0, catsTop = 0, catsRange = 1, lastCatsX = null;
   function layoutCats() {
-    if (!catsSec || reduce) return;
+    if (!catsSec || reduce) return false;
     var ph = catsPin.clientHeight;          // 100svh — не прыгает, когда прячется адресная строка
+    var old = catsDist;
     catsDist = Math.max(0, catsTrack.offsetWidth - W);
     catsSec.style.height = (ph + catsDist) + "px";
     catsRange = Math.max(1, catsDist);
+    return old !== catsDist;
   }
   function updateCats() {
-    if (!catsSec || reduce) return;
+    if (!catsSec || reduce || sdaOn) return;
     var p = clamp((Y - catsTop) / catsRange, 0, 1);
     var x = Math.round(-p * catsDist);
     if (x === lastCatsX) return;
     lastCatsX = x;
     catsTrack.style.transform = "translate3d(" + x + "px,0,0)";
     if (catsBar) catsBar.style.setProperty("--cp", p.toFixed(4));
+  }
+
+  /* ---------------- Анимации, которые ведёт сам браузер ----------------
+     Современные браузеры умеют сами связывать анимацию с прокруткой (ViewTimeline) и считают её
+     отдельно от страницы — она не дёргается, даже если телефон в этот момент занят (догружает фото).
+     Где браузер так не умеет, работает запасной вариант выше (updateIntro / updateCats). */
+  var sdaOk = !reduce && typeof window.ViewTimeline === "function";
+  var sdaOn = false, anims = [];
+  function run(el, frames, tl) {
+    if (!el) return;
+    anims.push(el.animate(frames, { timeline: tl, fill: "both", easing: "linear", rangeStart: "contain 0%", rangeEnd: "contain 100%" }));
+  }
+  function buildSda() {
+    anims.forEach(function (a) { a.cancel(); });
+    anims = [];
+    if (!sdaOk || !hero) return false;
+    try {
+      var tl = new ViewTimeline({ subject: hero, axis: "block", inset: "0px" }) /* без отступа под шапку (scroll-padding) */;
+      var N = 24, i, z, e, kMask = [], kImg = [];
+      for (i = 0; i <= N; i++) {
+        z = i / N; e = smooth(z);
+        kMask.push({
+          offset: z * 0.6,
+          transform: "scale(" + Math.pow(maxScale, e).toFixed(3) + ")",
+          opacity: touch ? +(1 - smooth(clamp((z - 0.45) / 0.5, 0, 1))).toFixed(3) : (z >= 0.995 ? 0 : 1)
+        });
+        kImg.push({ offset: z * 0.6, transform: "scale(" + (1.2 - 0.2 * e).toFixed(4) + ")" });
+      }
+      kMask.push({ offset: 1, transform: "scale(" + maxScale.toFixed(3) + ")", opacity: 0 });
+      kImg.push({ offset: 1, transform: "scale(1)" });
+      run(mask, kMask, tl);
+      run(heroImg, kImg, tl);
+      run($(".hero__shade"), [{ offset: 0, opacity: 0 }, { offset: 0.375, opacity: 0 }, { offset: 0.79, opacity: 1 }, { offset: 1, opacity: 1 }], tl);
+      run(cap, [{ offset: 0, opacity: 1 }, { offset: 0.07, opacity: 0 }, { offset: 1, opacity: 0 }], tl);
+      run($(".hero__hint"), [{ offset: 0, opacity: 1 }, { offset: 0.08, opacity: 0 }, { offset: 1, opacity: 0 }], tl);
+      run($(".hero__content"), [
+        { offset: 0, opacity: 0, transform: "translateY(144px)" },
+        { offset: 0.56, opacity: 0, transform: "translateY(43px)" },
+        { offset: 0.76, opacity: 1, transform: "translateY(7px)" },
+        { offset: 0.8, opacity: 1, transform: "translateY(0)" },
+        { offset: 1, opacity: 1, transform: "translateY(0)" }
+      ], tl);
+      if (catsSec) {
+        var ctl = new ViewTimeline({ subject: catsSec, axis: "block", inset: "0px" });
+        run(catsTrack, [{ transform: "translate3d(0,0,0)" }, { transform: "translate3d(" + (-catsDist) + "px,0,0)" }], ctl);
+        run(catsBar, [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }], ctl);
+      }
+      // скрипт больше не двигает эти блоки сам
+      mask.style.transform = mask.style.opacity = mask.style.visibility = heroImg.style.transform = catsTrack.style.transform = "";
+      return true;
+    } catch (err) {
+      anims.forEach(function (a) { a.cancel(); });
+      anims = [];
+      return false;
+    }
   }
 
   /* ---------------- Проявление текста словами ---------------- */
@@ -226,6 +284,7 @@
     layoutIntro();
     layoutCats();
     measure();
+    sdaOn = buildSda();
     onScroll();
   }
   // На телефоне при прокрутке прячется адресная строка и меняется высота окна —
@@ -249,7 +308,7 @@
       pending = false;
       processText();
       cloneReviews();
-      layoutCats();
+      if (layoutCats() && sdaOn) sdaOn = buildSda(); // ширина ленты категорий изменилась (другой язык)
       measure();
       onScroll();
     });
@@ -260,6 +319,17 @@
   layoutAll();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutAll);
   window.addEventListener("load", layoutAll);
+
+  // Фото подгружаем заранее, когда страница уже открылась и телефон свободен, —
+  // чтобы он не «задумывался» над фото прямо во время прокрутки. На медленном интернете не трогаем.
+  window.addEventListener("load", function () {
+    var c = navigator.connection;
+    if (c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ""))) return;
+    var idle = window.requestIdleCallback || function (f) { return setTimeout(f, 1500); };
+    idle(function () {
+      $$('img[loading="lazy"]').forEach(function (img) { img.loading = "eager"; });
+    }, { timeout: 4000 });
+  });
   // высота страницы поменялась (догрузились фото, сменился фильтр галереи) — перемеряем положения блоков
   if ("ResizeObserver" in window) {
     var roTimer;
@@ -273,6 +343,7 @@
   (function petals() {
     var cv = $("#petals");
     if (!cv || reduce || !cv.getContext) return;
+    if (touch) { cv.remove(); return; } // на телефоне без лепестков: они рисуются каждый кадр
     var ctx = cv.getContext("2d"), list = [], running = false, dpr = Math.min(2, window.devicePixelRatio || 1), cw = 0, ch = 0;
     var COLORS = ["242,205,190", "246,226,216", "217,147,127", "255,240,232"];
     function size() {
