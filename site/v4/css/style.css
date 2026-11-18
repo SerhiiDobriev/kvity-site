@@ -188,25 +188,6 @@ p { text-wrap: pretty; }
 .loader__word { font-family: var(--logo); font-weight: 500; font-size: .9rem; letter-spacing: .6em; margin-right: -.6em; opacity: 0; animation: fadeUp .9s .7s var(--ease) forwards; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-/* ---------- Свой курсор (только мышь) ---------- */
-.cursor { display: none; }
-.has-cursor .cursor {
-  display: grid; place-items: center;
-  position: fixed; left: 0; top: 0; z-index: 150;
-  width: 12px; height: 12px; margin: -6px 0 0 -6px;
-  border-radius: 50%;
-  background: var(--cream);
-  mix-blend-mode: difference;
-  pointer-events: none;
-  transition: width .45s var(--ease), height .45s var(--ease), margin .45s var(--ease), background-color .3s, opacity .3s;
-}
-.has-cursor .cursor.is-link { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
-.has-cursor .cursor.is-view { width: 104px; height: 104px; margin: -52px 0 0 -52px; background: var(--blush); mix-blend-mode: normal; }
-.has-cursor .cursor.is-hidden { opacity: 0; }
-.cursor span { font-size: .62rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); opacity: 0; transition: opacity .25s; white-space: nowrap; }
-.cursor.is-view span { opacity: 1; }
-.has-cursor .work, .has-cursor .cat { cursor: none; }
-
 /* ---------- Шапка ---------- */
 .header {
   position: fixed; top: 0; left: 0; right: 0;
@@ -725,6 +706,25 @@ p { text-wrap: pretty; }
   .order__visual img { width: 100%; height: 100%; object-fit: cover; }
   .sticky { display: none; }
   .footer__giant { font-size: min(29vw, 400px); }
+}
+
+/* ==========================================================================
+   Телефон (палец, без мыши): облегчаем всё, что мешает плавной прокрутке
+   ========================================================================== */
+.is-touch .hero__mask { will-change: transform, opacity; }      /* буквы рисуются один раз, дальше только масштаб */
+.is-touch .hero__photo img, .is-touch .cats__track { will-change: transform; }
+@media (hover: none), (pointer: coarse) {
+  .display em .w > span, .hero__title em { animation: none; background-position: 30% 0; }  /* без постоянного перелива */
+  .header.is-solid { background: rgba(18, 14, 13, .94); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .sticky { background: rgba(33, 26, 24, .97); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .cat::before, .hero__actions .btn--line { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .cat::before { background: rgba(18, 14, 13, .55); }
+  .reveal-img, .reveal-img.in { clip-path: none; }
+  .reveal-img img { opacity: 0; transform: scale(1.06); transition: opacity 1s var(--ease), transform 1.4s var(--ease); }
+  .reveal-img.in img { opacity: 1; transform: none; }
+  .reveal-img { border-radius: var(--r); }
+  .about__img, .balloons__img > div { border-radius: var(--r-lg); }
+  .balloons__img--side > div { border-radius: 50%; }
 }
 
 /* ==========================================================================

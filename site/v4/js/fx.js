@@ -15,6 +15,8 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) root.classList.add("is-reduced");
 
+  var touch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+  if (touch) root.classList.add("is-touch");
   var W = window.innerWidth, H = window.innerHeight;
 
   /* ---------------- Заставка ---------------- */
@@ -99,63 +101,76 @@
     mark.setAttribute("height", (149 * u).toFixed(1));
     mask.style.transformOrigin = icx.toFixed(1) + "px " + (capTop + capH * 0.55).toFixed(1) + "px";
     hero.style.setProperty("--capY", (baseline + Math.max(22, fs * 0.16)) + "px");
-    maxScale = Math.max(36, (w / (fs * 0.13)) * 1.4);
+    maxScale = touch ? 12 : Math.max(36, (w / (fs * 0.13)) * 1.4);
   }
+
+  /* Прокрутка: на каждом кадре читаем только scrollY, а положения блоков меряем заранее (layoutAll).
+     Так браузеру не приходится пересчитывать вёрстку посреди кадра — на телефоне это и давало рывки. */
+  var Y = 0;
+  var heroTop = 0, heroRange = 1;
 
   function updateIntro() {
     if (!hero || reduce) return;
-    var r = hero.getBoundingClientRect();
-    var total = hero.offsetHeight - H;
-    var p = clamp(-r.top / total, 0, 1);
+    var p = clamp((Y - heroTop) / heroRange, 0, 1);
     var z = clamp(p / 0.6, 0, 1);
-    var s = Math.pow(maxScale, smooth(z));
+    var e = smooth(z);
+    var s = Math.pow(maxScale, e);
     mask.style.transform = "scale(" + s.toFixed(3) + ")";
+    // на телефоне буквы не растягиваем до бесконечности, а мягко растворяем — так легче для видеокарты
+    if (touch) mask.style.opacity = (1 - smooth(clamp((z - 0.45) / 0.5, 0, 1))).toFixed(3);
     mask.style.visibility = z >= 0.995 ? "hidden" : "visible";
-    heroImg.style.transform = "scale(" + (1.2 - 0.2 * smooth(z)).toFixed(4) + ")";
+    heroImg.style.transform = "scale(" + (1.2 - 0.2 * e).toFixed(4) + ")";
     hero.style.setProperty("--p", p.toFixed(4));
     hero.classList.toggle("is-revealed", p > 0.7);
   }
 
   /* ---------------- Категории: едут вбок ---------------- */
-  var catsSec = $("#catsSec"), catsTrack = $("#cats"), catsBar = $("#catsBar"), catsDist = 0;
+  var catsSec = $("#catsSec"), catsTrack = $("#cats"), catsBar = $("#catsBar"), catsPin = $(".cats__pin");
+  var catsDist = 0, catsTop = 0, catsRange = 1, lastCatsX = null;
   function layoutCats() {
     if (!catsSec || reduce) return;
+    var ph = catsPin.clientHeight;          // 100svh — не прыгает, когда прячется адресная строка
     catsDist = Math.max(0, catsTrack.offsetWidth - W);
-    catsSec.style.height = (H + catsDist) + "px";
+    catsSec.style.height = (ph + catsDist) + "px";
+    catsRange = Math.max(1, catsDist);
   }
   function updateCats() {
     if (!catsSec || reduce) return;
-    var r = catsSec.getBoundingClientRect();
-    var total = catsSec.offsetHeight - H;
-    var p = total > 0 ? clamp(-r.top / total, 0, 1) : 0;
-    catsTrack.style.transform = "translate3d(" + (-p * catsDist).toFixed(1) + "px,0,0)";
+    var p = clamp((Y - catsTop) / catsRange, 0, 1);
+    var x = Math.round(-p * catsDist);
+    if (x === lastCatsX) return;
+    lastCatsX = x;
+    catsTrack.style.transform = "translate3d(" + x + "px,0,0)";
     if (catsBar) catsBar.style.setProperty("--cp", p.toFixed(4));
   }
 
   /* ---------------- Проявление текста словами ---------------- */
+  var scrubs = [];
   function updateScrub() {
-    $$(".scrub").forEach(function (el) {
-      var words = el.querySelectorAll(".sw");
-      if (!words.length) return;
-      if (reduce) { if (el._k !== words.length) { el._k = words.length; for (var j = 0; j < words.length; j++) words[j].classList.add("on"); } return; }
-      var r = el.getBoundingClientRect();
-      var p = clamp((H * 0.82 - r.top) / (r.height + H * 0.3), 0, 1);
-      var k = Math.round(p * words.length * 1.05);
-      if (k === el._k) return;
-      el._k = k;
-      for (var i = 0; i < words.length; i++) words[i].classList.toggle("on", i < k);
+    scrubs.forEach(function (s) {
+      var n = s.words.length;
+      if (!n) return;
+      var k;
+      if (reduce) k = n;
+      else {
+        var top = s.top - Y;  // положение на экране
+        var p = clamp((H * 0.82 - top) / (s.height + H * 0.3), 0, 1);
+        k = Math.round(p * n * 1.05);
+      }
+      if (k === s.k) return;
+      s.k = k;
+      for (var i = 0; i < n; i++) s.words[i].classList.toggle("on", i < k);
     });
   }
 
-  /* ---------------- Параллакс ---------------- */
-  var para = $$("[data-speed]");
+  /* ---------------- Параллакс (только компьютер) ---------------- */
+  var para = touch ? [] : $$("[data-speed]").map(function (el) { return { el: el, speed: parseFloat(el.dataset.speed), mid: 0 }; });
   function updatePara() {
     if (reduce) return;
-    para.forEach(function (el) {
-      var r = el.parentElement.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > H + 200) return;
-      var d = (r.top + r.height / 2 - H / 2) * parseFloat(el.dataset.speed);
-      el.style.transform = "translate3d(0," + (-d).toFixed(1) + "px,0)";
+    para.forEach(function (o) {
+      var c = o.mid - Y;  // центр блока относительно верха экрана
+      if (c < -H || c > H * 2) return;
+      o.el.style.transform = "translate3d(0," + (-(c - H / 2) * o.speed).toFixed(1) + "px,0)";
     });
   }
 
@@ -174,10 +189,30 @@
     });
   }
 
+  /* ---------------- Замеры ---------------- */
+  function measure() {
+    var y = window.scrollY;
+    if (hero) {
+      heroTop = hero.getBoundingClientRect().top + y;
+      heroRange = Math.max(1, hero.offsetHeight - $(".hero__pin").clientHeight);
+    }
+    if (catsSec) catsTop = catsSec.getBoundingClientRect().top + y;
+    scrubs = $$(".scrub").map(function (el) {
+      var r = el.getBoundingClientRect();
+      return { words: el.querySelectorAll(".sw"), top: r.top + y, height: r.height, k: -1 };
+    });
+    para.forEach(function (o) {
+      var r = o.el.parentElement.getBoundingClientRect();
+      o.mid = r.top + y + r.height / 2;
+    });
+    lastCatsX = null;
+  }
+
   /* ---------------- Прокрутка ---------------- */
   var ticking = false;
   function onScroll() {
     ticking = false;
+    Y = window.scrollY;
     updateIntro();
     updateCats();
     updateScrub();
@@ -190,12 +225,19 @@
     W = window.innerWidth; H = window.innerHeight;
     layoutIntro();
     layoutCats();
+    measure();
     onScroll();
   }
-  var resizeTimer;
+  // На телефоне при прокрутке прячется адресная строка и меняется высота окна —
+  // это не повод всё перемерять (иначе страница дёргается). Перемеряем, только если изменилась ширина.
+  var resizeTimer, lastW = W;
   window.addEventListener("resize", function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(layoutAll, 120);
+    resizeTimer = setTimeout(function () {
+      if (touch && window.innerWidth === lastW) { H = window.innerHeight; return; }
+      lastW = window.innerWidth;
+      layoutAll();
+    }, 150);
   });
 
   // main.js перерисовывает блоки при смене языка — заново делим слова, копируем отзывы, меряем ленту
@@ -208,8 +250,8 @@
       processText();
       cloneReviews();
       layoutCats();
-      updateCats();
-      updateScrub();
+      measure();
+      onScroll();
     });
   }).observe(document.body, { childList: true, subtree: true });
 
@@ -218,6 +260,14 @@
   layoutAll();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutAll);
   window.addEventListener("load", layoutAll);
+  // высота страницы поменялась (догрузились фото, сменился фильтр галереи) — перемеряем положения блоков
+  if ("ResizeObserver" in window) {
+    var roTimer;
+    new ResizeObserver(function () {
+      clearTimeout(roTimer);
+      roTimer = setTimeout(function () { measure(); onScroll(); }, 100);
+    }).observe(document.body);
+  }
 
   /* ---------------- Лепестки в финальном блоке ---------------- */
   (function petals() {
@@ -282,34 +332,8 @@
     }
   })();
 
-  /* ---------------- Курсор и «магнитные» кнопки (только мышь) ---------------- */
+  /* ---------------- «Магнитные» кнопки (только мышь) ---------------- */
   if (!reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    var cur = $("#cursor"), label = $("span", cur);
-    var VIEW = { ro: "Vezi", en: "View", uk: "Дивитись", ru: "Смотреть" };
-    var tx = W / 2, ty = H / 2, cx = tx, cy = ty, shown = false;
-    root.classList.add("has-cursor");
-    cur.classList.add("is-hidden");
-    document.addEventListener("mousemove", function (e) {
-      tx = e.clientX; ty = e.clientY;
-      if (!shown) { shown = true; cx = tx; cy = ty; cur.classList.remove("is-hidden"); }
-    }, { passive: true });
-    document.addEventListener("mouseleave", function () { shown = false; cur.classList.add("is-hidden"); });
-    document.addEventListener("mouseover", function (e) {
-      var t = e.target;
-      var view = t.closest && t.closest(".work, .cat");
-      var link = !view && t.closest && t.closest("a, button, .chip, .filter");
-      var field = t.closest && t.closest("input, textarea, select, iframe");
-      cur.classList.toggle("is-view", !!view);
-      cur.classList.toggle("is-link", !!link);
-      cur.classList.toggle("is-hidden", !!field || !shown);
-      if (view) label.textContent = VIEW[root.lang] || VIEW.ro;
-    });
-    (function loop() {
-      cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
-      cur.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)";
-      requestAnimationFrame(loop);
-    })();
-
     $$("[data-magnetic]").forEach(function (b) {
       b.addEventListener("mousemove", function (e) {
         var r = b.getBoundingClientRect();
