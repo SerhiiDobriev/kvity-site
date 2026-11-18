@@ -18,7 +18,8 @@
   var pad2 = function (n) { return String(n).padStart(2, "0"); };
   var byId = {};
   cfg.gallery.forEach(function (g) { byId[g.id] = g; });
-  var file = function (id) { var g = byId[id]; return "img/" + id + (g && g.slug ? "-" + g.slug : ""); };
+  // KV_BASE: копии сайта в подпапках (/v3/) берут фото из общей папки img/
+  var file = function (id) { var g = byId[id]; return (window.KV_BASE || "") + "img/" + id + (g && g.slug ? "-" + g.slug : ""); };
   var small = function (id) { return file(id) + "-s.webp"; };
   var large = function (id) { return file(id) + ".webp"; };
 
