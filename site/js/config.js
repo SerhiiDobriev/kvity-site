@@ -27,7 +27,7 @@ window.KVITY_CONFIG = {
     {
       id: "constanta",
       name: "Constanța",
-      address: "Bulevardul Aurel Vlaicu 305A, 900001 Constanța",
+      address: "Bulevardul Aurel Vlaicu 305, 900001 Constanța",
       phone: "+40 727 244 681",
       hours: "09:00–19:00",
       rating: 5.0,
