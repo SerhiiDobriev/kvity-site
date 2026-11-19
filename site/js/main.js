@@ -3,8 +3,8 @@
 
   var cfg = window.KVITY_CONFIG;
   var I18N = window.KVITY_I18N;
-  var LANGS = ["ro", "en", "ua", "ru"];
-  var HTML_LANG = { ro: "ro", en: "en", ua: "uk", ru: "ru" };
+  var LANGS = ["ro", "en", "ua"];
+  var HTML_LANG = { ro: "ro", en: "en", ua: "uk" };
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
@@ -39,7 +39,7 @@
     if (saved && LANGS.indexOf(saved) > -1) return saved;
     var nav = (navigator.language || "ro").slice(0, 2).toLowerCase();
     if (nav === "uk") return "ua";
-    if (nav === "ru" || nav === "en") return nav;
+    if (nav === "en") return nav;
     return "ro";
   }
 

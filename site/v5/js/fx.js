@@ -75,8 +75,7 @@
   var MOOD = {
     ro: { label: "Alege starea", blush: "Pudră", peach: "Piersică", lilac: "Liliac", sage: "Salvie" },
     en: { label: "Pick a mood", blush: "Blush", peach: "Peach", lilac: "Lilac", sage: "Sage" },
-    uk: { label: "Оберіть настрій", blush: "Пудра", peach: "Персик", lilac: "Бузок", sage: "Шавлія" },
-    ru: { label: "Выберите настроение", blush: "Пудра", peach: "Персик", lilac: "Сирень", sage: "Шалфей" }
+    uk: { label: "Оберіть настрій", blush: "Пудра", peach: "Персик", lilac: "Бузок", sage: "Шавлія" }
   };
   function moodTexts() {
     var t = MOOD[root.lang] || MOOD.ro;
