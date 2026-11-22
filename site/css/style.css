@@ -168,6 +168,10 @@ p { text-wrap: pretty; }
 .logo--light .logo__word { font-size: 2rem; }
 .logo--light { --mk-sw: 1px; }
 .header .logo { --mk-sw: .6px; --mk-in: none; } /* мелкий размер: тонкий контур и один ряд лепестков, иначе цветок сливается */
+/* Логотип из файлов Алины (img/logo-*.png): картинка вместо букв */
+.logo:has(.logo__img) { padding-top: 0; }
+.logo__img { display: block; width: 126px; height: auto; }
+.logo--light .logo__img { width: 190px; }
 .note svg { --mk-fill: var(--surface); }
 
 /* ---------- Шапка ---------- */
