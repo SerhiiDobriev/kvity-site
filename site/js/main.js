@@ -489,8 +489,8 @@
       '<a href="' + wa + '" target="_blank" rel="noopener" aria-label="WhatsApp">' + icon("chat") + "</a>";
     $("#legal").innerHTML =
       "<li>" + esc(cfg.legal.company) + "</li>" +
-      "<li>CUI: " + esc(cfg.legal.cui) + "</li>" +
-      '<li><a href="mailto:' + cfg.legal.email + '">' + esc(cfg.legal.email) + "</a></li>" +
+      "<li>C.U.I.: " + esc(cfg.legal.cui) + "</li>" +
+      (cfg.legal.email ? '<li><a href="mailto:' + cfg.legal.email + '">' + esc(cfg.legal.email) + "</a></li>" : "") +
       '<li><a href="#">' + esc(t("footer.privacy")) + "</a></li>" +
       '<li><a href="#">' + esc(t("footer.terms")) + "</a></li>" +
       '<li><a href="https://anpc.ro/" target="_blank" rel="noopener">ANPC</a> · ' +

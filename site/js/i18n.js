@@ -136,8 +136,8 @@ window.KVITY_I18N = {
       phone: "Telefon",
       submit: "Trimite pe WhatsApp",
       submitTg: "Trimite pe Telegram",
-      hint: "Se deschide WhatsApp cu mesajul gata. Nimic nu se trimite fără tine.",
-      hintBoth: "Se deschide WhatsApp sau Telegram cu mesajul gata. Nimic nu se trimite fără tine.",
+      hint: "Mesajul va fi pregătit automat — tu doar confirmi trimiterea.",
+      hintBoth: "Mesajul va fi pregătit automat — tu doar confirmi trimiterea.",
       ref: "Exemplul ales",
       remove: "Elimină",
       required: "Completează acest câmp",
@@ -162,8 +162,8 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Studiourile noastre",
-      lead: "Livrare flori în Constanța și Mamaia sau vino în studio.",
-      title: "Te așteptăm<br>în <em>două locuri</em>",
+      lead: "Te așteptăm în studiourile noastre din Constanța și Mamaia.",
+      title: "Două studiouri.<br><em>O singură iubire pentru flori</em>",
       daily: "Zilnic",
       route: "Traseu",
       call: "Sună",
@@ -176,8 +176,8 @@ window.KVITY_I18N = {
       read: "Toate recenziile pe Google"
     },
     cta: {
-      title: "Flori sau baloane<br>pentru <em>cineva drag?</em>",
-      sub: "Comandă flori sau baloane cu livrare în Constanța și Mamaia — floristul creează comanda astăzi.",
+      title: "Nu aștepta o ocazie specială<br><em>ca să dăruiești flori</em>",
+      sub: "Alege buchetul preferat, iar noi ne ocupăm de restul.",
       btn: "Comandă"
     },
     footer: {
@@ -326,8 +326,8 @@ window.KVITY_I18N = {
       phone: "Phone",
       submit: "Send via WhatsApp",
       submitTg: "Send via Telegram",
-      hint: "WhatsApp opens with the message ready. Nothing is sent without you.",
-      hintBoth: "Telegram or WhatsApp will open with a ready message. Nothing is sent without you.",
+      hint: "Your message will be prepared automatically — you just confirm sending it.",
+      hintBoth: "Your message will be prepared automatically — you just confirm sending it.",
       ref: "Chosen example",
       remove: "Remove",
       required: "Please fill in this field",
@@ -352,8 +352,8 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Our studios",
-      lead: "Flower delivery in Constanța and Mamaia — or visit our studio.",
-      title: "Visit us<br><em>in two places</em>",
+      lead: "We look forward to seeing you at our studios in Constanța and Mamaia.",
+      title: "Two studios.<br><em>One love for flowers</em>",
       daily: "Daily",
       route: "Directions",
       call: "Call",
@@ -366,8 +366,8 @@ window.KVITY_I18N = {
       read: "All reviews on Google"
     },
     cta: {
-      title: "Flowers or balloons<br>for <em>someone special?</em>",
-      sub: "Order flowers or balloons with delivery in Constanța and Mamaia — the florist will create it today.",
+      title: "Don't wait for a special occasion<br><em>to give flowers</em>",
+      sub: "Choose your favourite bouquet and we'll take care of the rest.",
       btn: "Order"
     },
     footer: {
@@ -516,8 +516,8 @@ window.KVITY_I18N = {
       phone: "Телефон",
       submit: "Надіслати у WhatsApp",
       submitTg: "Надіслати в Telegram",
-      hint: "Відкриється WhatsApp з готовим повідомленням. Без вас нічого не надсилається.",
-      hintBoth: "Відкриється Telegram або WhatsApp з готовим повідомленням. Без вас нічого не надсилається.",
+      hint: "Повідомлення буде підготовлено автоматично — вам залишиться лише підтвердити відправлення.",
+      hintBoth: "Повідомлення буде підготовлено автоматично — вам залишиться лише підтвердити відправлення.",
       ref: "Обраний приклад",
       remove: "Прибрати",
       required: "Заповніть це поле",
@@ -542,8 +542,8 @@ window.KVITY_I18N = {
     },
     studios: {
       kicker: "Наші студії",
-      lead: "Доставка квітів по Констанці та на Мамаї — або приходьте до студії.",
-      title: "Чекаємо на вас<br><em>у двох місцях</em>",
+      lead: "Чекаємо на Вас в наших студіях у Констанці та на Мамаї.",
+      title: "Дві студії.<br><em>Одна любов до квітів</em>",
       daily: "Щодня",
       route: "Маршрут",
       call: "Подзвонити",
@@ -556,8 +556,8 @@ window.KVITY_I18N = {
       read: "Усі відгуки в Google"
     },
     cta: {
-      title: "Квіти чи кулі<br>для <em>дорогої людини?</em>",
-      sub: "Замовте квіти чи кулі з доставкою по Констанці та на Мамаї — флорист створить замовлення вже сьогодні.",
+      title: "Не чекайте особливого приводу,<br><em>щоб подарувати квіти</em>",
+      sub: "Обирайте улюблений букет, а ми подбаємо про все інше.",
       btn: "Замовити"
     },
     footer: {

@@ -101,8 +101,8 @@ window.KVITY_CONFIG = {
 
   // Юридические данные (заглушки для демо).
   legal: {
-    company: "S.C. ________ S.R.L.",
-    cui: "RO________",
-    email: "hello@kvity.ro"
+    company: "KVITY FLORI S.R.L.",
+    cui: "49267079",
+    email: "" // почты пока нет (решение Алины 22.11.2026); появится — вписать сюда
   }
 };
