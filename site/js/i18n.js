@@ -142,7 +142,12 @@ window.KVITY_I18N = {
       remove: "Elimină",
       required: "Completează acest câmp",
       sent: "Se deschide WhatsApp…",
-      sentTg: "Se deschide Telegram. Mesajul este copiat — îl poți lipi dacă e nevoie."
+      sentTg: "Se deschide Telegram. Mesajul este copiat — îl poți lipi dacă e nevoie.",
+      inspoTitle: "Fotografie de inspirație",
+      inspo: "📷 Am o fotografie-exemplu",
+      inspoNote: "După ce se deschide chatul, trimite pur și simplu fotografia — floristul va ține cont de ea.",
+      sentPhoto: "Nu uita să atașezi fotografia în chat 📷",
+      confirm: "Comanda este confirmată după stabilirea detaliilor și plata cu managerul KVITY."
     },
     msg: {
       hello: "Bună ziua! Aș dori să fac o comandă.",
@@ -158,7 +163,8 @@ window.KVITY_I18N = {
       example: "Exemplu",
       name: "Destinatar",
       phone: "Telefon destinatar",
-      thanks: "Mulțumesc!"
+      thanks: "Mulțumesc!",
+      inspo: "📷 Trimit o fotografie-exemplu în chat"
     },
     studios: {
       kicker: "Studiourile noastre",
@@ -332,7 +338,12 @@ window.KVITY_I18N = {
       remove: "Remove",
       required: "Please fill in this field",
       sent: "Opening WhatsApp…",
-      sentTg: "Opening Telegram. The message is copied — paste it if needed."
+      sentTg: "Opening Telegram. The message is copied — paste it if needed.",
+      inspoTitle: "Inspiration photo",
+      inspo: "📷 I have an example photo",
+      inspoNote: "Once the chat opens, just send the photo — the florist will use it as a reference.",
+      sentPhoto: "Don't forget to attach the photo in the chat 📷",
+      confirm: "Your order is confirmed once the details and payment are agreed with a KVITY manager."
     },
     msg: {
       hello: "Hello! I'd like to place an order.",
@@ -348,7 +359,8 @@ window.KVITY_I18N = {
       example: "Example",
       name: "Recipient",
       phone: "Recipient's phone",
-      thanks: "Thank you!"
+      thanks: "Thank you!",
+      inspo: "📷 I'll send an example photo in the chat"
     },
     studios: {
       kicker: "Our studios",
@@ -522,7 +534,12 @@ window.KVITY_I18N = {
       remove: "Прибрати",
       required: "Заповніть це поле",
       sent: "Відкриваємо WhatsApp…",
-      sentTg: "Відкриваємо Telegram. Повідомлення скопійовано — вставте його, якщо потрібно."
+      sentTg: "Відкриваємо Telegram. Повідомлення скопійовано — вставте його, якщо потрібно.",
+      inspoTitle: "Фото для натхнення",
+      inspo: "📷 Маю фото-приклад",
+      inspoNote: "Після відкриття чату просто надішліть фото — флорист врахує ваш приклад.",
+      sentPhoto: "Не забудьте прикріпити фото в чаті 📷",
+      confirm: "Ваше замовлення вважається підтвердженим після узгодження деталей та оплати з менеджером KVITY."
     },
     msg: {
       hello: "Добрий день! Хочу зробити замовлення.",
@@ -538,7 +555,8 @@ window.KVITY_I18N = {
       example: "Приклад",
       name: "Отримувач",
       phone: "Телефон отримувача",
-      thanks: "Дякую!"
+      thanks: "Дякую!",
+      inspo: "📷 Надішлю фото-приклад у чат"
     },
     studios: {
       kicker: "Наші студії",

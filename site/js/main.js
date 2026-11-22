@@ -300,6 +300,23 @@
     $("#date").value = iso;
   })();
 
+  // Фото для натхнення (идея Алины): ссылка wa.me/t.me передаёт только текст, поэтому отмечаем галочку,
+  // в заявку идёт строка «Надішлю фото-приклад», а само фото клиент прикрепляет в открывшемся чате.
+  (function initInspo() {
+    var fs = document.createElement("fieldset");
+    fs.className = "field";
+    fs.innerHTML = '<legend data-i18n="form.inspoTitle"></legend>' +
+      '<div class="chips"><label class="chip" id="inspoChip"><input type="checkbox" id="inspo"><span data-i18n="form.inspo"></span></label></div>' +
+      '<p class="form__note form__note--after"><small data-i18n="form.inspoNote"></small></p>';
+    $("#styleChips").closest("fieldset").insertAdjacentElement("afterend", fs);
+    $("#inspo").addEventListener("change", function () { $("#inspoChip").classList.toggle("is-checked", this.checked); });
+    // Под кнопками: заявка — ещё не подтверждённый заказ (просьба Алины)
+    var confirm = document.createElement("p");
+    confirm.className = "form__hint form__confirm";
+    confirm.setAttribute("data-i18n", "form.confirm");
+    $(".form__hint").insertAdjacentElement("afterend", confirm);
+  })();
+
   var segment = $("#method");
   segment.addEventListener("click", function (e) {
     var b = e.target.closest("button[data-method]");
@@ -371,12 +388,13 @@
     if (channel === "tg" && cfg.telegramOrders) {
       // t.me/<ник>?text= открывает чат с готовым текстом; на всякий случай кладём текст и в буфер обмена
       url = "https://t.me/" + cfg.telegramOrders + "?text=" + encodeURIComponent(text);
-      try { if (navigator.clipboard) navigator.clipboard.writeText(text); } catch (err) { /* без буфера тоже работает */ }
+      try { if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function () {}); } catch (err) { /* без буфера тоже работает */ }
       toast(t("form.sentTg"));
     } else {
       url = "https://wa.me/" + cfg.whatsapp + "?text=" + encodeURIComponent(text);
       toast(t("form.sent"));
     }
+    if ($("#inspo").checked) toast(t("form.sentPhoto"));
     channel = "wa";
     var win = window.open(url, "_blank", "noopener");
     if (!win) location.href = url;
@@ -403,6 +421,7 @@
     else lines.push("• " + m("pickup") + ": KVITY " + cfg.studios[state.studio || 0].name);
     var card = $("#card").value.trim();
     if (card) lines.push("• " + m("card") + ": «" + card + "»");
+    if ($("#inspo").checked) lines.push("• " + m("inspo"));
     if (state.ref != null) {
       lines.push("• " + m("example") + ": #" + refNumber(state.ref) + " " + caption(state.ref) + " — " + new URL(large(state.ref), location.href).href);
     }

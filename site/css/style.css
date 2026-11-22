@@ -640,3 +640,5 @@ p { text-wrap: pretty; }
 /* Приписка под «Доставка» */
 .form__note { margin: 0 0 10px; color: var(--ink-soft); line-height: 1.4; }
 #customTimeBox { margin-top: 12px; }
+.form__note--after { margin: 10px 0 0; }
+.form__confirm { margin-top: 6px; color: var(--ink); }
