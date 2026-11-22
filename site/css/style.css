@@ -636,3 +636,6 @@ p { text-wrap: pretty; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
   .reveal, .reveal-img img, .hero__line { opacity: 1 !important; transform: none !important; }
 }
+
+/* Приписка под «Доставка» */
+.form__note { margin: 0 0 10px; color: var(--ink-soft); line-height: 1.4; }

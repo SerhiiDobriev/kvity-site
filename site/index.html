@@ -24,10 +24,10 @@
   <link rel="preload" href="fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="img/buchet-trandafiri-piersica-kvity-constanta.webp">
-  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/style.css?v=3.3">
   <!-- defer: скрипты качаются параллельно и не задерживают первую отрисовку (важно для Safari на медленном интернете) -->
   <script src="js/config.js?v=3.2" defer></script>
-  <script src="js/i18n.js?v=3.4" defer></script>
+  <script src="js/i18n.js?v=3.5" defer></script>
   <script src="js/main.js?v=3.3" defer></script>
 </head>
 <body>
@@ -196,8 +196,8 @@
             <button type="button" data-method="pickup" data-i18n="form.pickup">Ridicare din studio</button>
             <span class="segment__thumb" aria-hidden="true"></span>
           </div>
-          <div class="collapse is-open" id="deliveryBox">
-            <label class="input"><span data-i18n="form.address">Adresa de livrare</span><textarea id="address" rows="2" data-i18n-ph="form.addressPh"></textarea></label>
+          <div class="collapse is-open" id="deliveryBox"><div><p class="form__note"><small data-i18n="form.deliveryNote"></small></p>
+            <label class="input"><span data-i18n="form.address">Adresa de livrare</span><textarea id="address" rows="2" data-i18n-ph="form.addressPh"></textarea></label></div>
           </div>
           <div class="collapse" id="pickupBox"><div class="chips" id="studioChips"></div></div>
         </fieldset>
@@ -210,8 +210,8 @@
         <fieldset class="field">
           <legend data-i18n="form.contact">Datele tale</legend>
           <div class="row">
-            <label class="input"><span data-i18n="form.name">Numele</span><input type="text" id="name" autocomplete="name" required></label>
-            <label class="input"><span data-i18n="form.phone">Telefon</span><input type="tel" id="phone" autocomplete="tel" inputmode="tel" required></label>
+            <label class="input"><span data-i18n="form.name">Numele</span><input type="text" id="name" autocomplete="off" required></label>
+            <label class="input"><span data-i18n="form.phone">Telefon</span><input type="tel" id="phone" autocomplete="off" inputmode="tel" required></label>
           </div>
         </fieldset>
 
