@@ -164,7 +164,7 @@ window.KVITY_I18N = {
       name: "Destinatar",
       phone: "Telefon destinatar",
       thanks: "Mulțumesc!",
-      inspo: "📷 Trimit o fotografie-exemplu în chat"
+      inspo: "📷 Trimit fotografia-exemplu în mesajul următor ⬇️"
     },
     studios: {
       kicker: "Studiourile noastre",
@@ -360,7 +360,7 @@ window.KVITY_I18N = {
       name: "Recipient",
       phone: "Recipient's phone",
       thanks: "Thank you!",
-      inspo: "📷 I'll send an example photo in the chat"
+      inspo: "📷 I'll send the example photo in the next message ⬇️"
     },
     studios: {
       kicker: "Our studios",
@@ -556,7 +556,7 @@ window.KVITY_I18N = {
       name: "Отримувач",
       phone: "Телефон отримувача",
       thanks: "Дякую!",
-      inspo: "📷 Надішлю фото-приклад у чат"
+      inspo: "📷 Фото-приклад надішлю наступним повідомленням ⬇️"
     },
     studios: {
       kicker: "Наші студії",

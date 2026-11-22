@@ -421,11 +421,12 @@
     else lines.push("• " + m("pickup") + ": KVITY " + cfg.studios[state.studio || 0].name);
     var card = $("#card").value.trim();
     if (card) lines.push("• " + m("card") + ": «" + card + "»");
-    if ($("#inspo").checked) lines.push("• " + m("inspo"));
     if (state.ref != null) {
       lines.push("• " + m("example") + ": #" + refNumber(state.ref) + " " + caption(state.ref) + " — " + new URL(large(state.ref), location.href).href);
     }
     lines.push("", m("name") + ": " + $("#name").value.trim(), m("phone") + ": " + $("#phone").value.trim(), "", m("thanks"));
+    // Напоминание про фото — последней строкой, чтобы клиент сразу отправил фото следом (бот KVITY MANAGER узнаёт эту строку)
+    if ($("#inspo").checked) lines.push("", m("inspo"));
     return lines.join("\n");
   }
 
