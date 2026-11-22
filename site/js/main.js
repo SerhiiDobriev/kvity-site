@@ -39,8 +39,8 @@
     if (saved && LANGS.indexOf(saved) > -1) return saved;
     var nav = (navigator.language || "ro").slice(0, 2).toLowerCase();
     if (nav === "uk" || nav === "ru") return "ua"; // телефон на русском — почти всегда наши: украинский (просьба Алины)
-    if (nav === "en") return nav;
-    return "ro";
+    if (nav === "ro" || nav === "mo") return "ro";
+    return "en"; // остальные языки (туристы: немцы, поляки…) — английский
   }
 
   function t(path) {
