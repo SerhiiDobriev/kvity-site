@@ -639,3 +639,4 @@ p { text-wrap: pretty; }
 
 /* Приписка под «Доставка» */
 .form__note { margin: 0 0 10px; color: var(--ink-soft); line-height: 1.4; }
+#customTimeBox { margin-top: 12px; }

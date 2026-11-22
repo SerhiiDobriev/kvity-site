@@ -38,7 +38,7 @@
     var saved = store.get("kvity-lang");
     if (saved && LANGS.indexOf(saved) > -1) return saved;
     var nav = (navigator.language || "ro").slice(0, 2).toLowerCase();
-    if (nav === "uk") return "ua";
+    if (nav === "uk" || nav === "ru") return "ua"; // телефон на русском — почти всегда наши: украинский (просьба Алины)
     if (nav === "en") return nav;
     return "ro";
   }
@@ -79,6 +79,7 @@
     renderSteps();
     renderChips();
     renderTimes();
+    renderChannels();
     renderStudios();
     renderRatings();
     renderFooter();
@@ -265,14 +266,32 @@
     }
   });
 
+  // Интервалы — список Алины; morning/anytime/custom подписываются из form.slots, custom открывает поле «Бажаний час»
+  var SLOTS = ["9:30–10:30", "10:30–11:30", "morning", "anytime", "custom"];
+  var customTime = (function () {
+    var box = document.createElement("label");
+    box.className = "input";
+    box.id = "customTimeBox";
+    box.hidden = true;
+    box.innerHTML = '<span></span><input type="text" id="timeCustom" maxlength="60">';
+    $("#time").closest(".row").insertAdjacentElement("afterend", box);
+    return box;
+  })();
+  function slotLabel(s) { return /^\d/.test(s) ? s : t("form.slots." + s); }
   function renderTimes() {
     var sel = $("#time"), prev = sel.value;
-    var slots = ["asap", "09:00–11:00", "11:00–13:00", "13:00–15:00", "15:00–17:00", "17:00–19:00"];
-    sel.innerHTML = slots.map(function (s) {
-      return '<option value="' + s + '">' + (s === "asap" ? esc(t("form.asap")) : s) + "</option>";
+    sel.innerHTML = SLOTS.map(function (s) {
+      return '<option value="' + s + '">' + esc(slotLabel(s)) + "</option>";
     }).join("");
-    if (prev) sel.value = prev;
+    sel.value = prev && SLOTS.indexOf(prev) > -1 ? prev : "anytime";
+    $("span", customTime).textContent = t("form.slots.customLabel");
+    $("#timeCustom").placeholder = t("form.slots.customPh");
+    customTime.hidden = sel.value !== "custom";
   }
+  $("#time").addEventListener("change", function () {
+    customTime.hidden = this.value !== "custom";
+    if (!customTime.hidden) $("#timeCustom").focus();
+  });
 
   (function initDate() {
     var d = new Date();
@@ -312,11 +331,19 @@
     if (err) { if (on) err.textContent = t("form.required"); else err.remove(); }
   }
 
-  // Кнопка Telegram видна, только если в config.js задан ник для заявок
-  var tgBtn = $('[data-channel="tg"]');
-  if (cfg.telegramOrders) {
-    tgBtn.hidden = false;
-    $(".form__hint").setAttribute("data-i18n", "form.hintBoth");
+  // Куда отправлять заявку (просьба Алины): румынский — только WhatsApp;
+  // украинский и английский — сначала Telegram (тёмная кнопка), потом WhatsApp.
+  function tgFirst() { return !!cfg.telegramOrders && lang !== "ro"; }
+  function renderChannels() {
+    var waBtn = $('#orderForm [data-channel="wa"]'), tgBtn = $('#orderForm [data-channel="tg"]');
+    var both = tgFirst();
+    tgBtn.hidden = !both;
+    waBtn.parentNode.insertBefore(both ? tgBtn : waBtn, both ? waBtn : tgBtn);
+    tgBtn.classList.toggle("btn--dark", both); tgBtn.classList.toggle("btn--line", !both);
+    waBtn.classList.toggle("btn--dark", !both); waBtn.classList.toggle("btn--line", both);
+    var hint = $(".form__hint");
+    hint.setAttribute("data-i18n", both ? "form.hintBoth" : "form.hint");
+    hint.textContent = t(both ? "form.hintBoth" : "form.hint");
   }
   var channel = "wa";
   $$("#orderForm [data-channel]").forEach(function (b) {
@@ -370,7 +397,8 @@
       lines.push("• " + m("budget") + ": " + b + " " + t("form.currency"));
     }
     var time = $("#time").value;
-    lines.push("• " + m("date") + ": " + $("#date").value.split("-").reverse().join(".") + ", " + (time === "asap" ? t("form.asap") : time));
+    var timeText = time === "custom" ? ($("#timeCustom").value.trim() || slotLabel("custom")) : slotLabel(time);
+    lines.push("• " + m("date") + ": " + $("#date").value.split("-").reverse().join(".") + ", " + timeText);
     if (state.method === "delivery") lines.push("• " + m("delivery") + ": " + $("#address").value.trim());
     else lines.push("• " + m("pickup") + ": KVITY " + cfg.studios[state.studio || 0].name);
     var card = $("#card").value.trim();
@@ -469,7 +497,14 @@
       '<a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">' + esc(t("footer.sal")) + "</a></li>" +
       '<li class="footer__note">' + esc(t("footer.cookies")) + "</li>";
     $$(".js-call").forEach(function (a) { a.href = tel(cfg.phone); });
-    $$(".js-wa").forEach(function (a) { a.href = wa; });
+    // Кнопка чата внизу экрана: на румынском WhatsApp, на украинском и английском Telegram менеджера
+    var tgChat = tgFirst();
+    $$(".js-wa").forEach(function (a) {
+      a.href = tgChat ? "https://t.me/" + cfg.telegramOrders : wa;
+      a.setAttribute("aria-label", tgChat ? "Telegram" : "WhatsApp");
+      var use = $("use", a);
+      if (use) use.setAttribute("href", tgChat ? "#i-send" : "#i-chat");
+    });
     $("#year").textContent = new Date().getFullYear();
   }
 
