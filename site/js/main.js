@@ -37,9 +37,14 @@
     if (q && LANGS.indexOf(q) > -1) return q;
     var saved = store.get("kvity-lang");
     if (saved && LANGS.indexOf(saved) > -1) return saved;
-    var nav = (navigator.language || "ro").slice(0, 2).toLowerCase();
-    if (nav === "uk" || nav === "ru") return "ua"; // телефон на русском — почти всегда наши: украинский (просьба Алины)
-    if (nav === "ro" || nav === "mo") return "ro";
+    // смотрим весь список языков телефона, а не только первый:
+    // у многих первым стоит английский, а русский/украинский — вторым
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ""];
+    for (var i = 0; i < list.length; i++) {
+      var nav = String(list[i] || "").slice(0, 2).toLowerCase();
+      if (nav === "uk" || nav === "ru") return "ua"; // телефон на русском — почти всегда наши: украинский (просьба Алины)
+      if (nav === "ro" || nav === "mo") return "ro";
+    }
     return "en"; // остальные языки (туристы: немцы, поляки…) — английский
   }
 
