@@ -563,8 +563,8 @@
       (cfg.legal.regCom ? "<li>Nr. Reg. Com.: " + esc(cfg.legal.regCom) + "</li>" : "") +
       (cfg.legal.seat ? "<li>" + esc(t("footer.seat")) + ": " + esc(cfg.legal.seat) + "</li>" : "") +
       (cfg.legal.email ? '<li><a href="mailto:' + cfg.legal.email + '">' + esc(cfg.legal.email) + "</a></li>" : "") +
-      '<li><a href="#">' + esc(t("footer.privacy")) + "</a></li>" +
-      '<li><a href="#">' + esc(t("footer.terms")) + "</a></li>" +
+      '<li><a href="/confidentialitate.html?lang=' + lang + '">' + esc(t("footer.privacy")) + "</a></li>" +
+      '<li><a href="/termeni.html?lang=' + lang + '">' + esc(t("footer.terms")) + "</a></li>" +
       '<li><a href="https://anpc.ro/" target="_blank" rel="noopener">ANPC</a> · ' +
       '<a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">' + esc(t("footer.sal")) + "</a></li>" +
       '<li class="footer__note">' + esc(t("footer.cookies")) + "</li>";
