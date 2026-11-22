@@ -98,8 +98,10 @@ window.KVITY_CONFIG = {
     { id: "g24", slug: "baloane-cifra-10", cat: "balloons" },
     { id: "g25", slug: "baloane-cifra-7-roz", cat: "balloons" },
     { id: "g26", slug: "baloane-argintii-aurii", cat: "balloons" },
-    // ВРЕМЕННО: копия g19, чтобы был виден раздел «Різдвяна колекція» — заменить её рождественскими фото
-    { id: "g27", slug: "trandafiri-rosii-craciun", cat: "christmas" }
+    // ВРЕМЕННО: копия g19 для раздела «Різдвяна колекція» — заменить её фото. Чтобы был виден раздел «Різдвяна колекція» — заменить её рождественскими фото
+    { id: "g27", slug: "trandafiri-rosii-craciun", cat: "christmas" },
+    // ВРЕМЕННО: копия g10 для раздела «Моно букети» — заменить её фото
+    { id: "g28", slug: "hortensii-roz-mono", cat: "mono" }
   ],
 
   // Юридические данные (заглушки для демо).

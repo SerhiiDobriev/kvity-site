@@ -283,7 +283,8 @@ p { text-wrap: pretty; }
 .cat:hover img { transform: scale(1.04); }
 .cat::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(31,28,27,.5), rgba(31,28,27,0) 50%); }
 .cat span {
-  position: absolute; left: 14px; bottom: 12px; z-index: 1;
+  position: absolute; left: 14px; right: 10px; bottom: 12px; z-index: 1;
+  line-height: 1.35;
   color: var(--white);
   font-size: .78rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
 }
@@ -615,7 +616,9 @@ p { text-wrap: pretty; }
   .hero__content { order: 1; margin: 0; align-self: center; padding: 60px 56px 80px max(40px, calc((100vw - var(--max)) / 2 + 40px)); }
 
   .cats { padding-top: 110px; }
-  .cats__track { grid-auto-flow: row; grid-template-columns: repeat(5, 1fr); overflow: visible; padding: 0 var(--gutter); }
+  /* все категории в один ряд: столбцов столько, сколько категорий (--n ставит main.js) */
+  .cats__track { grid-auto-flow: row; grid-template-columns: repeat(var(--n, 5), 1fr); gap: 10px; overflow: visible; padding: 0 var(--gutter); }
+  .cats__track[style*="--n: 6"] .cat span, .cats__track[style*="--n: 7"] .cat span, .cats__track[style*="--n: 8"] .cat span { font-size: .68rem; letter-spacing: .14em; }
   .filters { margin-inline: 0; padding: 0; flex-wrap: wrap; }
   .gallery { grid-template-columns: repeat(4, 1fr); gap: 20px; }
 

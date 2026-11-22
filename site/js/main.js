@@ -106,6 +106,7 @@
     return id;
   }
   function renderCats() {
+    $("#cats").style.setProperty("--n", shownCats().length);
     $("#cats").innerHTML = shownCats().map(function (c) {
       return '<button type="button" class="cat reveal" data-cat="' + c + '">' +
         '<img src="' + small(coverOf(c)) + '" alt="" loading="lazy" width="640" height="853">' +
