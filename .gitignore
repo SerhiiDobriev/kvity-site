@@ -5,3 +5,5 @@ Thumbs.db
 photos-raw/
 photos-selection.jpg
 logo-src/
+foto/data/
+foto/.env

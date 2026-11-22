@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#FBF9F7">
+  <title>KVITY · Фото для сайту</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="app.css?v=2">
+</head>
+<body>
+  <header class="top">
+    <div class="top__title">Фото для сайту <small id="status"></small></div>
+    <div class="seg" id="device" title="Як виглядатиме"><button type="button" data-w="390" class="is-on">Телефон</button><button type="button" data-w="0">Комп'ютер</button></div>
+    <button type="button" class="btn btn--line" id="modeBtn">Переглянути</button>
+    <button type="button" class="btn" id="doneBtn">Готово</button>
+  </header>
+
+  <div class="stage" id="stage"><iframe id="frame" title="Сайт KVITY"></iframe></div>
+
+  <section class="tray" id="tray" aria-label="Ваші фото">
+    <div class="tray__bar">
+      <strong>Ваші фото <span class="muted" id="count"></span></strong>
+      <span class="tray__help" id="help">Перетягніть фото на сайт. На телефоні — затисніть фото на мить і тягніть, або торкніться фото, а потім місця на сайті.</span>
+      <label class="chk"><input type="checkbox" id="onlyFree"> ще не використані</label>
+      <label class="btn btn--small" for="files">+ Додати фото</label>
+      <input type="file" id="files" accept="image/*" multiple hidden>
+    </div>
+    <div class="tray__list" id="pool"></div>
+  </section>
+
+  <div class="hint" id="hint" hidden><span>Тепер торкніться місця на сайті</span><button type="button" id="hintCancel">Скасувати</button></div>
+  <div class="menu" id="menu" hidden><button type="button" id="menuRemove">Прибрати фото</button><button type="button" id="menuCancel">Скасувати</button></div>
+
+  <div class="modal" id="doneModal" hidden>
+    <div class="modal__box">
+      <h2>Надіслати Сергію?</h2>
+      <p id="doneEmpty" class="muted"></p>
+      <p>Після цього можна й далі змінювати — тоді просто знову натисніть «Готово».</p>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--line" id="doneCancel">Ще подумаю</button>
+        <button type="button" class="btn" id="doneSend">Надіслати</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal login" id="login" hidden>
+    <form class="modal__box" id="loginForm">
+      <img src="/img/logo-dark-180.png" srcset="/img/logo-dark-180.png 1x, /img/logo-dark-360.png 2x" width="108" height="36" alt="KVITY">
+      <h2>Фото для сайту</h2>
+      <label class="field">Пароль<input type="password" id="pw" autocomplete="current-password" required></label>
+      <p class="err" id="loginErr"></p>
+      <button type="submit" class="btn">Увійти</button>
+    </form>
+  </div>
+
+  <div class="drop" id="drop" hidden><span>Відпустіть, щоб додати фото</span></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Конструктор фото KVITY на сервере: /opt/kvityfoto (app, data, .env с FOTO_PASSWORD)
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: ../.env
+    ports:
+      - "127.0.0.1:4100:4100"
+    volumes:
+      - /opt/kvityfoto/data:/data
+    mem_limit: 128m
