@@ -78,7 +78,7 @@ window.KVITY_I18N = {
       title: "Baloanele —<br><em>completarea perfectă a florilor</em>",
       text: "Adaugă și mai multă bucurie buchetului! Baloane cu heliu, cifre, inimi și compoziții stilate, în nuanțe care se potrivesc cu darul tău floral.",
       list: ["Baloane din latex", "Baloane din folie de diferite forme", "Baloane din folie cifre", "Compoziții combinate din baloane"],
-      note: "*Baloanele sunt disponibile doar în studioul nostru din Mamaia."
+      note: "*Baloanele sunt disponibile doar de la studioul nostru din Mamaia."
     },
     about: {
       kicker: "Despre studio",
@@ -454,7 +454,7 @@ window.KVITY_I18N = {
       title: "Повітряні кульки —<br><em>ідеальне доповнення до квітів</em>",
       text: "Додайте до букета ще більше святкового настрою! Гелієві кульки, цифри, серця та стильні композиції у відтінках, що гармонійно доповнять ваш квітковий подарунок.",
       list: ["Латексні кулі", "Фольговані кулі різної форми", "Фольговані кулі-цифри", "Комбіновані композиції з кульок"],
-      note: "*Послуга «кульки» доступна лише в нашій студії на Мамаї."
+      note: "*Послуга «кульки» доступна лише з нашої студії на Мамаї."
     },
     about: {
       kicker: "Про студію",
