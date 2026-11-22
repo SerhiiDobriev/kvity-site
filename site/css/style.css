@@ -238,6 +238,7 @@ p { text-wrap: pretty; }
 .hero__h1 > span { display: block; }
 .hero__content .display { font-size: clamp(2.35rem, 10.2vw, 5.2rem); }
 .hero__sub { color: var(--ink-soft); max-width: 36ch; margin: 0 0 24px; }
+.hero__est { color: var(--accent); margin: 0 0 14px; }
 .hero__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 420px; }
 .hero__actions .btn { padding: 0 12px; }
 
