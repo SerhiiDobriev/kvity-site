@@ -95,10 +95,20 @@
   /* ---------------- Категории и фильтры ---------------- */
   var filter = "all";
 
+  // Пустые категории не показываем (Різдвяна колекція появится сама, когда будут фото).
+  // Конструктор фото (KV_ALL_CATS) показывает все — туда раскладывают новые фото.
+  function shownCats() {
+    return cfg.categories.filter(function (c) { return window.KV_ALL_CATS || countIn(c) > 0; });
+  }
+  function coverOf(c) {
+    var id = (cfg.categoryCovers || {})[c];
+    if (!id) { var first = cfg.gallery.filter(function (g) { return g.cat === c; })[0]; id = first ? first.id : "none"; }
+    return id;
+  }
   function renderCats() {
-    $("#cats").innerHTML = cfg.categories.map(function (c) {
+    $("#cats").innerHTML = shownCats().map(function (c) {
       return '<button type="button" class="cat reveal" data-cat="' + c + '">' +
-        '<img src="' + small(cfg.categoryCovers[c]) + '" alt="" loading="lazy" width="640" height="853">' +
+        '<img src="' + small(coverOf(c)) + '" alt="" loading="lazy" width="640" height="853">' +
         "<span>" + esc(t("cats." + c)) + "</span></button>";
     }).join("");
   }
@@ -113,7 +123,7 @@
     return cat === "all" ? cfg.gallery.length : cfg.gallery.filter(function (g) { return g.cat === cat; }).length;
   }
   function renderFilters() {
-    $("#filters").innerHTML = ["all"].concat(cfg.categories).map(function (c) {
+    $("#filters").innerHTML = ["all"].concat(shownCats()).map(function (c) {
       var on = c === filter;
       return '<button type="button" role="tab" class="filter' + (on ? " is-active" : "") + '" aria-selected="' + on + '" data-filter="' + c + '">' +
         esc(t("cats." + c)) + "<sup>" + countIn(c) + "</sup></button>";

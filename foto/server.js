@@ -105,7 +105,7 @@ function publicState() {
 }
 // Раскладка: single = { слот: id }, gallery = [{ p: id, cat, cap: подпись }] в порядке сайта.
 // Чистим от мусора и несуществующих фото.
-const CATS = new Set(["bouquets", "xl", "baskets", "wedding", "balloons"]);
+const CATS = new Set(["bouquets", "mono", "xl", "baskets", "wedding", "balloons", "christmas"]);
 function cleanLayout(l) {
   const have = new Set(state.photos.map((p) => p.id));
   const out = { single: {}, gallery: [] };

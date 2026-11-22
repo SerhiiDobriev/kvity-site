@@ -9,7 +9,7 @@
   var q = function (s, r) { return (r || document).querySelector(s); };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
 
-  var CATS = [["bouquets", "Букети"], ["xl", "Size XL+"], ["baskets", "Кошики"], ["wedding", "Весілля"], ["balloons", "Кулі"]];
+  var CATS = [["bouquets", "Збірні букети"], ["mono", "Моно букети"], ["xl", "Size XL+"], ["baskets", "Кошики"], ["wedding", "Весілля"], ["balloons", "Кулі"], ["christmas", "Різдвяна колекція"]];
   var CAT_NAME = {}; CATS.forEach(function (c) { CAT_NAME[c[0]] = c[1]; });
   // Постоянные фото сайта: место → [селектор, название, размер файла]
   var FIXED = {
@@ -111,11 +111,11 @@
     var over = "(function(){var D=" + JSON.stringify(d) + ",F=" + JSON.stringify(FIXED) + ",c=window.KVITY_CONFIG,I=window.KVITY_I18N;" +
       "if(D.mode==='preview'){c.gallery=D.gallery;c.categoryCovers=D.covers;" +
       "Object.keys(I).forEach(function(l){I[l].gallery=I[l].gallery||{};I[l].gallery.captions=Object.assign({},I[l].gallery.captions,D.caps);});}" +
-      "else{c.gallery=[];c.categoryCovers={bouquets:'none',xl:'none',baskets:'none',wedding:'none',balloons:'none'};}" +
+      "else{c.gallery=[];c.categoryCovers={};c.categories.forEach(function(k){c.categoryCovers[k]='none';});}" +
       "Object.keys(F).forEach(function(k){var el=document.querySelector(F[k][0]);if(!el)return;el.removeAttribute('srcset');el.removeAttribute('loading');" +
       "el.src=D.fixed[k]||D.PH;});})();";
     var blob = URL.createObjectURL(new Blob([over], { type: "text/javascript" }));
-    var head = '<base href="' + location.origin + '/"><script>window.KV_BASE="/foto/";' +
+    var head = '<base href="' + location.origin + '/"><script>window.KV_BASE="/foto/";' + (mode === "edit" ? "window.KV_ALL_CATS=1;" : "") +
       // язык — украинский, и выбор языка здесь не сохраняется на её настоящем сайте
       'try{var gi=Storage.prototype.getItem,si=Storage.prototype.setItem;Storage.prototype.getItem=function(k){return k==="kvity-lang"?"ua":gi.apply(this,arguments)};' +
       'Storage.prototype.setItem=function(k){if(k!=="kvity-lang")return si.apply(this,arguments)}}catch(e){}' +

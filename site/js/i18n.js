@@ -29,11 +29,13 @@ window.KVITY_I18N = {
     },
     cats: {
       kicker: "Ce creăm",
-      bouquets: "Buchete",
+      bouquets: "Buchete compuse",
+      mono: "Buchete mono",
       xl: "Size XL+",
       baskets: "Coșuri",
       wedding: "Nunți",
       balloons: "Baloane",
+      christmas: "Colecția de Crăciun",
       all: "Toate"
     },
     gallery: {
@@ -225,11 +227,13 @@ window.KVITY_I18N = {
     },
     cats: {
       kicker: "What we create",
-      bouquets: "Bouquets",
+      bouquets: "Mixed bouquets",
+      mono: "Mono bouquets",
       xl: "Size XL+",
       baskets: "Baskets",
       wedding: "Weddings",
       balloons: "Balloons",
+      christmas: "Christmas collection",
       all: "All"
     },
     gallery: {
@@ -421,11 +425,13 @@ window.KVITY_I18N = {
     },
     cats: {
       kicker: "Що ми створюємо",
-      bouquets: "Букети",
+      bouquets: "Збірні букети",
+      mono: "Моно букети",
       xl: "Size XL+",
       baskets: "Кошики",
       wedding: "Весілля",
       balloons: "Кулі",
+      christmas: "Різдвяна колекція",
       all: "Усі"
     },
     gallery: {

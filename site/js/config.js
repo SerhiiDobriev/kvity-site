@@ -63,9 +63,10 @@ window.KVITY_CONFIG = {
   ],
 
   // Категории = разделы её Instagram. Порядок задаёт порядок фильтров.
-  categories: ["bouquets", "xl", "baskets", "wedding", "balloons"],
+  // Пустые категории (без фото) на сайте не показываются.
+  categories: ["bouquets", "mono", "xl", "baskets", "wedding", "balloons", "christmas"],
 
-  // Обложки категорий (img/<id>-s.webp).
+  // Обложки категорий (img/<id>-s.webp). Нет обложки — берётся первое фото категории.
   categoryCovers: { bouquets: "g01", xl: "g02", baskets: "g07", wedding: "g08", balloons: "g04" },
 
   // Галерея: файлы img/<id>-<slug>.webp (большое) и img/<id>-<slug>-s.webp (превью). slug — по-румынски, для Google.
