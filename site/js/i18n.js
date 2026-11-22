@@ -19,7 +19,7 @@ window.KVITY_I18N = {
       tulips: "Lalele roz proaspete — florăria KVITY, Constanța și Mamaia",
       cta: "Buchete de hortensii și trandafiri pregătite pentru livrare — KVITY, Constanța"
     },
-    nav: { works: "Lucrări", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
+    nav: { works: "Buchete", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
     hero: {
       eyebrow: "Florărie în Constanța și Mamaia",
       title: "Rădăcini ucrainene.<br>Floristică modernă.<br><em>Stil propriu.</em>",
@@ -215,7 +215,7 @@ window.KVITY_I18N = {
       tulips: "Fresh pink tulips — KVITY flower shop, Constanța & Mamaia",
       cta: "Hydrangea and rose bouquets ready for delivery — KVITY, Constanța"
     },
-    nav: { works: "Works", balloons: "Balloons", studios: "Studios", order: "Order" },
+    nav: { works: "Bouquets", balloons: "Balloons", studios: "Studios", order: "Order" },
     hero: {
       eyebrow: "Flower shop in Constanța & Mamaia",
       title: "Ukrainian roots.<br>Modern floristry.<br><em>Our own style.</em>",
@@ -411,7 +411,7 @@ window.KVITY_I18N = {
       tulips: "Свіжі рожеві тюльпани — квіткова студія KVITY, Констанца й Мамая",
       cta: "Букети з гортензій і троянд, готові до доставки — KVITY, Констанца"
     },
-    nav: { works: "Роботи", balloons: "Кулі", studios: "Студії", order: "Замовити" },
+    nav: { works: "Букети", balloons: "Кулі", studios: "Студії", order: "Замовити" },
     hero: {
       eyebrow: "Квіткова студія в Констанці та на Мамаї",
       title: "Українське коріння.<br>Сучасна флористика.<br><em>Власний стиль.</em>",
