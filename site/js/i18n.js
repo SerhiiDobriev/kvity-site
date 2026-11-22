@@ -72,7 +72,8 @@ window.KVITY_I18N = {
         g23: "Crizanteme bordo",
         g24: "Cifra 10 și buchet de baloane",
         g25: "Cifra 7 în nuanțe de roz",
-        g26: "Baloane argintii și aurii"
+        g26: "Baloane argintii și aurii",
+        g27: "Trandafiri roșii, XL"
       }
     },
     balloons: {
@@ -270,7 +271,8 @@ window.KVITY_I18N = {
         g23: "Burgundy chrysanthemums",
         g24: "Number 10 and a balloon bouquet",
         g25: "Number 7 in shades of pink",
-        g26: "Silver and gold balloons"
+        g26: "Silver and gold balloons",
+        g27: "Red roses, XL"
       }
     },
     balloons: {
@@ -468,7 +470,8 @@ window.KVITY_I18N = {
         g23: "Бордові хризантеми",
         g24: "Цифра 10 і букет із куль",
         g25: "Цифра 7 у рожевих відтінках",
-        g26: "Срібні та золоті кулі"
+        g26: "Срібні та золоті кулі",
+        g27: "Червоні троянди, XL"
       }
     },
     balloons: {

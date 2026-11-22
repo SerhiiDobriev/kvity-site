@@ -97,7 +97,9 @@ window.KVITY_CONFIG = {
     { id: "g23", slug: "crizanteme-bordo", cat: "bouquets" },
     { id: "g24", slug: "baloane-cifra-10", cat: "balloons" },
     { id: "g25", slug: "baloane-cifra-7-roz", cat: "balloons" },
-    { id: "g26", slug: "baloane-argintii-aurii", cat: "balloons" }
+    { id: "g26", slug: "baloane-argintii-aurii", cat: "balloons" },
+    // ВРЕМЕННО: копия g19, чтобы был виден раздел «Різдвяна колекція» — заменить её рождественскими фото
+    { id: "g27", slug: "trandafiri-rosii-craciun", cat: "christmas" }
   ],
 
   // Юридические данные (заглушки для демо).
