@@ -560,6 +560,8 @@
     $("#legal").innerHTML =
       "<li>" + esc(cfg.legal.company) + "</li>" +
       "<li>C.U.I.: " + esc(cfg.legal.cui) + "</li>" +
+      (cfg.legal.regCom ? "<li>Nr. Reg. Com.: " + esc(cfg.legal.regCom) + "</li>" : "") +
+      (cfg.legal.seat ? "<li>" + esc(t("footer.seat")) + ": " + esc(cfg.legal.seat) + "</li>" : "") +
       (cfg.legal.email ? '<li><a href="mailto:' + cfg.legal.email + '">' + esc(cfg.legal.email) + "</a></li>" : "") +
       '<li><a href="#">' + esc(t("footer.privacy")) + "</a></li>" +
       '<li><a href="#">' + esc(t("footer.terms")) + "</a></li>" +

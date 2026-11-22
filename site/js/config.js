@@ -216,10 +216,12 @@ window.KVITY_CONFIG = {
     { id: "k141", slug: "hortensii-cu-trandafiri", cat: "bouquets" }
   ],
 
-  // Юридические данные (заглушки для демо).
+  // Юридические данные фирмы (по сертификату ONRC от 17.03.2025, прислал Сергей 22.11.2026).
   legal: {
     company: "KVITY FLORI S.R.L.",
     cui: "49267079",
+    regCom: "J2023023757409",
+    seat: "București, Sector 2, Aleea Pantelimon nr. 6, bl. 8, sc. 1, et. 3, ap. 29",
     email: "" // почты пока нет (решение Алины 22.11.2026); появится — вписать сюда
   }
 };
