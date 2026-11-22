@@ -137,6 +137,7 @@
   function setFilter(c) {
     if (c === filter) return;
     filter = c;
+    shown = PAGE;
     renderFilters();
     renderGallery(true);
     var active = $(".filter.is-active");
@@ -147,17 +148,50 @@
   }
 
   /* ---------------- Галерея ---------------- */
+  // Фото много (140+), поэтому показываем по PAGE штук и кнопку «Показати ще».
+  // В «Усі» фото идут вперемешку по разделам, чтобы в первых 12 были все виды работ.
+  // Просмотр фото (лайтбокс) листает весь раздел, включая ещё не показанные.
+  var PAGE = 12, shown = PAGE;
   var visible = [];
-  function renderGallery(animate) {
-    visible = cfg.gallery.filter(function (g) { return filter === "all" || g.cat === filter; });
-    $("#gallery").innerHTML = visible.map(function (g, i) {
-      var cap = caption(g.id);
-      return '<figure class="work" role="button" tabindex="0" data-index="' + i + '" aria-label="' + esc(cap) + '"' +
-        (animate ? ' style="--i:' + i + '"' : ' style="animation:none"') + ">" +
-        '<div class="work__frame"><img src="' + small(g.id) + '" alt="' + esc(altText(g.id)) + '" loading="lazy" decoding="async" width="640" height="853"></div>' +
-        "<figcaption>" + esc(cap) + "</figcaption></figure>";
-    }).join("");
+  function mixedAll() {
+    var groups = shownCats().map(function (c) { return cfg.gallery.filter(function (g) { return g.cat === c; }); });
+    var out = [], i = 0, left = true;
+    while (left) {
+      left = false;
+      groups.forEach(function (gr) { if (i < gr.length) { out.push(gr[i]); left = true; } });
+      i++;
+    }
+    return out;
   }
+  function workHtml(g, i, delay) {
+    var cap = caption(g.id);
+    return '<figure class="work" role="button" tabindex="0" data-index="' + i + '" aria-label="' + esc(cap) + '"' +
+      (delay == null ? ' style="animation:none"' : ' style="--i:' + delay + '"') + ">" +
+      '<div class="work__frame"><img src="' + small(g.id) + '" alt="' + esc(altText(g.id)) + '" loading="lazy" decoding="async" width="640" height="853"></div>' +
+      (cap ? "<figcaption>" + esc(cap) + "</figcaption>" : "") + "</figure>";
+  }
+  function renderGallery(animate) {
+    visible = filter === "all" ? mixedAll() : cfg.gallery.filter(function (g) { return g.cat === filter; });
+    $("#gallery").innerHTML = visible.slice(0, shown).map(function (g, i) { return workHtml(g, i, animate ? i : null); }).join("");
+    renderMore();
+  }
+  var moreBox = document.createElement("div");
+  moreBox.className = "center gallery__more";
+  moreBox.innerHTML = '<button type="button" class="btn btn--line" id="moreWorks"></button>';
+  $("#gallery").insertAdjacentElement("afterend", moreBox);
+  function renderMore() {
+    var left = visible.length - shown;
+    moreBox.hidden = left <= 0;
+    if (left > 0) $("#moreWorks").innerHTML = esc(t("gallery.more")) + " <sup>" + left + "</sup>";
+  }
+  $("#moreWorks").addEventListener("click", function () {
+    var from = shown;
+    shown = Math.min(visible.length, shown + PAGE);
+    $("#gallery").insertAdjacentHTML("beforeend", visible.slice(from, shown).map(function (g, k) { return workHtml(g, from + k, k); }).join(""));
+    renderMore();
+    var first = $('#gallery .work[data-index="' + from + '"]');
+    if (first) first.focus({ preventScroll: true });
+  });
   $("#gallery").addEventListener("click", function (e) {
     var w = e.target.closest(".work");
     if (w) openLightbox(+w.dataset.index);

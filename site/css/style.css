@@ -327,6 +327,8 @@ p { text-wrap: pretty; }
 .work__frame { overflow: hidden; border-radius: var(--radius); aspect-ratio: 3 / 4; background: var(--surface); }
 .work__frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .work:hover .work__frame img { transform: scale(1.04); }
+.gallery__more { margin-top: 34px; }
+.gallery__more sup { font-size: .7em; margin-left: 4px; opacity: .6; }
 .work figcaption { font-size: .82rem; line-height: 1.35; color: var(--ink-soft); margin-top: 8px; }
 .note {
   display: flex; gap: 12px; align-items: flex-start;
