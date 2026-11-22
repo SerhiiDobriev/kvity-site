@@ -202,7 +202,7 @@
   $("#lbSimilar").addEventListener("click", function () {
     var g = visible[lbIndex];
     state.ref = g.id;
-    state.what = g.cat === "balloons" ? 1 : 0;
+    state.what = g.cat === "balloons" ? 3 : g.cat === "baskets" ? 2 : 0;
     renderChips();
     updateRef();
     closeLightbox();
@@ -229,7 +229,7 @@
   var SWATCHES = [
     "linear-gradient(135deg,#F6DDD1,#EBC6D6)",
     "conic-gradient(#E0475B,#F2A33A,#D94C9C,#7A5CD6,#E0475B)",
-    "#FFFFFF",
+    "linear-gradient(135deg,#6E1F33,#3E1A2B)",
     "conic-gradient(#F6DDD1,#C7D3B4,#B9C7EA,#F6E1C3,#F6DDD1)"
   ];
 
