@@ -201,10 +201,10 @@ window.KVITY_I18N = {
     about: {
       kicker: "Despre studio",
       title: "Prima florărie <em>ucraineană</em><br>din Constanța",
-      p1: "Povestea KVITY a început în 2022. De atunci ne formăm propriul stil în floristică, îmbinând rădăcinile ucrainene, estetica modernă și atenția la detalii.",
-      p2: "Astăzi KVITY înseamnă două studiouri florale, în Constanța și în Mamaia, unite de aceeași filozofie și de dragostea pentru flori.",
-      p3: "Alegem soiuri de flori deosebite, creăm buchete de autor și gândim fiecare detaliu: de la armonia nuanțelor până la ambalaj și panglică.",
-      p4: "La KVITY nu există buchete „de pe raft”. Fiecare compoziție este creată individual de floriștii noștri din flori proaspete, ținând cont de dorințele tale, de sezon și de particularitățile fiecărei flori.",
+      p1: "Povestea KVITY a început în 2022. De atunci, ne-am conturat propriul stil floral, în care îmbinăm rădăcinile ucrainene cu estetica modernă și atenția pentru fiecare detaliu.",
+      p2: "Astăzi, KVITY înseamnă două studiouri florale, unul în Constanța și unul în Mamaia, unite de aceeași viziune asupra frumuseții și de dragostea pentru flori.",
+      p3: "Alegem flori deosebite, creăm buchete cu personalitate și acordăm atenție fiecărui detaliu — de la armonia culorilor până la ambalaj și panglică.",
+      p4: "La KVITY nu există buchete standard. Fiecare aranjament este creat individual de floriștii noștri, din flori proaspete, ținând cont de dorințele tale, de sezon și de frumusețea naturală a fiecărei flori.",
       stat1: "rating Google",
       stat2: "studiouri",
       stat3: "deschis zilnic, 9:00–19:00"
@@ -224,7 +224,7 @@ window.KVITY_I18N = {
       title: "Creează-ți<br><em>buchetul perfect</em>",
       sub: "Spune-ne ce îți dorești, iar noi ne ocupăm de rest. Alege ocazia, gama de culori și bugetul — floriștii noștri vor crea buchetul special pentru tine. După ce primim cererea, te contactăm pe messenger pentru a stabili detaliile comenzii.",
       what: "Ce te interesează?",
-      whats: ["Buchet asortat", "Buchet mono", "Aranjament în coș sau cutie", "Baloane", "Flori + baloane"],
+      whats: ["Buchet mixat", "Buchet mono", "Aranjament în coș sau cutie", "Baloane", "Flori + baloane"],
       occasion: "Pentru ce ocazie?",
       occasions: ["Zi de naștere", "Aniversare", "Dragoste", "Fără motiv", "Nuntă", "Mulțumire", "Scuze", "Altă ocazie"],
       palette: "Gama de culori",
