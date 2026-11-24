@@ -516,10 +516,10 @@ window.KVITY_I18N = {
     about: {
       kicker: "About the studio",
       title: "The first <em>Ukrainian</em><br>flower studio in Constanța",
-      p1: "The KVITY story began in 2022. Since then we have been shaping our own signature in floristry, combining Ukrainian roots, modern aesthetics and attention to detail.",
-      p2: "Today KVITY is two flower studios, in Constanța and Mamaia, united by one philosophy and a love of flowers.",
-      p3: "We choose unusual flower varieties, create signature bouquets and think through every detail, from the harmony of shades to the wrapping and ribbon.",
-      p4: "At KVITY there are no ready-made bouquets “off the shelf”. Our florists create every arrangement individually from fresh flowers, taking into account your wishes, the season and the character of each flower.",
+      p1: "The KVITY story began in 2022. Since then, we have developed our own floral style, blending Ukrainian roots with modern aesthetics and attention to every detail.",
+      p2: "Today, KVITY is two flower studios, one in Constanța and one in Mamaia, united by a shared vision of beauty and a love of flowers.",
+      p3: "We choose exceptional flowers, create bouquets with personality and pay attention to every detail — from the harmony of colours to the wrapping and ribbon.",
+      p4: "At KVITY there are no standard bouquets. Our florists create every arrangement individually, from fresh flowers, taking into account your wishes, the season and the natural beauty of each flower.",
       stat1: "Google rating",
       stat2: "studios",
       stat3: "open daily, 9:00–19:00"
