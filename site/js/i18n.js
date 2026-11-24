@@ -337,8 +337,8 @@ window.KVITY_I18N = {
     nav: { works: "Bouquets", balloons: "Balloons", studios: "Studios", order: "Order" },
     hero: {
       eyebrow: "Flower shop in Constanța & Mamaia",
-      title: "Ukrainian roots.<br>Modern floristry.<br><em>Our own style.</em>",
-      sub: "At KVITY we brought the aesthetics of modern Ukrainian floristry to Romania. We combine fresh flowers, designer style and attention to every detail to create bouquets you will love to give and receive.<br>Delivery in Constanța and Mamaia, or pickup from our studios.",
+      title: "Flowers with personality.<br>Modern floristry.<br><em>Our own style.</em>",
+      sub: "At KVITY, flowers become more than a gift — they become an emotion, a story and a form of expression. We combine fresh flowers, contemporary design and attention to every detail, creating bouquets with a distinctive style for moments worth remembering.<br>We deliver in Constanța and Mamaia, or you are welcome to pick up your order from our studios.",
       ctaOrder: "Order",
       ctaWorks: "See our work"
     },
