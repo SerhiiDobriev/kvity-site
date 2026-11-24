@@ -621,9 +621,11 @@ p { text-wrap: pretty; }
   .hero__content { order: 1; margin: 0; align-self: center; padding: 60px 56px 80px max(40px, calc((100vw - var(--max)) / 2 + 40px)); }
 
   .cats { padding-top: 110px; }
-  /* все категории в один ряд: столбцов столько, сколько категорий (--n ставит main.js) */
-  .cats__track { grid-auto-flow: row; grid-template-columns: repeat(var(--n, 5), 1fr); gap: 10px; overflow: visible; padding: 0 var(--gutter); }
-  .cats__track[style*="--n: 6"] .cat span, .cats__track[style*="--n: 7"] .cat span, .cats__track[style*="--n: 8"] .cat span { font-size: .68rem; letter-spacing: .14em; }
+  /* все категории в один ряд на всю ширину экрана (правка 28, 24.11.2026); столбцов столько, сколько категорий (--n ставит main.js) */
+  .cats { max-width: none; }
+  .cats .label { padding-inline: 24px; }
+  .cats__track { grid-auto-flow: row; grid-template-columns: repeat(var(--n, 5), 1fr); gap: 12px; overflow: visible; padding: 0 24px; }
+  .cat span { left: 16px; bottom: 16px; font-size: .74rem; letter-spacing: .16em; }
   .filters { margin-inline: 0; padding: 0; flex-wrap: wrap; }
   .gallery { grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
