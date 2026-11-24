@@ -71,7 +71,7 @@ window.KVITY_CONFIG = {
 
   // Галерея: файлы img/<id>-<slug>.webp (большое) и img/<id>-<slug>-s.webp (превью). slug — по-румынски, для Google.
   // Подписи — в js/i18n.js → gallery.captions.<id>.
-  // Фото и подписи — от Алины из конструктора (22.11.2026)
+  // Фото и подписи — от Алины из конструктора (22.11.2026, обновлено 24.11.2026)
   gallery: [
     { id: "k001", slug: "hortensii-roz-cu-trandafiri", cat: "bouquets" },
     { id: "k002", slug: "baloane-roz-sidefate", cat: "balloons" },
@@ -80,7 +80,6 @@ window.KVITY_CONFIG = {
     { id: "k005", slug: "baloane-inima-lila", cat: "balloons" },
     { id: "k006", slug: "buchet-cu-hortensii-si-baloane-pastel", cat: "balloons" },
     { id: "k007", slug: "baloane-cu-funda-si-norisor", cat: "balloons" },
-    { id: "k008", slug: "baloane-pentru-2-ani-cu-excavator", cat: "balloons" },
     { id: "k009", slug: "baloane-albe-si-aurii", cat: "balloons" },
     { id: "k010", slug: "baloane-cu-dinozauri", cat: "balloons" },
     { id: "k011", slug: "baloane-negre-si-trandafiri-rosii", cat: "balloons" },
@@ -189,7 +188,6 @@ window.KVITY_CONFIG = {
     { id: "k114", slug: "buchet-de-mireasa-alb", cat: "wedding" },
     { id: "k115", slug: "baloane-piersica-cu-stele", cat: "balloons" },
     { id: "k116", slug: "hortensii-roz", cat: "mono" },
-    { id: "k117", slug: "trandafiri-rosii", cat: "mono" },
     { id: "k118", slug: "hortensii-cu-trandafiri-xl", cat: "xl" },
     { id: "k119", slug: "cos-cu-hortensii-si-trandafiri", cat: "baskets" },
     { id: "k120", slug: "hortensii-cu-trandafiri-xl", cat: "xl" },
@@ -213,7 +211,12 @@ window.KVITY_CONFIG = {
     { id: "k138", slug: "hortensii-cu-crizanteme-bordo", cat: "bouquets" },
     { id: "k139", slug: "buchete-cu-hortensii", cat: "bouquets" },
     { id: "k140", slug: "buchet-mare-cu-hortensii", cat: "bouquets" },
-    { id: "k141", slug: "hortensii-cu-trandafiri", cat: "bouquets" }
+    { id: "k142", slug: "cos-colorat-marimea-xl-in-afara-sezonului", cat: "baskets" },
+    { id: "k143", slug: "complimente-de-primavara-marimea-xs", cat: "bouquets" },
+    { id: "k144", slug: "buchet-in-stil-boho", cat: "bouquets" },
+    { id: "k141", slug: "hortensii-cu-trandafiri", cat: "bouquets" },
+    { id: "k145", slug: "buchet-cu-hortensie-verde-marimea-m", cat: "bouquets" },
+    { id: "k146", slug: "buchete-compuse-colorate-marimea-xl", cat: "xl" }
   ],
 
   // Юридические данные фирмы (по сертификату ONRC от 17.03.2025, прислал Сергей 22.11.2026).
