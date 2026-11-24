@@ -32,9 +32,17 @@
   var lang = detectLang();
   var dict = I18N[lang];
 
+  // Свой адрес у каждого языка (для Google): / — RO, /en/ — EN, /ua/ — UA.
+  // Страницы /en/ и /ua/ собирает tools/build-lang-pages.js из index.html.
+  var LANG_PATH = { ro: "/", en: "/en/", ua: "/ua/" };
+  function pathLang() { var m = location.pathname.match(/^\/(en|ua)\//); return m ? m[1] : null; }
   function detectLang() {
+    var p = pathLang();
+    if (p) return p;
     var q = new URLSearchParams(location.search).get("lang");
     if (q && LANGS.indexOf(q) > -1) return q;
+    // поисковые роботы на главной всегда видят румынскую версию (у Google телефон «английский»)
+    if (/bot|crawl|spider|slurp|google-inspection/i.test(navigator.userAgent || "")) return "ro";
     var saved = store.get("kvity-lang");
     if (saved && LANGS.indexOf(saved) > -1) return saved;
     // смотрим весь список языков телефона, а не только первый:
@@ -645,7 +653,15 @@
 
   $(".langs").addEventListener("click", function (e) {
     var b = e.target.closest("button[data-lang]");
-    if (b && b.dataset.lang !== lang) applyLang(b.dataset.lang);
+    if (b && b.dataset.lang !== lang) {
+      applyLang(b.dataset.lang);
+      // адрес в строке браузера — под выбранный язык (чтобы ссылкой делились уже на нём)
+      if (pathLang() || location.pathname === "/") {
+        var sp = new URLSearchParams(location.search); sp.delete("lang");
+        var qs = sp.toString();
+        try { history.replaceState(null, "", LANG_PATH[lang] + (qs ? "?" + qs : "") + location.hash); } catch (err) { /* file:// и т. п. */ }
+      }
+    }
   });
 
   /* ---------------- Старт ---------------- */

@@ -38,7 +38,13 @@ python -m http.server 5500 --directory site
 ```
 Открыть http://localhost:5500. С телефона в той же Wi-Fi сети: `http://<IP компьютера>:5500`.
 
-Язык выбирается так: `?lang=ro|en|ua|ru` → сохранённый выбор → язык браузера → RO.
+Язык выбирается так: адрес `/en/` или `/ua/` → `?lang=ro|en|ua` → (роботы поисковиков на главной всегда RO) → сохранённый выбор → язык браузера → EN.
+
+**Свои адреса языков (для Google, с 24.11.2026):** `kvity.ro/` — RO, `kvity.ro/en/`, `kvity.ro/ua/`. Страницы `site/en/index.html` и `site/ua/index.html` собираются из `site/index.html` + `site/js/i18n.js`:
+```bash
+node tools/build-lang-pages.js
+```
+**Запускать после КАЖДОЙ правки `index.html` или `i18n.js`**, перед коммитом. Вручную эти две страницы не править.
 
 ## Публикация — https://kvity.ro (старый адрес kvity.tutormate.site удалён 24.11.2026)
 Сайт живёт на сервере Hetzner (95.217.133.58) рядом с TutorMate, в `/var/www/kvity`, отдельный конфиг nginx.

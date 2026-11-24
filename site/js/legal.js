@@ -36,7 +36,7 @@
     var art = document.querySelector('article[data-l="' + lang + '"]');
     var h = art && art.querySelector("h1");
     if (h) document.title = h.textContent + " | KVITY";
-    Array.prototype.forEach.call(document.querySelectorAll("a[data-home]"), function (a) { a.href = "./?lang=" + lang; });
+    Array.prototype.forEach.call(document.querySelectorAll("a[data-home]"), function (a) { a.href = { ro: "/", en: "/en/", ua: "/ua/" }[lang] || "/"; });
     Array.prototype.forEach.call(document.querySelectorAll("a[data-page]"), function (a) { a.href = a.dataset.page + "?lang=" + lang; });
   }
 
