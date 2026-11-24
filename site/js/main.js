@@ -274,7 +274,7 @@
     $("#balloonList").innerHTML = t("balloons.list").map(function (s) { return "<li>" + icon("check") + esc(s) + "</li>"; }).join("");
   }
   $$("[data-order-what]").forEach(function (a) {
-    a.addEventListener("click", function () { state.what = +a.dataset.orderWhat; renderChips(); });
+    a.addEventListener("click", function () { state.what = +a.dataset.orderWhat; balloonStudio(); renderChips(); });
   });
 
   function renderSteps() {
@@ -306,8 +306,21 @@
 
   // Кулі есть только в студии на Мамае (Năvodari): выбрали «Кулі» или «Квіти + кулі» — самовывоз сразу оттуда
   var BALLOONS_STUDIO = Math.max(0, cfg.studios.map(function (s) { return s.id; }).indexOf("navodari"));
+  function hasBalloons() { return state.what === 3 || state.what === 4; }
   function balloonStudio() {
-    if (state.what === 3 || state.what === 4) state.studio = BALLOONS_STUDIO;
+    if (hasBalloons()) state.studio = BALLOONS_STUDIO;
+  }
+  // С кулями другая студия недоступна (зачёркнута), под выбором — пояснение
+  function lockStudios() {
+    var on = hasBalloons();
+    $$('input[name="studio"]').forEach(function (r) {
+      var off = on && Number(r.value) !== BALLOONS_STUDIO;
+      r.disabled = off;
+      r.checked = Number(r.value) === state.studio;
+      r.closest(".chip").classList.toggle("is-off", off);
+      r.closest(".chip").classList.toggle("is-checked", r.checked);
+    });
+    $("#balloonsOnly").hidden = !on;
   }
 
   function renderChips() {
@@ -318,6 +331,7 @@
     var budgetLabels = cfg.budgets.map(function (b) { return b + " " + t("form.currency"); }).concat(t("form.custom"));
     chipGroup($("#budgetChips"), "budget", budgetLabels, "budget", { values: cfg.budgets.map(String).concat("custom") });
     chipGroup($("#studioChips"), "studio", cfg.studios.map(function (s) { return "KVITY " + s.name; }), "studio");
+    lockStudios();
   }
 
   $("#orderForm").addEventListener("change", function (e) {
@@ -325,13 +339,7 @@
     if (input.type !== "radio") return;
     state[input.name] = input.name === "budget" ? input.value : Number(input.value);
     $$('input[name="' + input.name + '"]').forEach(function (r) { r.closest(".chip").classList.toggle("is-checked", r.checked); });
-    if (input.name === "what" && (state.what === 3 || state.what === 4)) {
-      balloonStudio();
-      $$('input[name="studio"]').forEach(function (r) {
-        r.checked = Number(r.value) === state.studio;
-        r.closest(".chip").classList.toggle("is-checked", r.checked);
-      });
-    }
+    if (input.name === "what") { balloonStudio(); lockStudios(); }
     if (input.name === "budget") {
       $("#customBudget").hidden = input.value !== "custom";
       if (input.value === "custom") $("#budgetCustom").focus();
