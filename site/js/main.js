@@ -608,6 +608,12 @@
       '<li><a href="https://anpc.ro/" target="_blank" rel="noopener">ANPC</a> · ' +
       '<a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">' + esc(t("footer.sal")) + "</a></li>" +
       '<li class="footer__note">' + esc(t("footer.cookies")) + "</li>";
+    var cr = cfg.credit;
+    if (cr && cr.name) {
+      $("#credit").innerHTML = esc(t("footer.credit")) + " " + esc(cr.name[lang] || cr.name.ro) +
+        (cr.telegram ? '<a href="https://t.me/' + cr.telegram + '" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">' + icon("send") + "</a>" : "") +
+        (cr.whatsapp ? '<a href="https://wa.me/' + cr.whatsapp + "?text=" + encodeURIComponent(t("footer.creditMsg")) + '" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">' + icon("chat") + "</a>" : "");
+    }
     $$(".js-call").forEach(function (a) { a.href = tel(cfg.phone); });
     // Кнопка чата внизу экрана: на румынском WhatsApp, на украинском и английском Telegram менеджера
     var tgChat = tgFirst();

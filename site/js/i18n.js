@@ -318,7 +318,9 @@ window.KVITY_I18N = {
       terms: "Termeni și condiții",
       sal: "Soluționarea alternativă a litigiilor",
       cookies: "Hărțile Google de pe această pagină pot salva cookie-uri în browser.",
-      rights: "Toate drepturile rezervate."
+      rights: "Toate drepturile rezervate.",
+      credit: "Creat de",
+      creditMsg: "Bună! Am văzut site-ul KVITY și aș vrea și eu un site."
     },
     sticky: { order: "Comandă" }
   },
@@ -637,7 +639,9 @@ window.KVITY_I18N = {
       terms: "Terms and conditions",
       sal: "Alternative dispute resolution",
       cookies: "The Google Maps on this page may store cookies in your browser.",
-      rights: "All rights reserved."
+      rights: "All rights reserved.",
+      credit: "Created by",
+      creditMsg: "Hi! I saw the KVITY website and I would like a website too."
     },
     sticky: { order: "Order" }
   },
@@ -956,7 +960,9 @@ window.KVITY_I18N = {
       terms: "Умови замовлення",
       sal: "Альтернативне вирішення спорів",
       cookies: "Карти Google на цій сторінці можуть зберігати cookies у браузері.",
-      rights: "Усі права захищені."
+      rights: "Усі права захищені.",
+      credit: "Створив",
+      creditMsg: "Привіт! Я з сайту KVITY, хочу теж сайт."
     },
     sticky: { order: "Замовити" }
   }

@@ -524,7 +524,11 @@ p { text-wrap: pretty; }
 .socials a { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); transition: background-color .3s, color .3s; }
 .socials a:hover { background: var(--white); color: var(--ink); }
 .socials svg { width: 19px; height: 19px; }
-.footer__bottom { max-width: var(--max); margin: 40px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); font-size: .78rem; color: rgba(255,255,255,.45); }
+.footer__bottom { max-width: var(--max); margin: 40px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); font-size: .78rem; color: rgba(255,255,255,.45); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.footer__credit { display: inline-flex; align-items: center; }
+.footer__credit a { color: inherit; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-left: 4px; transition: color .2s; }
+.footer__credit a:hover { color: rgba(255,255,255,.85); }
+.footer__credit svg { width: 15px; height: 15px; }
 
 /* ---------- Липкая панель ---------- */
 .sticky {
