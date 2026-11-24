@@ -254,6 +254,7 @@
     var g = visible[lbIndex];
     state.ref = g.id;
     state.what = g.cat === "balloons" ? 3 : g.cat === "baskets" ? 2 : 0;
+    balloonStudio();
     renderChips();
     updateRef();
     closeLightbox();
@@ -295,6 +296,12 @@
     }).join("");
   }
 
+  // Кулі есть только в студии на Мамае (Năvodari): выбрали «Кулі» или «Квіти + кулі» — самовывоз сразу оттуда
+  var BALLOONS_STUDIO = Math.max(0, cfg.studios.map(function (s) { return s.id; }).indexOf("navodari"));
+  function balloonStudio() {
+    if (state.what === 3 || state.what === 4) state.studio = BALLOONS_STUDIO;
+  }
+
   function renderChips() {
     chipGroup($("#whatChips"), "what", t("form.whats"), "what");
     chipGroup($("#occasionChips"), "occasion", t("form.occasions"), "occasion");
@@ -310,6 +317,13 @@
     if (input.type !== "radio") return;
     state[input.name] = input.name === "budget" ? input.value : Number(input.value);
     $$('input[name="' + input.name + '"]').forEach(function (r) { r.closest(".chip").classList.toggle("is-checked", r.checked); });
+    if (input.name === "what" && (state.what === 3 || state.what === 4)) {
+      balloonStudio();
+      $$('input[name="studio"]').forEach(function (r) {
+        r.checked = Number(r.value) === state.studio;
+        r.closest(".chip").classList.toggle("is-checked", r.checked);
+      });
+    }
     if (input.name === "budget") {
       $("#customBudget").hidden = input.value !== "custom";
       if (input.value === "custom") $("#budgetCustom").focus();

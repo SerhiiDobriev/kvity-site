@@ -315,7 +315,7 @@ p { text-wrap: pretty; }
   transition: background-color .3s, color .3s, border-color .3s;
 }
 .filter.is-active { background: var(--ink); color: var(--white); border-color: var(--ink); }
-.filter sup { font-size: .62em; margin-left: 3px; opacity: .6; }
+.filter sup { font-size: .85em; margin-left: 4px; opacity: .65; letter-spacing: 0; }
 
 .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .work {
@@ -630,7 +630,7 @@ p { text-wrap: pretty; }
   .about { grid-template-columns: 5fr 6fr; gap: 100px; align-items: center; }
   .steps { grid-template-columns: repeat(4, 1fr); border-top: 0; gap: 32px; }
   .reviews__track { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; margin-inline: 0; padding: 0; }
-  .step { grid-template-columns: 1fr; border-bottom: 0; border-top: 1px solid var(--ink); padding-top: 22px; }
+  .step { grid-template-columns: 1fr; align-content: start; border-bottom: 0; border-top: 1px solid var(--ink); padding-top: 22px; }
   .order { grid-template-columns: 5fr 7fr; gap: 90px; align-items: start; }
   .order__head { position: sticky; top: calc(var(--header-h) + 30px); }
   .order__visual { display: block; margin-top: 34px; border-radius: var(--radius); aspect-ratio: 4 / 5; max-width: 380px; }
