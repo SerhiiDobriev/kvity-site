@@ -22,8 +22,8 @@ window.KVITY_I18N = {
     nav: { works: "Buchete", balloons: "Baloane", studios: "Studiouri", order: "Comandă" },
     hero: {
       eyebrow: "Florărie în Constanța și Mamaia",
-      title: "Rădăcini ucrainene.<br>Floristică modernă.<br><em>Stil propriu.</em>",
-      sub: "Am adus în România estetica floristicii ucrainene moderne. La KVITY îmbinăm flori proaspete, stil de designer și atenție la fiecare detaliu. Creăm buchete pe care îți dorești să le dăruiești și să le primești.<br>Livrare în Constanța și Mamaia sau ridicare din studiourile noastre.",
+      title: "Flori cu personalitate.<br>Floristică modernă.<br><em>Stil propriu.</em>",
+      sub: "La KVITY, florile devin mai mult decât un cadou — devin o emoție, o poveste și o formă de expresie. Combinăm flori proaspete, design contemporan și atenție pentru fiecare detaliu, creând buchete cu un stil aparte, pentru momente care merită să fie memorate.<br>Livrăm în Constanța și Mamaia sau te așteptăm să ridici comanda din studiourile noastre.",
       ctaOrder: "Comandă",
       ctaWorks: "Vezi lucrările"
     },
