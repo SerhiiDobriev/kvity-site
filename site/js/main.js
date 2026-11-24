@@ -445,6 +445,16 @@
       toast(t("form.sent"));
     }
     if ($("#inspo").checked) toast(t("form.sentPhoto"));
+    // Статистика (js/stats.js): что заказывают — без имени, телефона и адреса; подписи берём румынские, чтобы считать вместе
+    if (window.kvStat) {
+      var ro = I18N.ro.form;
+      window.kvStat(channel === "tg" ? "order_tg" : "order_wa", {
+        what: state.what != null ? ro.whats[state.what] : "",
+        occasion: state.occasion != null ? ro.occasions[state.occasion] : "",
+        budget: state.budget == null ? "" : (state.budget === "custom" ? "custom" : String(state.budget)),
+        method: state.method
+      });
+    }
     channel = "wa";
     var win = window.open(url, "_blank", "noopener");
     if (!win) location.href = url;

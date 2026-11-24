@@ -5,6 +5,7 @@ Disallow: /v4/
 Disallow: /v5/
 Disallow: /v6/
 Disallow: /foto/
+Disallow: /stats/
 Disallow: /_fonts.html
 
 Sitemap: https://kvity.ro/sitemap.xml

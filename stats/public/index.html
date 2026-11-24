@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KVITY · Статистика сайту</title>
+<style>
+  :root { --bg:#FBF9F7; --card:#fff; --surface:#F3EEEA; --blush:#F6DDD1; --accent:#A3685A; --ink:#1F1C1B; --soft:#6B6461; --line:rgba(31,28,27,.12); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:400 15px/1.45 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:14px 14px 40px; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+  h1 { font-size:19px; font-weight:600; margin:0; letter-spacing:.02em; }
+  h1 small { font-weight:400; color:var(--soft); font-size:13px; margin-left:6px; }
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; }
+  .tabs button { border:1px solid var(--line); background:var(--card); border-radius:20px; padding:6px 12px; font:inherit; font-size:13px; cursor:pointer; }
+  .tabs button.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:8px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+  .tile b { display:block; font-size:26px; font-weight:600; line-height:1.1; }
+  .tile span { color:var(--soft); font-size:12.5px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 12px; min-width:0; }
+  .card.wide { grid-column:1 / -1; }
+  .card h2 { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--soft); margin:0 0 8px; }
+  .row { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; font-size:13.5px; padding:3px 0; position:relative; }
+  .row i { position:absolute; left:0; top:2px; bottom:2px; background:var(--blush); border-radius:3px; z-index:0; }
+  .row span, .row em { position:relative; z-index:1; padding-left:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .row em { font-style:normal; font-weight:600; padding:0 4px 0 0; }
+  .empty { color:var(--soft); font-size:13px; }
+  .chart { width:100%; height:150px; display:block; }
+  .note { color:var(--soft); font-size:12.5px; margin:10px 2px 0; }
+  .login { max-width:320px; margin:18vh auto 0; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px; }
+  .login h1 { margin-bottom:12px; }
+  .login input { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:6px; font:inherit; margin-bottom:10px; }
+  .login button { width:100%; padding:10px; border:0; border-radius:6px; background:var(--ink); color:#fff; font:inherit; cursor:pointer; }
+  .err { color:#b3261e; font-size:13px; min-height:18px; }
+  @media (max-width:760px) { .tiles { grid-template-columns:repeat(2,1fr); } .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="login" id="login" hidden>
+  <h1>KVITY · Статистика</h1>
+  <input type="password" id="pw" placeholder="Пароль (той самий, що в конструкторі фото)" autocomplete="current-password">
+  <p class="err" id="err"></p>
+  <button id="go">Увійти</button>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header>
+    <h1>KVITY · Статистика сайту <small id="range"></small></h1>
+    <div class="tabs" id="tabs">
+      <button data-d="1">Сьогодні</button><button data-d="7" class="on">7 днів</button><button data-d="30">30 днів</button><button data-d="90">3 місяці</button><button data-d="365">Рік</button>
+    </div>
+  </header>
+  <div class="tiles">
+    <div class="tile"><b id="tVis">–</b><span>Відвідувачів</span></div>
+    <div class="tile"><b id="tPv">–</b><span>Переглядів сторінок</span></div>
+    <div class="tile"><b id="tOrd">–</b><span>Заявок з форми</span></div>
+    <div class="tile"><b id="tCall">–</b><span>Натиснули «Подзвонити»</span></div>
+  </div>
+  <div class="grid">
+    <div class="card wide"><h2>Відвідувачі по днях <span style="text-transform:none;letter-spacing:0;font-weight:400">— рожеве: відвідувачі, темне: заявки</span></h2><svg class="chart" id="chart"></svg></div>
+    <div class="card"><h2>Звідки прийшли</h2><div id="sources"></div></div>
+    <div class="card"><h2>Що натискали</h2><div id="events"></div></div>
+    <div class="card"><h2>Які розділи дивились</h2><div id="cats"></div></div>
+    <div class="card"><h2>Країна (за часовим поясом)</h2><div id="tz"></div></div>
+    <div class="card"><h2>Пристрій</h2><div id="devices"></div><h2 style="margin-top:10px">Система</h2><div id="os"></div></div>
+    <div class="card"><h2>Мова сайту</h2><div id="langs"></div><h2 style="margin-top:10px">Сторінки</h2><div id="pages"></div></div>
+    <div class="card"><h2>Що замовляють</h2><div id="ordWhat"></div></div>
+    <div class="card"><h2>Привід</h2><div id="ordOcc"></div></div>
+    <div class="card"><h2>Бюджет у заявках, лей</h2><div id="ordBudget"></div></div>
+    <div class="card wide"><h2>О котрій годині заходять (час Румунії)</h2><svg class="chart" id="hours" style="height:110px"></svg></div>
+  </div>
+  <p class="note">«Відвідувач» — одна людина за один день (якщо прийде завтра, порахується знову). «Заявка» — людина заповнила форму і натиснула «Надіслати»; чи дійсно відправила повідомлення в месенджері, сайт не бачить. Статистика без cookies і без імен: хто саме заходив, дізнатися не можна. Ваші власні перегляди не рахуються, якщо один раз відкрити на своєму телефоні kvity.ro/?nostat=1</p>
+</div>
+
+<script src="/js/i18n.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (s) { return document.getElementById(s); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var L = {
+    src: { direct: "Напряму (адреса, закладка, посилання з месенджера)", Instagram: "Instagram", Facebook: "Facebook", Google: "Google (пошук, карти)", TikTok: "TikTok",
+      Telegram: "Telegram", WhatsApp: "WhatsApp", QR: "QR-код", "other-search": "Інші пошуковики" },
+    dev: { mobile: "Телефон", desktop: "Комп'ютер", tablet: "Планшет" },
+    os: { iOS: "iPhone / iPad", Android: "Android", Windows: "Windows", Mac: "Mac", Linux: "Linux", other: "Інше" },
+    lang: { ro: "Румунська", ua: "Українська", en: "Англійська" },
+    page: { "/": "Головна", "/index.html": "Головна", "/termeni.html": "Умови замовлення", "/confidentialitate.html": "Конфіденційність" },
+    ev: { call: "Подзвонити", chat_wa: "Чат WhatsApp", chat_tg: "Чат Telegram", route: "Маршрут до студії", google_reviews: "Відгуки / студія в Google",
+      instagram: "Instagram", more: "«Показати ще»", similar: "«Хочу такий» (з фото)", photo: "Відкрили фото", order_open: "Кнопка «Замовити»",
+      order_tg: "Заявка в Telegram", order_wa: "Заявка в WhatsApp", legal: "Умови / конфіденційність",
+      "lang:ro": "Перемкнули мову на RO", "lang:ua": "Перемкнули мову на UA", "lang:en": "Перемкнули мову на EN" },
+    cat: { bouquets: "Збірні букети", mono: "Моно букети", xl: "Size XL+", baskets: "Кошики", wedding: "Весілля", balloons: "Кулі", christmas: "Різдвяна колекція", all: "Усі" },
+    tz: { "Europe/Bucharest": "Румунія", "Europe/Kyiv": "Україна", "Europe/Kiev": "Україна", "Europe/Uzhgorod": "Україна", "Europe/Zaporozhye": "Україна",
+      "Europe/Chisinau": "Молдова", "Europe/Berlin": "Німеччина", "Europe/Warsaw": "Польща", "Europe/London": "Велика Британія", "Europe/Paris": "Франція",
+      "Europe/Rome": "Італія", "Europe/Madrid": "Іспанія", "Europe/Istanbul": "Туреччина", "Europe/Sofia": "Болгарія", "Europe/Budapest": "Угорщина",
+      "Europe/Vienna": "Австрія", "Europe/Prague": "Чехія", "Europe/Amsterdam": "Нідерланди", "Europe/Brussels": "Бельгія", "Europe/Athens": "Греція",
+      "Europe/Moscow": "Росія", "Europe/Minsk": "Білорусь", "America/New_York": "США", "America/Chicago": "США", "America/Los_Angeles": "США", "Asia/Dubai": "ОАЕ" }
+  };
+  // Что заказывают приходит по-румынски (так считается вместе для всех языков) — показываем по-украински
+  var FORM = { whats: {}, occasions: {} };
+  try {
+    var I = window.KVITY_I18N;
+    ["whats", "occasions"].forEach(function (k) { I.ro.form[k].forEach(function (ro, i) { FORM[k][ro] = I.ua.form[k][i]; }); });
+  } catch (e) { /* без перевода */ }
+  function list(id, rows, map, unit) {
+    var el = $(id);
+    if (!rows || !rows.length) { el.innerHTML = '<p class="empty">Поки немає даних</p>'; return; }
+    var max = rows[0][1] || 1;
+    el.innerHTML = rows.map(function (r) {
+      var name = (map && map[r[0]]) || r[0];
+      return '<div class="row"><i style="width:' + Math.max(2, Math.round(r[1] / max * 100)) + '%"></i><span title="' + esc(name) + '">' + esc(name) + "</span><em>" + r[1] + (unit || "") + "</em></div>";
+    }).join("");
+  }
+  // Страны по часовому поясу складываем вместе (Kyiv + Kiev = Україна)
+  function byCountry(rows) {
+    var m = {};
+    rows.forEach(function (r) { var k = L.tz[r[0]] || (r[0] ? r[0].split("/").pop().replace(/_/g, " ") : "Невідомо"); m[k] = (m[k] || 0) + r[1]; });
+    return Object.keys(m).map(function (k) { return [k, m[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+  }
+  function bars(svgId, values, labels, second) {
+    var svg = $(svgId), W = svg.clientWidth || 600, H = svg.clientHeight || 150, n = values.length;
+    var max = Math.max.apply(null, values.concat([1])), pad = 16, bw = (W - 4) / n;
+    var out = "";
+    for (var i = 0; i < n; i++) {
+      var h = Math.round((values[i] / max) * (H - pad - 14));
+      var x = 2 + i * bw, y = H - pad - h;
+      out += '<rect x="' + (x + bw * 0.12) + '" y="' + y + '" width="' + Math.max(1, bw * 0.76) + '" height="' + h + '" rx="2" fill="#EECDBD"><title>' + esc(labels[i]) + ": " + values[i] + "</title></rect>";
+      if (second && second[i]) {
+        var h2 = Math.round((second[i] / max) * (H - pad - 14));
+        out += '<rect x="' + (x + bw * 0.32) + '" y="' + (H - pad - h2) + '" width="' + Math.max(1, bw * 0.36) + '" height="' + h2 + '" rx="1" fill="#1F1C1B"><title>Заявок: ' + second[i] + "</title></rect>";
+      }
+      if (values[i] && n <= 31) out += '<text x="' + (x + bw / 2) + '" y="' + (y - 3) + '" font-size="10" text-anchor="middle" fill="#6B6461">' + values[i] + "</text>";
+      var step = n <= 14 ? 1 : n <= 31 ? 3 : n <= 90 ? 10 : 30;
+      if (i % step === 0) out += '<text x="' + (x + bw / 2) + '" y="' + (H - 3) + '" font-size="10" text-anchor="middle" fill="#6B6461">' + esc(labels[i]) + "</text>";
+    }
+    svg.innerHTML = out;
+  }
+  var days = 7, last = null;
+  function fmt(d) { var p = d.split("-"); return p[2] + "." + p[1]; }
+  function render(s) {
+    last = s;
+    $("range").textContent = s.from === s.to ? fmt(s.from) : fmt(s.from) + " – " + fmt(s.to);
+    $("tVis").textContent = s.visitors; $("tPv").textContent = s.pageviews; $("tOrd").textContent = s.orders; $("tCall").textContent = s.calls;
+    bars("chart", s.perDay.map(function (x) { return x.v; }), s.perDay.map(function (x) { return fmt(x.d); }), s.perDay.map(function (x) { return x.orders; }));
+    bars("hours", s.hours, s.hours.map(function (_, i) { return String(i); }));
+    list("sources", s.sources, L.src); list("events", s.events, L.ev); list("cats", s.cats, L.cat);
+    list("tz", byCountry(s.tz)); list("devices", s.devices, L.dev); list("os", s.os, L.os);
+    list("langs", s.langs, L.lang); list("pages", s.pages, L.page);
+    list("ordWhat", s.orderWhat, FORM.whats); list("ordOcc", s.orderOccasion, FORM.occasions); list("ordBudget", s.orderBudget, { custom: "Своя сума" });
+  }
+  function load() {
+    fetch("api/summary?days=" + days, { credentials: "same-origin" }).then(function (r) {
+      if (r.status === 403) { $("app").hidden = true; $("login").hidden = false; $("pw").focus(); return null; }
+      return r.json();
+    }).then(function (s) { if (s) { $("login").hidden = true; $("app").hidden = false; render(s); } })
+      .catch(function () { $("range").textContent = "немає зв'язку"; });
+  }
+  $("tabs").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    days = +b.dataset.d;
+    Array.prototype.forEach.call($("tabs").children, function (x) { x.classList.toggle("on", x === b); });
+    load();
+  });
+  function login() {
+    $("err").textContent = "";
+    fetch("api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: $("pw").value }) })
+      .then(function (r) {
+        if (r.ok) { $("pw").value = ""; load(); }
+        else $("err").textContent = r.status === 429 ? "Забагато спроб, зачекайте 10 хвилин" : "Невірний пароль";
+      });
+  }
+  $("go").addEventListener("click", login);
+  $("pw").addEventListener("keydown", function (e) { if (e.key === "Enter") login(); });
+  window.addEventListener("resize", function () { if (last) render(last); });
+  load();
+  setInterval(function () { if (!$("app").hidden && !document.hidden) load(); }, 60000);
+})();
+</script>
+</body>
+</html>

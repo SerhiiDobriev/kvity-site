@@ -1,0 +1,11 @@
+# Статистика сайта KVITY на сервере: /opt/kvitystats (app, data). Пароль — тот же, что у конструктора (/opt/kvityfoto/.env)
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: /opt/kvityfoto/.env
+    ports:
+      - "127.0.0.1:4200:4200"
+    volumes:
+      - /opt/kvitystats/data:/data
+    mem_limit: 96m
