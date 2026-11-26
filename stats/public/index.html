@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>KVITY · Статистика сайту</title>
 <style>
-  :root { --bg:#FBF9F7; --card:#fff; --surface:#F3EEEA; --blush:#F6DDD1; --accent:#A3685A; --ink:#1F1C1B; --soft:#6B6461; --line:rgba(31,28,27,.12); }
+  :root { --bg:#FBF9F7; --card:#fff; --surface:#F3EEEA; --blush:#F6DDD1; --accent:#A3685A; --bar:#6E8CA6; --ink:#1F1C1B; --soft:#6B6461; --line:rgba(31,28,27,.12); }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font:400 15px/1.45 "Segoe UI", system-ui, -apple-system, sans-serif; }
   .wrap { max-width:1080px; margin:0 auto; padding:14px 14px 40px; }
@@ -24,8 +24,8 @@
   .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 12px; min-width:0; }
   .card.wide { grid-column:1 / -1; }
   .card h2 { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--soft); margin:0 0 8px; }
-  .row { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; font-size:13.5px; padding:3px 0; position:relative; }
-  .row i { position:absolute; left:0; top:2px; bottom:2px; background:var(--blush); border-radius:3px; z-index:0; }
+  .row { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; font-size:13.5px; padding:3px 0 7px; position:relative; }
+  .row i { position:absolute; left:0; bottom:2px; height:4px; background:var(--bar); border-radius:2px; z-index:0; }
   .row span, .row em { position:relative; z-index:1; padding-left:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .row em { font-style:normal; font-weight:600; padding:0 4px 0 0; }
   .empty { color:var(--soft); font-size:13px; }
@@ -62,7 +62,7 @@
     <div class="tile"><b id="tCall">–</b><span>Натиснули «Подзвонити»</span></div>
   </div>
   <div class="grid">
-    <div class="card wide"><h2>Відвідувачі по днях <span style="text-transform:none;letter-spacing:0;font-weight:400">— рожеве: відвідувачі, темне: заявки</span></h2><svg class="chart" id="chart"></svg></div>
+    <div class="card wide"><h2>Відвідувачі по днях <span style="text-transform:none;letter-spacing:0;font-weight:400">— блакитне: відвідувачі, темне: заявки</span></h2><svg class="chart" id="chart"></svg></div>
     <div class="card"><h2>Звідки прийшли</h2><div id="sources"></div></div>
     <div class="card"><h2>Що натискали</h2><div id="events"></div></div>
     <div class="card"><h2>Які розділи дивились</h2><div id="cats"></div></div>
@@ -129,7 +129,7 @@
     for (var i = 0; i < n; i++) {
       var h = Math.round((values[i] / max) * (H - pad - 14));
       var x = 2 + i * bw, y = H - pad - h;
-      out += '<rect x="' + (x + bw * 0.12) + '" y="' + y + '" width="' + Math.max(1, bw * 0.76) + '" height="' + h + '" rx="2" fill="#EECDBD"><title>' + esc(labels[i]) + ": " + values[i] + "</title></rect>";
+      out += '<rect x="' + (x + bw * 0.12) + '" y="' + y + '" width="' + Math.max(1, bw * 0.76) + '" height="' + h + '" rx="2" fill="#6E8CA6"><title>' + esc(labels[i]) + ": " + values[i] + "</title></rect>";
       if (second && second[i]) {
         var h2 = Math.round((second[i] / max) * (H - pad - 14));
         out += '<rect x="' + (x + bw * 0.32) + '" y="' + (H - pad - h2) + '" width="' + Math.max(1, bw * 0.36) + '" height="' + h2 + '" rx="1" fill="#1F1C1B"><title>Заявок: ' + second[i] + "</title></rect>";
