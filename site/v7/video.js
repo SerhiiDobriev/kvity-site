@@ -13,7 +13,7 @@
   // Только для показа Алине; потом заменить на её видео.
   var VID = "video/mixkit-";
   var V = {
-    hero: { src: "video/pexels-6428717.mp4", poster: IMG + "buchet-trandafiri-piersica-kvity-constanta.webp?v=2" }, // Pexels, бесплатная лицензия
+    hero: { src: "video/kvity-hero.mp4" }, // своё видео (IMG_3947 от Сергея, 27.11.2026); путь задан в tools/build-v7.js
     reels: [
       { src: VID + "15122.mp4", poster: "", t: { ua: "Збираємо букет", ro: "Asamblăm buchetul", en: "Making a bouquet" } },
       { src: VID + "49067.mp4", poster: "", t: { ua: "Ніжні півонії", ro: "Bujori delicați", en: "Delicate peonies" } },
@@ -33,11 +33,11 @@
   var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
 
   /* ---------- первый экран ---------- */
-  var media = $(".hero__media");
-  if (V.hero.src) {
-    media.insertAdjacentHTML("afterbegin", '<video class="hero__video" src="' + V.hero.src + '" poster="' + V.hero.poster + '" muted autoplay loop playsinline preload="metadata"></video>');
-  } else {
-    media.classList.add("is-live");
+  // само видео стоит прямо в HTML (tools/build-v7.js) — здесь только плавное появление
+  var hv = $(".hero__video");
+  if (hv) {
+    var shown = function () { hv.classList.add("is-on"); };
+    if (hv.readyState >= 3) shown(); else { hv.addEventListener("playing", shown); hv.addEventListener("canplay", shown); }
   }
 
   /* ---------- ролики ---------- */

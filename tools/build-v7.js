@@ -8,14 +8,20 @@ const must = (re, to) => { if (!re.test(h)) throw new Error("не найдено
 const isRel = (u) => u !== "" && !/^(\/|#|[a-z][a-z0-9+.-]*:)/i.test(u);
 
 must(/<link rel="canonical"[^>]*>\s*/, "");
+// первый экран: сразу видео, без фото основного сайта (чтобы фото не мелькало до видео)
+const HERO_VIDEO = "video/kvity-hero.mp4";
+must(/\s*<link rel="preload" as="image"[^>]*>/, "");
+must(/(<div class="hero__media">)\s*<img [^>]*>/, `$1
+        <video class="hero__video" src="${HERO_VIDEO}" muted autoplay loop playsinline preload="auto"></video>`);
 h = h.replace(/<link rel="alternate" hreflang[^>]*>\s*/g, "");
 must(/(<meta name="viewport"[^>]*>)/, '$1\n  <meta name="robots" content="noindex, nofollow">');
 must(/<title>/, "<title>v7 · ");
 h = h.replace(/\b(src|href)="([^"]*)"/g, (m, a, u) => (isRel(u) ? `${a}="../${u}"` : m));
 h = h.replace(/\bsrcset="([^"]*)"/g, (m, list) => `srcset="${list.split(",").map((p) => { p = p.trim(); return isRel(p) ? "../" + p : p; }).join(", ")}"`);
-must(/(<link rel="stylesheet" href="\.\.\/css\/style\.css[^"]*">)/, '$1\n  <link rel="stylesheet" href="video.css?v=2">\n  <script>window.KV_BASE = "../";</script>');
+h = h.replace(`src="../${HERO_VIDEO}"`, `src="${HERO_VIDEO}"`); // своё видео лежит в v7/video/
+must(/(<link rel="stylesheet" href="\.\.\/css\/style\.css[^"]*">)/, '$1\n  <link rel="stylesheet" href="video.css?v=3">\n  <script>window.KV_BASE = "../";</script>');
 must(/\s*<script src="\.\.\/js\/stats\.js[^"]*" defer><\/script>/, "");
-must(/(<script src="\.\.\/js\/main\.js[^"]*" defer><\/script>)/, '$1\n  <script src="video.js?v=4" defer></script>');
+must(/(<script src="\.\.\/js\/main\.js[^"]*" defer><\/script>)/, '$1\n  <script src="video.js?v=6" defer></script>');
 must(/(\s*<!-- Шары -->)/, `
 
     <!-- Видео (черновик v7) -->

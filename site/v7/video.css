@@ -1,6 +1,8 @@
 /* KVITY v7 (черновик, правка 31): видео. Поверх основного css/style.css */
 
 /* Первый экран: «живое фото», пока нет видео — медленное движение камеры по кругу */
+.hero__video { opacity: 0; transition: opacity .8s ease; }
+.hero__video.is-on { opacity: 1; }
 .hero__video { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 .hero__media.is-live img { animation: heroZoom 2.4s var(--ease) both, kvDrift 18s ease-in-out 2.4s infinite alternate; }
 @keyframes kvDrift { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.09) translate(-1.5%, -2%); } }
