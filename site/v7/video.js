@@ -13,7 +13,7 @@
   // Только для показа Алине; потом заменить на её видео.
   var VID = "video/mixkit-";
   var V = {
-    hero: { src: "video/kvity-hero.mp4" }, // своё видео (IMG_3947 от Сергея, 27.11.2026); путь задан в tools/build-v7.js
+    hero: { src: "video/kvity-hero-2.mp4" }, // своё видео (IMG_4463 от Сергея, 27.11.2026; раньше IMG_3947); путь задан в tools/build-v7.js
     reels: [
       { src: VID + "15122.mp4", poster: "", t: { ua: "Збираємо букет", ro: "Asamblăm buchetul", en: "Making a bouquet" } },
       { src: VID + "49067.mp4", poster: "", t: { ua: "Ніжні півонії", ro: "Bujori delicați", en: "Delicate peonies" } },

@@ -9,7 +9,7 @@ const isRel = (u) => u !== "" && !/^(\/|#|[a-z][a-z0-9+.-]*:)/i.test(u);
 
 must(/<link rel="canonical"[^>]*>\s*/, "");
 // первый экран: сразу видео, без фото основного сайта (чтобы фото не мелькало до видео)
-const HERO_VIDEO = "video/kvity-hero.mp4";
+const HERO_VIDEO = "video/kvity-hero-2.mp4";
 must(/\s*<link rel="preload" as="image"[^>]*>/, "");
 must(/(<div class="hero__media">)\s*<img [^>]*>/, `$1
         <video class="hero__video" src="${HERO_VIDEO}" muted autoplay loop playsinline preload="auto"></video>`);
