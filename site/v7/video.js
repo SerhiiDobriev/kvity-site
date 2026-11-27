@@ -9,11 +9,11 @@
 (function () {
   "use strict";
   var IMG = "../img/";
-  // Пример: бесплатные стоковые ролики Mixkit (mixkit.co, лицензия Mixkit — можно на сайтах без подписи).
+  // Пример: бесплатные стоковые ролики Mixkit и Pexels (лицензии позволяют на сайтах без подписи).
   // Только для показа Алине; потом заменить на её видео.
   var VID = "video/mixkit-";
   var V = {
-    hero: { src: VID + "169.mp4", poster: IMG + "buchet-trandafiri-piersica-kvity-constanta.webp?v=2" },
+    hero: { src: "video/pexels-6428717.mp4", poster: IMG + "buchet-trandafiri-piersica-kvity-constanta.webp?v=2" }, // Pexels, бесплатная лицензия
     reels: [
       { src: VID + "15122.mp4", poster: "", t: { ua: "Збираємо букет", ro: "Asamblăm buchetul", en: "Making a bouquet" } },
       { src: VID + "49067.mp4", poster: "", t: { ua: "Ніжні півонії", ro: "Bujori delicați", en: "Delicate peonies" } },
@@ -39,7 +39,6 @@
   } else {
     media.classList.add("is-live");
   }
-  media.insertAdjacentHTML("beforeend", '<button type="button" class="hero__watch" id="heroWatch">' + PLAY + "<span></span></button>");
 
   /* ---------- ролики ---------- */
   var track = $("#reelsTrack");
@@ -65,7 +64,7 @@
   } else Array.prototype.forEach.call(track.children, function (c) { c.classList.add("in"); });
 
   /* ---------- плеер на весь экран ---------- */
-  var list = [V.hero].concat(V.reels), cur = 0;
+  var list = V.reels, cur = 0;
   document.body.insertAdjacentHTML("beforeend",
     '<div class="vplayer" id="vplayer" hidden role="dialog" aria-modal="true">' +
     '<button type="button" class="vplayer__x" aria-label="">×</button>' +
@@ -82,8 +81,7 @@
   }
   function open(i) { show(i); pl.hidden = false; document.documentElement.style.overflow = "hidden"; requestAnimationFrame(function () { pl.classList.add("is-open"); }); }
   function close() { pl.classList.remove("is-open"); stage.innerHTML = ""; document.documentElement.style.overflow = ""; setTimeout(function () { pl.hidden = true; }, 250); }
-  track.addEventListener("click", function (e) { var c = e.target.closest(".reel"); if (c) open(+c.dataset.i + 1); });
-  $("#heroWatch").addEventListener("click", function () { open(0); });
+  track.addEventListener("click", function (e) { var c = e.target.closest(".reel"); if (c) open(+c.dataset.i); });
   $(".vplayer__x", pl).addEventListener("click", close);
   pl.addEventListener("click", function (e) { if (e.target === pl) close(); });
   document.addEventListener("keydown", function (e) {
@@ -107,7 +105,6 @@
     var L = lang(), T = TXT[L];
     $("#reelsKicker").textContent = T.kicker;
     $("#reelsTitle").innerHTML = T.title;
-    $("#heroWatch span").textContent = T.watch;
     $(".vplayer__x", pl).setAttribute("aria-label", T.close);
     Array.prototype.forEach.call(track.children, function (c) { c.querySelector(".reel__cap").textContent = V.reels[+c.dataset.i].t[L]; });
     if (!pl.hidden) show(cur);
