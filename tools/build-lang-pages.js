@@ -37,7 +37,7 @@ function build(lang) {
   must(/(<meta property="og:type"[^>]*>)/, `$1\n  <meta property="og:locale" content="${P.locale}">`);
 
   // относительные пути (img/…, css/…, js/…) → от корня сайта, иначе из /en/ они не найдутся
-  h = h.replace(/\b(src|href)="([^"]*)"/g, (m, a, u) => (isRel(u) ? `${a}="/${u}"` : m));
+  h = h.replace(/\b(src|href|poster)="([^"]*)"/g, (m, a, u) => (isRel(u) ? `${a}="/${u}"` : m));
   h = h.replace(/\bsrcset="([^"]*)"/g, (m, list) =>
     `srcset="${list.split(",").map((p) => { p = p.trim(); return isRel(p) ? "/" + p : p; }).join(", ")}"`);
   // фото галереи main.js берёт из KV_BASE + "img/…"

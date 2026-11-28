@@ -11,6 +11,13 @@ site/js/i18n.js        — все тексты на 4 языках
 site/js/main.js        — логика: язык, галерея/лайтбокс, форма → WhatsApp, анимации
 site/img/              — фото WebP: <id>-<slug>.webp (большое) и <id>-<slug>-s.webp (превью), og.jpg — превью ссылки
 site/fonts/            — шрифты Jost, Cormorant Italic, Montserrat (буквы логотипа), Sacramento (подпись «your happy moments and memories»)
+site/video/            — видео (правка 31, на основном сайте с 28.11.2026): kvity-hero-3.mp4/.jpg — первый экран (IMG_4463 Сергея),
+                         alina-01..06.mp4/.jpg — блок «Історія одного букета». Логика и тексты (UA/RO/EN) — js/video.js, стили — css/video.css.
+                         Оригиналы — private/video-alina/ (в git нет). Сжатие (ffmpeg в C:\Users\Sergey\Tools\ffmpeg-dl\...\bin):
+                         ролики: -vf "scale=720:-2:flags=lanczos,fps=30" -c:v libx264 -preset slow -crf 25 -profile:v high -pix_fmt yuv420p -movflags +faststart -c:a aac -b:a 96k
+                         первый экран: scale=1080, -crf 24, -an; заставка = первый кадр: -frames:v 1 -q:v 4
+                         Копия сайта до видео: git-метка before-v7-main-2026-11-28 и /root/kvity-backups/kvity-site-20261128-before-v7.tar.gz на сервере
+site/v7/               — черновик с видео (/v7/, noindex). С 28.11.2026 его содержимое на основном сайте; v7 заморожен, tools/build-v7.js больше не запускать
 site/v1/               — первая версия сайта (для сравнения): /v1/
 site/v6/               — черновик «бутик» (как модный дом: слоновая кость, чёрный, шампань, прямые углы, триптих фото): /v6/. Без своего скрипта, эффекты только в CSS
 site/v5/               — черновик «Bloom» (светлый, пастель): /v5/. Орбита фото, выбор настроения (4 цветовые темы), 3D-карусель, бенто, шарики, лента отзывов в 3D; js/fx.js
