@@ -1,70 +1,88 @@
 /*
  * KVITY v7 (черновик, правка 31): видео на сайте.
- *  1) первый экран — короткое видео без звука по кругу (как живое фото);
- *  2) блок «KVITY у русі» — вертикальные ролики 9:16, листаются пальцем,
+ *  1) первый экран — короткое видео без звука по кругу (само видео стоит в HTML, см. tools/build-v7.js);
+ *  2) блок «Історія одного букета» — 6 вертикальных роликов Алины (шаги 01–06),
  *     сами тихо играют, когда видны; нажатие — на весь экран со звуком.
- * Пока видео нет, вместо них — фото с медленным «движением камеры».
- * Чтобы поставить настоящее видео: положить .mp4 в site/video/ и вписать src ниже.
+ * Видео лежат в site/v7/video/ (не в git), сжаты ffmpeg из оригиналов в private/video-alina/.
  */
 (function () {
   "use strict";
-  var IMG = "../img/";
-  // Пример: бесплатные стоковые ролики Mixkit и Pexels (лицензии позволяют на сайтах без подписи).
-  // Только для показа Алине; потом заменить на её видео.
-  var VID = "video/mixkit-";
-  var V = {
-    hero: { src: "video/kvity-hero-2.mp4" }, // своё видео (IMG_4463 от Сергея, 27.11.2026; раньше IMG_3947); путь задан в tools/build-v7.js
-    reels: [
-      { src: VID + "15122.mp4", poster: "", t: { ua: "Збираємо букет", ro: "Asamblăm buchetul", en: "Making a bouquet" } },
-      { src: VID + "49067.mp4", poster: "", t: { ua: "Ніжні півонії", ro: "Bujori delicați", en: "Delicate peonies" } },
-      { src: VID + "45126.mp4", poster: "", t: { ua: "Букет нареченої", ro: "Buchet de mireasă", en: "Bridal bouquet" } },
-      { src: VID + "15115.mp4", poster: "", t: { ua: "Вручаємо з любов'ю", ro: "Oferit cu drag", en: "Handed with love" } },
-      { src: VID + "18204.mp4", poster: "", t: { ua: "Весільна класика", ro: "Clasic de nuntă", en: "Wedding classic" } }
-    ]
-  };
+  var V = "video/alina-";
+  // тексты от Алины (UA, 27.11.2026); RO и EN — перевод
+  var STEPS = [
+    { t: { ua: "Зустрічаємо квіти", ro: "Primim florile", en: "Welcoming the flowers" },
+      d: { ua: "Приймаємо свіже постачання та ретельно перевіряємо якість кожної квітки.",
+           ro: "Primim livrarea proaspătă și verificăm cu atenție calitatea fiecărei flori.",
+           en: "We receive each fresh delivery and carefully check the quality of every flower." } },
+    { t: { ua: "Готуємо з турботою", ro: "Le pregătim cu grijă", en: "Preparing with care" },
+      d: { ua: "Зачищаємо стебла, оновлюємо зрізи та створюємо оптимальні умови для зберігання квітів з урахуванням особливостей кожного сорту.",
+           ro: "Curățăm tulpinile, reîmprospătăm tăieturile și creăm condiții optime de păstrare, ținând cont de particularitățile fiecărui soi.",
+           en: "We clean the stems, refresh the cuts and create the best storage conditions, taking into account the needs of each variety." } },
+    { t: { ua: "Створюємо ваш букет", ro: "Creăm buchetul tău", en: "Creating your bouquet" },
+      d: { ua: "Поєднуємо відтінки, форми й фактури, приділяючи увагу кожній деталі. Створюємо ідеальний букет саме для вас.",
+           ro: "Combinăm nuanțe, forme și texturi, cu atenție la fiecare detaliu. Creăm buchetul perfect, special pentru tine.",
+           en: "We combine shades, shapes and textures, paying attention to every detail. We create the perfect bouquet just for you." } },
+    { t: { ua: "Ділимося результатом", ro: "Îți arătăm rezultatul", en: "Sharing the result" },
+      d: { ua: "Фотографуємо готовий букет та надсилаємо вам фото на погодження.",
+           ro: "Fotografiem buchetul gata și îți trimitem poza spre aprobare.",
+           en: "We photograph the finished bouquet and send you the photo for approval." } },
+    { t: { ua: "Додаємо особисте", ro: "Adăugăm o notă personală", en: "Adding a personal touch" },
+      d: { ua: "Переносимо ваші найтепліші слова на листівку, щоб разом із квітами передати ваші почуття. Додаємо рекомендації з догляду за букетом та поживний засіб для зрізаних квітів.",
+           ro: "Scriem cele mai calde cuvinte ale tale pe o felicitare, ca florile să-ți transmită sentimentele. Adăugăm sfaturi de îngrijire și hrană pentru flori tăiate.",
+           en: "We write your warmest words on a card, so the flowers carry your feelings. We add care tips and flower food for cut flowers." } },
+    { t: { ua: "Доставляємо емоції", ro: "Livrăm emoții", en: "Delivering emotions" },
+      d: { ua: "Дбайливо доставляємо букет, щоб він став частиною вашого особливого моменту.",
+           ro: "Livrăm buchetul cu grijă, ca să devină parte din momentul tău special.",
+           en: "We deliver the bouquet with care, so it becomes part of your special moment." } }
+  ];
+  STEPS.forEach(function (s, i) { var n = "0" + (i + 1); s.n = n; s.src = V + n + ".mp4"; s.poster = V + n + ".jpg"; });
   var TXT = {
-    ua: { kicker: "KVITY у русі", title: "Як народжується<br><em>ваш букет</em>", watch: "Дивитись відео", soon: "Тут буде відео", close: "Закрити" },
-    ro: { kicker: "KVITY în mișcare", title: "Cum se naște<br><em>buchetul tău</em>", watch: "Vezi video", soon: "Aici va fi un video", close: "Închide" },
-    en: { kicker: "KVITY in motion", title: "How your bouquet<br><em>comes to life</em>", watch: "Watch video", soon: "Video coming here", close: "Close" }
+    ua: { kicker: "KVITY у русі", title: "Історія<br><em>одного букета</em>",
+          lead: "За кожним букетом KVITY — маленька історія, яку зазвичай не видно. Запрошуємо вас побачити її нашими очима.", close: "Закрити" },
+    ro: { kicker: "KVITY în mișcare", title: "Povestea<br><em>unui buchet</em>",
+          lead: "În spatele fiecărui buchet KVITY e o mică poveste, care de obicei rămâne nevăzută. Te invităm s-o vezi prin ochii noștri.", close: "Închide" },
+    en: { kicker: "KVITY in motion", title: "The story<br><em>of a bouquet</em>",
+          lead: "Behind every KVITY bouquet there is a small story that usually stays unseen. We invite you to see it through our eyes.", close: "Close" }
   };
   var $ = function (s, r) { return (r || document).querySelector(s); };
   function lang() { var l = document.documentElement.lang; return l === "uk" ? "ua" : (TXT[l] ? l : "ro"); }
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
 
-  /* ---------- первый экран ---------- */
-  // само видео стоит прямо в HTML (tools/build-v7.js) — здесь только плавное появление
+  /* ---------- первый экран: плавное появление видео ---------- */
   var hv = $(".hero__video");
   if (hv) {
     var shown = function () { hv.classList.add("is-on"); };
     if (hv.readyState >= 3) shown(); else { hv.addEventListener("playing", shown); hv.addEventListener("canplay", shown); }
   }
 
-  /* ---------- ролики ---------- */
+  /* ---------- шаги с роликами ---------- */
   var track = $("#reelsTrack");
-  function cardHtml(r, i) {
-    var inner = r.src
-      ? '<video src="' + r.src + '" poster="' + r.poster + '" muted loop playsinline preload="metadata"></video>'
-      : '<img src="' + r.poster + '" alt="" loading="lazy" style="--k:' + (i % 3) + '">';
-    return '<button type="button" class="reel reveal" style="--delay:' + i * 0.08 + 's" data-i="' + i + '">' + inner +
-      '<span class="reel__play">' + PLAY + '</span><span class="reel__cap"></span></button>';
-  }
-  track.innerHTML = V.reels.map(cardHtml).join("");
+  track.innerHTML = STEPS.map(function (s, i) {
+    return '<figure class="story reveal" style="--delay:' + i * 0.08 + 's">' +
+      '<button type="button" class="reel" data-i="' + i + '">' +
+      '<video src="' + s.src + '" poster="' + s.poster + '" muted loop playsinline preload="metadata"></video>' +
+      '<span class="reel__play">' + PLAY + '</span></button>' +
+      '<figcaption><span class="story__n">' + s.n + '</span><h3></h3><p></p></figcaption></figure>';
+  }).join("");
 
   // ролики тихо играют, только пока видны на экране
   if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (es) {
+    // плавное появление, как у остальных блоков (карточка высокая из-за текста — хватает 10%)
+    var ioIn = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); ioIn.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    // ролик играет, когда видна хотя бы половина самого видео
+    var ioPlay = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
-        if (e.isIntersecting) e.target.classList.add("in"); // плавное появление, как у остальных блоков
-        var v = $("video", e.target); if (!v) return;
+        var v = $("video", e.target);
         if (e.isIntersecting) { v.play().catch(function () {}); } else v.pause();
       });
-    }, { threshold: 0.4 });
-    Array.prototype.forEach.call(track.children, function (c) { io.observe(c); });
+    }, { threshold: 0.5 });
+    Array.prototype.forEach.call(track.children, function (c) { ioIn.observe(c); ioPlay.observe($(".reel", c)); });
   } else Array.prototype.forEach.call(track.children, function (c) { c.classList.add("in"); });
 
   /* ---------- плеер на весь экран ---------- */
-  var list = V.reels, cur = 0;
+  var cur = 0;
   document.body.insertAdjacentHTML("beforeend",
     '<div class="vplayer" id="vplayer" hidden role="dialog" aria-modal="true">' +
     '<button type="button" class="vplayer__x" aria-label="">×</button>' +
@@ -72,12 +90,10 @@
     '<p class="vplayer__cap"></p></div>');
   var pl = $("#vplayer"), stage = $(".vplayer__stage", pl);
   function show(i) {
-    cur = (i + list.length) % list.length;
-    var it = list[cur], L = lang();
-    stage.innerHTML = it.src
-      ? '<video src="' + it.src + '" poster="' + it.poster + '" controls autoplay playsinline></video>'
-      : '<img src="' + it.poster + '" alt=""><span class="vplayer__soon">' + PLAY + esc(TXT[L].soon) + "</span>";
-    $(".vplayer__cap", pl).textContent = it.t ? it.t[L] : "KVITY";
+    cur = (i + STEPS.length) % STEPS.length;
+    var s = STEPS[cur];
+    stage.innerHTML = '<video src="' + s.src + '" poster="' + s.poster + '" controls autoplay playsinline></video>';
+    $(".vplayer__cap", pl).textContent = s.n + " — " + s.t[lang()];
   }
   function open(i) { show(i); pl.hidden = false; document.documentElement.style.overflow = "hidden"; requestAnimationFrame(function () { pl.classList.add("is-open"); }); }
   function close() { pl.classList.remove("is-open"); stage.innerHTML = ""; document.documentElement.style.overflow = ""; setTimeout(function () { pl.hidden = true; }, 250); }
@@ -105,8 +121,13 @@
     var L = lang(), T = TXT[L];
     $("#reelsKicker").textContent = T.kicker;
     $("#reelsTitle").innerHTML = T.title;
+    $("#reelsLead").textContent = T.lead;
     $(".vplayer__x", pl).setAttribute("aria-label", T.close);
-    Array.prototype.forEach.call(track.children, function (c) { c.querySelector(".reel__cap").textContent = V.reels[+c.dataset.i].t[L]; });
+    Array.prototype.forEach.call(track.children, function (c, i) {
+      $("h3", c).textContent = STEPS[i].t[L];
+      $("p", c).textContent = STEPS[i].d[L];
+      $(".reel", c).setAttribute("aria-label", STEPS[i].n + " " + STEPS[i].t[L]);
+    });
     if (!pl.hidden) show(cur);
   }
   texts();
