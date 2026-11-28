@@ -8,20 +8,22 @@ const must = (re, to) => { if (!re.test(h)) throw new Error("не найдено
 const isRel = (u) => u !== "" && !/^(\/|#|[a-z][a-z0-9+.-]*:)/i.test(u);
 
 must(/<link rel="canonical"[^>]*>\s*/, "");
-// первый экран: сразу видео, без фото основного сайта (чтобы фото не мелькало до видео)
+// первый экран: сразу видео, без фото основного сайта (чтобы фото не мелькало до видео);
+// заставка — первый кадр этого же видео: видна мгновенно, пока видео грузится или если автозапуск запрещён
 const HERO_VIDEO = "video/kvity-hero-3.mp4"; // IMG_4463, сжато ffmpeg до 1080px
-must(/\s*<link rel="preload" as="image"[^>]*>/, "");
+const HERO_POSTER = "video/kvity-hero-3.jpg"; // ffmpeg -i kvity-hero-3.mp4 -frames:v 1 -q:v 5 kvity-hero-3.jpg
+must(/<link rel="preload" as="image"[^>]*>/, `<link rel="preload" as="image" href="${HERO_POSTER}" fetchpriority="high">`);
 must(/(<div class="hero__media">)\s*<img [^>]*>/, `$1
-        <video class="hero__video" src="${HERO_VIDEO}" muted autoplay loop playsinline preload="auto"></video>`);
+        <video class="hero__video" src="${HERO_VIDEO}" poster="${HERO_POSTER}" muted autoplay loop playsinline preload="auto"></video>`);
 h = h.replace(/<link rel="alternate" hreflang[^>]*>\s*/g, "");
 must(/(<meta name="viewport"[^>]*>)/, '$1\n  <meta name="robots" content="noindex, nofollow">');
 must(/<title>/, "<title>v7 · ");
 h = h.replace(/\b(src|href)="([^"]*)"/g, (m, a, u) => (isRel(u) ? `${a}="../${u}"` : m));
 h = h.replace(/\bsrcset="([^"]*)"/g, (m, list) => `srcset="${list.split(",").map((p) => { p = p.trim(); return isRel(p) ? "../" + p : p; }).join(", ")}"`);
-h = h.replace(`src="../${HERO_VIDEO}"`, `src="${HERO_VIDEO}"`); // своё видео лежит в v7/video/
-must(/(<link rel="stylesheet" href="\.\.\/css\/style\.css[^"]*">)/, '$1\n  <link rel="stylesheet" href="video.css?v=4">\n  <script>window.KV_BASE = "../";</script>');
+h = h.replace(/(src|href|poster)="\.\.\/video\//g, '$1="video/'); // свои видео и заставка лежат в v7/video/
+must(/(<link rel="stylesheet" href="\.\.\/css\/style\.css[^"]*">)/, '$1\n  <link rel="stylesheet" href="video.css?v=5">\n  <script>window.KV_BASE = "../";</script>');
 must(/\s*<script src="\.\.\/js\/stats\.js[^"]*" defer><\/script>/, "");
-must(/(<script src="\.\.\/js\/main\.js[^"]*" defer><\/script>)/, '$1\n  <script src="video.js?v=7" defer></script>');
+must(/(<script src="\.\.\/js\/main\.js[^"]*" defer><\/script>)/, '$1\n  <script src="video.js?v=8" defer></script>');
 must(/(\s*<!-- Шары -->)/, `
 
     <!-- Видео (черновик v7) -->
