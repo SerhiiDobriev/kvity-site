@@ -23,7 +23,7 @@ h = h.replace(/\bsrcset="([^"]*)"/g, (m, list) => `srcset="${list.split(",").map
 h = h.replace(/(src|href|poster)="\.\.\/video\//g, '$1="video/'); // свои видео и заставка лежат в v7/video/
 must(/(<link rel="stylesheet" href="\.\.\/css\/style\.css[^"]*">)/, '$1\n  <link rel="stylesheet" href="video.css?v=5">\n  <script>window.KV_BASE = "../";</script>');
 must(/\s*<script src="\.\.\/js\/stats\.js[^"]*" defer><\/script>/, "");
-must(/(<script src="\.\.\/js\/main\.js[^"]*" defer><\/script>)/, '$1\n  <script src="video.js?v=8" defer></script>');
+must(/(<script src="\.\.\/js\/main\.js[^"]*" defer><\/script>)/, '$1\n  <script src="video.js?v=9" defer></script>');
 must(/(\s*<!-- Шары -->)/, `
 
     <!-- Видео (черновик v7) -->

@@ -36,7 +36,7 @@
            ro: "Livrăm buchetul cu grijă, ca să devină parte din momentul tău special.",
            en: "We deliver the bouquet with care, so it becomes part of your special moment." } }
   ];
-  STEPS.forEach(function (s, i) { var n = "0" + (i + 1); s.n = n; s.src = V + n + ".mp4"; s.poster = V + n + ".jpg"; });
+  STEPS.forEach(function (s, i) { var n = "0" + (i + 1); s.n = n; s.src = V + n + ".mp4"; s.poster = V + n + ".jpg?v=2"; }); // заставка = первый кадр ролика, чтобы не было скачка при старте
   var TXT = {
     ua: { kicker: "KVITY у русі", title: "Історія<br><em>одного букета</em>",
           lead: "За кожним букетом KVITY — маленька історія, яку зазвичай не видно. Запрошуємо вас побачити її нашими очима.",
@@ -70,7 +70,7 @@
   wrap.insertAdjacentHTML("beforeend",
     '<button type="button" class="reels__arrow reels__arrow--prev">' + ARROW("M15 5l-7 7 7 7") + "</button>" +
     '<button type="button" class="reels__arrow reels__arrow--next">' + ARROW("M9 5l7 7-7 7") + "</button>");
-  // preload="none": ролик начинает грузиться, только когда до него долистали (до этого видна заставка)
+  // ролики грузятся заранее, но после первого экрана (см. ниже «load»), чтобы не тормозить его
   track.innerHTML = STEPS.map(function (s, i) {
     return '<figure class="story reveal" style="--delay:' + i * 0.08 + 's">' +
       '<button type="button" class="reel" data-i="' + i + '">' +
@@ -96,6 +96,15 @@
     }, { threshold: 0.5 });
     each(track.children, function (c) { ioIn.observe(c); ioPlay.observe($(".reel", c)); });
   } else each(track.children, function (c) { c.classList.add("in"); });
+
+  // как только страница (первый экран, фото) загрузилась — тихо подгружаем все ролики,
+  // чтобы к моменту, когда до них долистают, они уже были готовы
+  function preloadReels() {
+    if (calm) return;
+    each(track.querySelectorAll("video"), function (v) { v.preload = "auto"; v.load(); });
+  }
+  if (document.readyState === "complete") setTimeout(preloadReels, 300);
+  else window.addEventListener("load", function () { setTimeout(preloadReels, 300); });
 
   /* стрелки ‹ › для мыши, когда ролики не помещаются в ряд */
   var prev = $(".reels__arrow--prev", wrap), next = $(".reels__arrow--next", wrap);
